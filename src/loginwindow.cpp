@@ -1,7 +1,13 @@
 #include "loginwindow.h"
 #include "ui_loginwindow.h"
 
-#include <iostream>
+#include "user.h"
+
+#include <QIntValidator>
+#include <QRegularExpressionValidator>
+#include <QRegularExpression>
+#include <QStackedWidget>
+
 #include <pqxx/pqxx>
 
 LoginWindow::LoginWindow(QWidget *parent) :
@@ -9,6 +15,16 @@ LoginWindow::LoginWindow(QWidget *parent) :
     ui(new Ui::LoginWindow)
 {
     ui->setupUi(this);
+
+    setFixedSize(QSize(1000, 600));
+
+    inputLogin = findChild<QLineEdit*>("inputLogin");
+    inputPassword = findChild<QLineEdit*>("inputPassword");
+
+    inputLogin->setValidator(new QIntValidator(0, std::numeric_limits<int>::max(), this));
+
+    QRegularExpression passwordRegExp("[a-zA-Z0-9]+");
+    inputPassword->setValidator(new QRegularExpressionValidator(passwordRegExp, this));
 
     QPushButton *pbLogin = findChild<QPushButton*>("pbLogin");
     connect(pbLogin, SIGNAL(clicked()), this, SLOT(authorize()));
@@ -21,33 +37,24 @@ LoginWindow::~LoginWindow()
 
 void LoginWindow::authorize()
 {
-    QLineEdit *leLogin = findChild<QLineEdit*>("leLogin");
-    QLineEdit *lePassword = findChild<QLineEdit*>("lePassword");
+    QStackedWidget *stackedWidget = reinterpret_cast<QStackedWidget*>(parentWidget());
 
-    try
-    {
-        // Connect to the database.  You can have multiple connections open
-        pqxx::connection c("user=admin hostaddr=185.251.91.109 port=5432 password=b5gXN6NNeS2JO8Ug dbname=hardware_store");
-        std::cout << "Connected to " << c.dbname() << '\n';
-
-        pqxx::work tx{ c };
-
-        int counter = 0;
-
-        QString request = QString("SELECT id, password FROM users WHERE id = '%1' AND password = '%2';").arg(leLogin->text()).arg(lePassword->text());
-        for (auto [id, password] : tx.query<int, std::string>(request.toStdString()))
-            counter++;
-
-        if (counter == 1)
-            std::cout << "Fine!\n";
-        else
-            std::cout << "Bad!\n";
-
-        //std::cout << "OK.\n";
+    if (inputLogin->text().isEmpty() || inputPassword->text().isEmpty()) {
+        //todo handle
+        return;
     }
-    catch (std::exception const& e)
-    {
-        std::cerr << "ERROR: " << e.what() << '\n';
-        //return 1;
+
+    if (!User::isUserExist(inputLogin->text())) {
+        //todo handle
+        return;
     }
+
+    if (!User::areCredentialsCorrect(inputLogin->text(), inputPassword->text())) {
+        //todo handle
+        return;
+    }
+
+    User::updateLastVisitDate(inputLogin->text());
+
+    stackedWidget->setCurrentIndex(1);
 }

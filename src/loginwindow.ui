@@ -6,51 +6,121 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
+    <width>1000</width>
     <height>600</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>53</horstretch>
+    <verstretch>36</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="font">
+   <font>
+    <bold>false</bold>
+   </font>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <widget class="QWidget" name="centralwidget">
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>307</x>
+      <y>140</y>
+      <width>386</width>
+      <height>52</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>СИСТЕМА УЧЕТА КОМПЬЮТЕРНЫХ КОМПЛЕКТУЮЩИХ</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
+   </widget>
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>200</y>
-      <width>301</width>
-      <height>181</height>
+      <x>344</x>
+      <y>229</y>
+      <width>312</width>
+      <height>141</height>
      </rect>
     </property>
     <property name="title">
      <string>АВТОРИЗАЦИЯ</string>
     </property>
-    <widget class="QLineEdit" name="leLogin">
+    <widget class="QWidget" name="verticalLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>0</x>
-       <y>60</y>
-       <width>299</width>
-       <height>24</height>
+       <x>10</x>
+       <y>30</y>
+       <width>291</width>
+       <height>71</height>
       </rect>
      </property>
-    </widget>
-    <widget class="QLineEdit" name="lePassword">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>90</y>
-       <width>299</width>
-       <height>24</height>
-      </rect>
-     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Логин</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="inputLogin">
+          <property name="inputMask">
+           <string/>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Пароль</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="inputPassword">
+          <property name="maxLength">
+           <number>32</number>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
     <widget class="QPushButton" name="pbLogin">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>150</y>
+       <x>116</x>
+       <y>110</y>
        <width>80</width>
        <height>24</height>
       </rect>
@@ -66,7 +136,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1000</width>
      <height>21</height>
     </rect>
    </property>

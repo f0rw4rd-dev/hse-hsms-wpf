@@ -2,6 +2,7 @@
 #define LOGINWINDOW_H
 
 #include <QMainWindow>
+#include <QLineEdit>
 
 namespace Ui {
 class LoginWindow;
@@ -20,6 +21,9 @@ private slots:
 
 private:
     Ui::LoginWindow *ui;
+
+    QLineEdit *inputLogin;
+    QLineEdit *inputPassword;
 };
 
 #endif // LOGINWINDOW_H
