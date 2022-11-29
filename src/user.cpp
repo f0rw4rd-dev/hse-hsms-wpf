@@ -57,5 +57,7 @@ void User::updateLastVisitDate(QString login)
                               "SET last_visit_date = '%1' "
                               "WHERE id = '%2';").arg(timestamp, login);
 
+    std::string test = request.toStdString();
     dbConnection->getTransaction()->exec(request.toStdString());
+    dbConnection->getTransaction()->commit();
 }
