@@ -24,23 +24,85 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
-    <widget class="QWidget" name="page"/>
-    <widget class="QWidget" name="page_2"/>
+    <widget class="QWidget" name="page">
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>1000</width>
+        <height>600</height>
+       </rect>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tabComponents">
+       <attribute name="title">
+        <string>Комплектующие</string>
+       </attribute>
+       <widget class="QTableWidget" name="tableComponents">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>1000</width>
+          <height>600</height>
+         </rect>
+        </property>
+        <column>
+         <property name="text">
+          <string>ИД</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Категория</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Модель</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Гарантия</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Цена</string>
+         </property>
+        </column>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="tabWarehouses">
+       <attribute name="title">
+        <string>Склады</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tabComputers">
+       <attribute name="title">
+        <string>Сборки компьютеров</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tabUsers">
+       <attribute name="title">
+        <string>Пользователи</string>
+       </attribute>
+      </widget>
+     </widget>
+    </widget>
    </widget>
   </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>1000</width>
-     <height>21</height>
-    </rect>
+  <widget class="QStatusBar" name="statusbar">
+   <property name="enabled">
+    <bool>false</bool>
    </property>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources/>
  <connections/>

@@ -3,6 +3,8 @@
 
 #include "user.h"
 
+#include "mainwindow.h"
+
 #include <QIntValidator>
 #include <QRegularExpressionValidator>
 #include <QRegularExpression>
@@ -56,5 +58,7 @@ void LoginWindow::authorize()
 
     User::updateLastVisitDate(inputLogin->text());
 
-    stackedWidget->setCurrentIndex(1);
+    stackedWidget->setCurrentIndex(0);
+
+    //MainWindow *mainWindow = reinterpret_cast<MainWindow*>(stackedWidget->nativeParentWidget());
 }
