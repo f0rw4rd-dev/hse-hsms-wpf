@@ -17,6 +17,12 @@ public:
     ~MainWindow();
 
 private:
+    void loadComponents();
+
+private slots:
+    void addComponent();
+
+private:
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

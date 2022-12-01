@@ -12,6 +12,8 @@ public:
 
     bool isConnectionReliable();
 
+    void assertConnectionIsReliable();
+
     std::unique_ptr<pqxx::connection> &getConnection() { return _connection; };
     std::unique_ptr<pqxx::work> &getTransaction() { return _transaction; };
 

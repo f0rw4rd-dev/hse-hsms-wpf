@@ -3,7 +3,11 @@
 
 #include "loginwindow.h"
 
+#include "component.h"
+
 #include "dbconnection.h"
+
+#include "addcomponentdialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,8 +18,8 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowTitle("HSMS");
     setFixedSize(1000, 600);
 
-    //menuBar = findChild<QMenuBar*>("menubar");
-    //menuBar->hide();
+    QPushButton *pbAddComponent = findChild<QPushButton*>("pbAddComponent");
+    connect(pbAddComponent, SIGNAL(clicked()), this, SLOT(addComponent()));
 
     QStackedWidget *stackedWidget = findChild<QStackedWidget*>("stackedWidget");
 
@@ -24,34 +28,36 @@ MainWindow::MainWindow(QWidget *parent)
     stackedWidget->addWidget(loginWindow);
     stackedWidget->setCurrentIndex(1);
 
-    //todo
-    QTableWidget *tableComponents = findChild<QTableWidget*>("tableComponents");
+    loadComponents();
 
-    //tableComponents->insertRow(0);
-    //tableComponents->setItem(0, 1, new QTableWidgetItem("gsdgsd"));
-
-    if (!dbConnection->isConnectionReliable()) {
-        //todo handle
-        return;
-    }
-
-    QString request = QString("SELECT * FROM components");
-    for (auto [id, componentTypeId, name, warranty, price] : dbConnection->getTransaction()->query<int, int, std::string, int, float>(request.toStdString())) {
-        int row = tableComponents->rowCount();
-
-        tableComponents->insertRow(row);
-
-        // проверить утечку памяти
-
-        tableComponents->setItem(row, 0, new QTableWidgetItem(QString::number(id)));
-        tableComponents->setItem(row, 1, new QTableWidgetItem(QString::number(componentTypeId)));
-        tableComponents->setItem(row, 2, new QTableWidgetItem(QString::fromUtf8(name)));
-        tableComponents->setItem(row, 3, new QTableWidgetItem(QString::number(warranty)));
-        tableComponents->setItem(row, 4, new QTableWidgetItem(QString::number(price)));
-    }
+    parentWidget();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::loadComponents()
+{
+    QTableWidget *tableComponents = findChild<QTableWidget*>("tableComponents");
+
+    tableComponents->setRowCount(0);
+
+    for (std::shared_ptr<DBComponent> &dbComponent : Component::getComponents()) {
+        int row = tableComponents->rowCount();
+
+        tableComponents->insertRow(row);
+
+        tableComponents->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(dbComponent->typeName)));
+        tableComponents->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbComponent->name)));
+        tableComponents->setItem(row, 2, new QTableWidgetItem(QString::number(dbComponent->warranty)));
+        tableComponents->setItem(row, 3, new QTableWidgetItem(QString::number(dbComponent->price)));
+    }
+}
+
+void MainWindow::addComponent()
+{
+    AddComponentDialog *addComponentDialog = new AddComponentDialog;
+    addComponentDialog->show();
 }

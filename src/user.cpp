@@ -12,10 +12,7 @@ User::User()
 
 bool User::isUserExist(QString login)
 {
-    if (!dbConnection->isConnectionReliable()) {
-        //todo handle
-        return false;
-    }
+    dbConnection->assertConnectionIsReliable();
 
     QString request = QString("SELECT id "
                               "FROM users "
@@ -28,14 +25,10 @@ bool User::isUserExist(QString login)
 
 bool User::areCredentialsCorrect(QString login, QString password)
 {
-    if (!dbConnection->isConnectionReliable()) {
-        //todo handle
-        return false;
-    }
+    dbConnection->assertConnectionIsReliable();
 
-    QString encryptedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex();
-
-    QString request = QString("SELECT id "
+    QString encryptedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex(),
+            request = QString("SELECT id "
                               "FROM users "
                               "WHERE id = '%1' AND password = '%2';").arg(login, encryptedPassword);
 
@@ -46,18 +39,13 @@ bool User::areCredentialsCorrect(QString login, QString password)
 
 void User::updateLastVisitDate(QString login)
 {
-    if (!dbConnection->isConnectionReliable()) {
-        //todo handle
-        return;
-    }
+    dbConnection->assertConnectionIsReliable();
 
-    QString timestamp = QString::number(QDateTime::currentSecsSinceEpoch());
-
-    QString request = QString("UPDATE users "
+    QString timestamp = QString::number(QDateTime::currentSecsSinceEpoch()),
+            request = QString("UPDATE users "
                               "SET last_visit_date = '%1' "
                               "WHERE id = '%2';").arg(timestamp, login);
 
-    std::string test = request.toStdString();
     dbConnection->getTransaction()->exec(request.toStdString());
     dbConnection->getTransaction()->commit();
 }

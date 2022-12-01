@@ -43,20 +43,55 @@
        <attribute name="title">
         <string>Комплектующие</string>
        </attribute>
+       <widget class="QPushButton" name="pbAddComponent">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>155</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Добавить комплектующее</string>
+        </property>
+       </widget>
        <widget class="QTableWidget" name="tableComponents">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>0</y>
+          <y>44</y>
           <width>1000</width>
           <height>600</height>
          </rect>
         </property>
-        <column>
-         <property name="text">
-          <string>ИД</string>
-         </property>
-        </column>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="tabKeyNavigation">
+         <bool>true</bool>
+        </property>
+        <property name="showDropIndicator" stdset="0">
+         <bool>true</bool>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>false</bool>
+        </property>
+        <property name="textElideMode">
+         <enum>Qt::ElideRight</enum>
+        </property>
+        <property name="showGrid">
+         <bool>true</bool>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+        <property name="cornerButtonEnabled">
+         <bool>true</bool>
+        </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>true</bool>
+        </attribute>
         <column>
          <property name="text">
           <string>Категория</string>
