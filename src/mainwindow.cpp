@@ -5,8 +5,6 @@
 
 #include "component.h"
 
-#include "dbconnection.h"
-
 #include "addcomponentdialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -15,19 +13,25 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // Adjust MainWindow
     setWindowTitle("HSMS");
     setFixedSize(1000, 600);
 
-    QPushButton *pbAddComponent = findChild<QPushButton*>("pbAddComponent");
-    connect(pbAddComponent, SIGNAL(clicked()), this, SLOT(addComponent()));
+    // Init pointers to UI elements
+    _buttonAddComponent = findChild<QPushButton*>("buttonAddComponent");
+    _buttonLoadComponents = findChild<QPushButton*>("buttonLoadComponents");
 
-    QStackedWidget *stackedWidget = findChild<QStackedWidget*>("stackedWidget");
+    _stackedWidget = findChild<QStackedWidget*>("stackedWidget");
 
-    LoginWindow *loginWindow = new LoginWindow(this);
+    // Open LoginWindow
+    _stackedWidget->addWidget(new LoginWindow(this));
+    _stackedWidget->setCurrentIndex(1);
 
-    stackedWidget->addWidget(loginWindow);
-    stackedWidget->setCurrentIndex(1);
+    // Connectors
+    connect(_buttonAddComponent, SIGNAL(clicked()), this, SLOT(addComponent()));
+    connect(_buttonLoadComponents, SIGNAL(clicked()), this, SLOT(loadComponents()));
 
+    // Fill tables with data
     loadComponents();
 
     parentWidget();
@@ -53,6 +57,8 @@ void MainWindow::loadComponents()
         tableComponents->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbComponent->name)));
         tableComponents->setItem(row, 2, new QTableWidgetItem(QString::number(dbComponent->warranty)));
         tableComponents->setItem(row, 3, new QTableWidgetItem(QString::number(dbComponent->price)));
+
+
     }
 }
 

@@ -3,8 +3,6 @@
 
 #include "user.h"
 
-#include "mainwindow.h"
-
 #include <QIntValidator>
 #include <QRegularExpressionValidator>
 #include <QRegularExpression>
@@ -18,18 +16,21 @@ LoginWindow::LoginWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Adjust LoginWindow
     setFixedSize(QSize(1000, 600));
 
-    inputLogin = findChild<QLineEdit*>("inputLogin");
-    inputPassword = findChild<QLineEdit*>("inputPassword");
+    // Init pointers to UI elements
+    _inputLogin = findChild<QLineEdit*>("inputLogin");
+    _inputPassword = findChild<QLineEdit*>("inputPassword");
+    _buttonLogin = findChild<QPushButton*>("buttonLogin");
 
-    inputLogin->setValidator(new QIntValidator(0, std::numeric_limits<int>::max(), this));
-
+    // Validators
     QRegularExpression passwordRegExp("[a-zA-Z0-9]+");
-    inputPassword->setValidator(new QRegularExpressionValidator(passwordRegExp, this));
+    _inputLogin->setValidator(new QIntValidator(0, std::numeric_limits<int>::max(), this));
+    _inputPassword->setValidator(new QRegularExpressionValidator(passwordRegExp, this));
 
-    QPushButton *pbLogin = findChild<QPushButton*>("pbLogin");
-    connect(pbLogin, SIGNAL(clicked()), this, SLOT(authorize()));
+    // Connectors
+    connect(_buttonLogin, SIGNAL(clicked()), this, SLOT(authorize()));
 }
 
 LoginWindow::~LoginWindow()
@@ -41,24 +42,22 @@ void LoginWindow::authorize()
 {
     QStackedWidget *stackedWidget = reinterpret_cast<QStackedWidget*>(parentWidget());
 
-    if (inputLogin->text().isEmpty() || inputPassword->text().isEmpty()) {
+    if (_inputLogin->text().isEmpty() || _inputPassword->text().isEmpty()) {
         //todo handle
         return;
     }
 
-    if (!User::isUserExist(inputLogin->text())) {
+    if (!User::isUserExist(_inputLogin->text())) {
         //todo handle
         return;
     }
 
-    if (!User::areCredentialsCorrect(inputLogin->text(), inputPassword->text())) {
+    if (!User::areCredentialsCorrect(_inputLogin->text(), _inputPassword->text())) {
         //todo handle
         return;
     }
 
-    User::updateLastVisitDate(inputLogin->text());
+    User::updateLastVisitDate(_inputLogin->text());
 
     stackedWidget->setCurrentIndex(0);
-
-    //MainWindow *mainWindow = reinterpret_cast<MainWindow*>(stackedWidget->nativeParentWidget());
 }

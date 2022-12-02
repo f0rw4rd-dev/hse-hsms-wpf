@@ -116,7 +116,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QPushButton" name="pbLogin">
+    <widget class="QPushButton" name="buttonLogin">
      <property name="geometry">
       <rect>
        <x>116</x>

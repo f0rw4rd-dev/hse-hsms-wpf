@@ -23,7 +23,7 @@ bool DBConnection::isConnectionReliable()
         }
         catch (std::exception const) {
             _transaction = std::make_unique<pqxx::work>(*_connection);
-            QThread::sleep(1);
+            //QThread::sleep(1);
             continue;
         }
 

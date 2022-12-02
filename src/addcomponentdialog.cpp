@@ -41,6 +41,11 @@ void AddComponentDialog::loadComponentTypes()
 
 void AddComponentDialog::addComponent()
 {
+    if (inputName->text().isEmpty() || inputWarranty->text().isEmpty() || inputPrice->text().isEmpty()) {
+        //todo handle
+        return;
+    }
+
     DBComponent dbComponent(-1, inputName->text().toStdString(), comboTypeName->itemData(comboTypeName->currentIndex()).toInt(), comboTypeName->currentText().toStdString(), inputWarranty->text().toInt(), inputPrice->text().toFloat());
 
     Component::addComponent(dbComponent);

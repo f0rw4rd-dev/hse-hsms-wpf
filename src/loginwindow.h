@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QLineEdit>
+#include <QPushButton>
 
 namespace Ui {
 class LoginWindow;
@@ -20,10 +21,13 @@ private slots:
     void authorize();
 
 private:
-    Ui::LoginWindow *ui;
+    QLineEdit *_inputLogin;
+    QLineEdit *_inputPassword;
 
-    QLineEdit *inputLogin;
-    QLineEdit *inputPassword;
+    QPushButton *_buttonLogin;
+
+private:
+    Ui::LoginWindow *ui;
 };
 
 #endif // LOGINWINDOW_H

@@ -43,17 +43,17 @@
        <attribute name="title">
         <string>Комплектующие</string>
        </attribute>
-       <widget class="QPushButton" name="pbAddComponent">
+       <widget class="QPushButton" name="buttonAddComponent">
         <property name="geometry">
          <rect>
-          <x>10</x>
+          <x>100</x>
           <y>10</y>
-          <width>155</width>
+          <width>80</width>
           <height>24</height>
          </rect>
         </property>
         <property name="text">
-         <string>Добавить комплектующее</string>
+         <string>Добавить</string>
         </property>
        </widget>
        <widget class="QTableWidget" name="tableComponents">
@@ -112,6 +112,50 @@
           <string>Цена</string>
          </property>
         </column>
+        <column>
+         <property name="text">
+          <string>Удалить</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QPushButton" name="buttonLoadComponents">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Обновить</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="buttonEditComponent">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>10</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Изменить</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="buttonDeleteComponent">
+        <property name="geometry">
+         <rect>
+          <x>280</x>
+          <y>10</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Удалить</string>
+        </property>
        </widget>
       </widget>
       <widget class="QWidget" name="tabWarehouses">
