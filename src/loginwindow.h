@@ -23,7 +23,6 @@ private slots:
 private:
     QLineEdit *_inputLogin;
     QLineEdit *_inputPassword;
-
     QPushButton *_buttonLogin;
 
 private:

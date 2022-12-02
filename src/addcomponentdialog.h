@@ -25,13 +25,11 @@ private slots:
     void addComponent();
 
 private:
-    QDialogButtonBox *buttonBox;
-
-    QComboBox *comboTypeName;
-
-    QLineEdit *inputName;
-    QLineEdit *inputWarranty;
-    QLineEdit *inputPrice;
+    QPushButton *_buttonAddComponent;
+    QComboBox *_comboTypeName;
+    QLineEdit *_inputName;
+    QLineEdit *_inputWarranty;
+    QLineEdit *_inputPrice;
 
 private:
     Ui::AddComponentDialog *ui;

@@ -11,19 +11,32 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    buttonBox = findChild<QDialogButtonBox*>("buttonBox");
+    // Init pointers to UI elements
+    _buttonAddComponent = findChild<QPushButton*>("buttonAddComponent");
+    _comboTypeName = findChild<QComboBox*>("comboTypeName");
+    _inputName = findChild<QLineEdit*>("inputName");
+    _inputWarranty = findChild<QLineEdit*>("inputWarranty");
+    _inputPrice = findChild<QLineEdit*>("inputPrice");
 
-    comboTypeName = findChild<QComboBox*>("comboTypeName");
+    // Validators
+    QRegularExpression nameRegExp("[a-zA-Zа-яА-Я0-9(),]+");
 
-    inputName = findChild<QLineEdit*>("inputName");
-    inputWarranty = findChild<QLineEdit*>("inputWarranty");
-    inputPrice = findChild<QLineEdit*>("inputPrice");
+    QLocale locale(QLocale::English, QLocale::UnitedStates);
+    locale.setNumberOptions(QLocale::RejectGroupSeparator);
 
+    QDoubleValidator *doubleValidator = new QDoubleValidator(0,  std::numeric_limits<float>::max(), 2, this);
+    doubleValidator->setLocale(locale);
+
+    _inputName->setLocale(locale);
+    _inputName->setValidator(new QRegularExpressionValidator(nameRegExp, this));
+    _inputWarranty->setValidator(new QIntValidator(1, std::numeric_limits<int>::max(), this));
+    _inputPrice->setValidator(doubleValidator);
+
+    // Connections
+    connect(_buttonAddComponent, SIGNAL(clicked()), this, SLOT(addComponent()));
+
+    // Fill the QComboBox with component types
     loadComponentTypes();
-
-    //todo validators
-
-    connect(buttonBox, SIGNAL(accepted()), this, SLOT(addComponent()));
 }
 
 AddComponentDialog::~AddComponentDialog()
@@ -33,20 +46,20 @@ AddComponentDialog::~AddComponentDialog()
 
 void AddComponentDialog::loadComponentTypes()
 {
-    comboTypeName->clear();
+    _comboTypeName->clear();
 
     for (pqxx::row const &row : Component::getComponentTypes())
-        comboTypeName->addItem(QString::fromStdString(row[1].c_str()), QVariant(atoi(row[0].c_str())));
+        _comboTypeName->addItem(QString::fromStdString(row[1].c_str()), QVariant(atoi(row[0].c_str())));
 }
 
 void AddComponentDialog::addComponent()
 {
-    if (inputName->text().isEmpty() || inputWarranty->text().isEmpty() || inputPrice->text().isEmpty()) {
+    if (_inputName->text().isEmpty() || _inputWarranty->text().isEmpty() || _inputPrice->text().isEmpty()) {
         //todo handle
         return;
     }
 
-    DBComponent dbComponent(-1, inputName->text().toStdString(), comboTypeName->itemData(comboTypeName->currentIndex()).toInt(), comboTypeName->currentText().toStdString(), inputWarranty->text().toInt(), inputPrice->text().toFloat());
+    DBComponent dbComponent(-1, _inputName->text().toStdString(), _comboTypeName->itemData(_comboTypeName->currentIndex()).toInt(), _comboTypeName->currentText().toStdString(), _inputWarranty->text().toInt(), _inputPrice->text().toFloat());
 
     Component::addComponent(dbComponent);
 }

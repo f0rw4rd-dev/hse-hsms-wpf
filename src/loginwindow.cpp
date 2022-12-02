@@ -29,7 +29,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
     _inputLogin->setValidator(new QIntValidator(0, std::numeric_limits<int>::max(), this));
     _inputPassword->setValidator(new QRegularExpressionValidator(passwordRegExp, this));
 
-    // Connectors
+    // Connections
     connect(_buttonLogin, SIGNAL(clicked()), this, SLOT(authorize()));
 }
 

@@ -12,6 +12,8 @@ SOURCES += \
     addcomponentdialog.cpp \
     component.cpp \
     dbconnection.cpp \
+    deletecomponentdialog.cpp \
+    editcomponentdialog.cpp \
     loginwindow.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -21,12 +23,16 @@ HEADERS += \
     addcomponentdialog.h \
     component.h \
     dbconnection.h \
+    deletecomponentdialog.h \
+    editcomponentdialog.h \
     loginwindow.h \
     mainwindow.h \
     user.h
 
 FORMS += \
     addcomponentdialog.ui \
+    deletecomponentdialog.ui \
+    editcomponentdialog.ui \
     loginwindow.ui \
     mainwindow.ui
 	
