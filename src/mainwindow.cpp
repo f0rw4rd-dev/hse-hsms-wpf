@@ -32,10 +32,10 @@ MainWindow::MainWindow(QWidget *parent)
     _stackedWidget->setCurrentIndex(1);
 
     // Connections
-    connect(_buttonLoadComponents, SIGNAL(clicked()), this, SLOT(loadComponents()));
-    connect(_buttonAddComponent, SIGNAL(clicked()), this, SLOT(addComponent()));
-    connect(_buttonEditComponent, SIGNAL(clicked()), this, SLOT(editComponent()));
-    connect(_buttonDeleteComponent, SIGNAL(clicked()), this, SLOT(deleteComponent()));
+    connect(_buttonLoadComponents, &QPushButton::clicked, this, &MainWindow::loadComponents);
+    connect(_buttonAddComponent, &QPushButton::clicked, this, &MainWindow::addComponent);
+    connect(_buttonEditComponent, &QPushButton::clicked, this, &MainWindow::editComponent);
+    connect(_buttonDeleteComponent, &QPushButton::clicked, this, &MainWindow::deleteComponent);
 
     // Fill tables with data
     loadComponents();
@@ -59,10 +59,11 @@ void MainWindow::loadComponents()
 
         tableComponents->insertRow(row);
 
-        tableComponents->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(dbComponent->typeName)));
-        tableComponents->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbComponent->name)));
-        tableComponents->setItem(row, 2, new QTableWidgetItem(QString::number(dbComponent->warranty)));
-        tableComponents->setItem(row, 3, new QTableWidgetItem(QString::number(dbComponent->price)));
+        tableComponents->setItem(row, 0, new QTableWidgetItem(QString::number(dbComponent->id)));
+        tableComponents->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbComponent->typeName)));
+        tableComponents->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(dbComponent->name)));
+        tableComponents->setItem(row, 3, new QTableWidgetItem(QString::number(dbComponent->warranty)));
+        tableComponents->setItem(row, 4, new QTableWidgetItem(QString::number(dbComponent->price)));
     }
 }
 

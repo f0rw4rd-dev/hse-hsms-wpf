@@ -30,7 +30,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
     _inputPassword->setValidator(new QRegularExpressionValidator(passwordRegExp, this));
 
     // Connections
-    connect(_buttonLogin, SIGNAL(clicked()), this, SLOT(authorize()));
+    connect(_buttonLogin, &QPushButton::clicked, this, &LoginWindow::authorize);
 }
 
 LoginWindow::~LoginWindow()

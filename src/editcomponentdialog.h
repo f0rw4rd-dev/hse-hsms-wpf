@@ -2,6 +2,8 @@
 #define EDITCOMPONENTDIALOG_H
 
 #include <QDialog>
+#include <QComboBox>
+#include <QLineEdit>
 
 namespace Ui {
 class EditComponentDialog;
@@ -14,6 +16,21 @@ class EditComponentDialog : public QDialog
 public:
     explicit EditComponentDialog(QWidget *parent = nullptr);
     ~EditComponentDialog();
+
+private:
+    void loadComponentTypes();
+
+private slots:
+    void loadComponent(const QString &id);
+    void editComponent();
+
+private:
+    QPushButton *_buttonEditComponent;
+    QComboBox *_comboTypeName;
+    QLineEdit *_inputId;
+    QLineEdit *_inputName;
+    QLineEdit *_inputWarranty;
+    QLineEdit *_inputPrice;
 
 private:
     Ui::EditComponentDialog *ui;

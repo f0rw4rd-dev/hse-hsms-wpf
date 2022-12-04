@@ -4,7 +4,6 @@
 #include <QDialog>
 #include <QComboBox>
 #include <QLineEdit>
-#include <QDialogButtonBox>
 
 namespace Ui {
 class AddComponentDialog;

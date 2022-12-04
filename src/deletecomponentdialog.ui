@@ -7,60 +7,81 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>113</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="verticalLayoutWidget">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>381</width>
-     <height>211</height>
+     <width>379</width>
+     <height>41</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <property name="spacing">
+     <number>6</number>
+    </property>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
-      <property name="spacing">
-       <number>6</number>
+     <widget class="QLabel" name="label_2">
+      <property name="text">
+       <string>ИД</string>
       </property>
-      <item>
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>ИД</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="inputName"/>
-      </item>
-     </layout>
+     </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
-      <item>
-       <widget class="QPushButton" name="buttonDeleteComponent">
-        <property name="text">
-         <string>Удалить</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="buttonCloseDialog">
-        <property name="text">
-         <string>Закрыть</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QLineEdit" name="inputId"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>60</y>
+     <width>379</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QPushButton" name="buttonDeleteComponent">
+      <property name="text">
+       <string>Удалить</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="buttonCloseDialog">
+      <property name="text">
+       <string>Закрыть</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>buttonCloseDialog</sender>
+   <signal>clicked()</signal>
+   <receiver>DeleteComponentDialog</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>295</x>
+     <y>79</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

@@ -11,6 +11,8 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    setWindowTitle("Добавить комплектующее");
+
     // Init pointers to UI elements
     _buttonAddComponent = findChild<QPushButton*>("buttonAddComponent");
     _comboTypeName = findChild<QComboBox*>("comboTypeName");
@@ -19,7 +21,7 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) :
     _inputPrice = findChild<QLineEdit*>("inputPrice");
 
     // Validators
-    QRegularExpression nameRegExp("[a-zA-Zа-яА-Я0-9(),]+");
+    QRegularExpression nameRegExp("[a-zA-Zа-яА-Я0-9(), ]+");
 
     QLocale locale(QLocale::English, QLocale::UnitedStates);
     locale.setNumberOptions(QLocale::RejectGroupSeparator);
@@ -33,7 +35,7 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) :
     _inputPrice->setValidator(doubleValidator);
 
     // Connections
-    connect(_buttonAddComponent, SIGNAL(clicked()), this, SLOT(addComponent()));
+    connect(_buttonAddComponent, &QPushButton::clicked, this, &AddComponentDialog::addComponent);
 
     // Fill the QComboBox with component types
     loadComponentTypes();
