@@ -1,5 +1,4 @@
 #include "user.h"
-
 #include "dbconnection.h"
 
 #include <QCryptographicHash>
@@ -45,6 +44,59 @@ void User::updateLastVisitDate(QString login)
             request = QString("UPDATE users "
                               "SET last_visit_date = '%1' "
                               "WHERE id = '%2';").arg(timestamp, login);
+
+    dbConnection->getTransaction()->exec(request.toStdString());
+    dbConnection->getTransaction()->commit();
+}
+
+QVector<std::shared_ptr<DBUser>> User::getUsers()
+{
+    dbConnection->assertConnectionIsReliable();
+
+    QString request = "SELECT users.id, users.registration_date, users.last_visit_date, users.group_id, groups.name FROM users "
+                              "LEFT JOIN groups ON users.group_id = groups.id;";
+
+    QVector<std::shared_ptr<DBUser>> users;
+
+    for (auto &[id, registrationDate, lastVisitDate, groupId, groupName] : dbConnection->getTransaction()->query<int, int64_t, int64_t, int, std::string>(request.toStdString()))
+        users.append(std::make_shared<DBUser>(id, registrationDate, lastVisitDate, groupId, groupName));
+
+    return users;
+}
+
+void addUser(DBUser &dbUser)
+{
+
+}
+
+void editPasswordUser(int id, QString newPassword)
+{
+    dbConnection->assertConnectionIsReliable();
+
+    QString newEncryptedPassword = QCryptographicHash::hash(newPassword.toUtf8(), QCryptographicHash::Sha256).toHex(),
+            request = QString("UPDATE users SET password = '%1' WHERE id = '%2';")
+            .arg(newEncryptedPassword, QString::number(id));
+
+    dbConnection->getTransaction()->exec(request.toStdString());
+    dbConnection->getTransaction()->commit();
+}
+
+void editGroupUser(int id, int newGroupId)
+{
+    dbConnection->assertConnectionIsReliable();
+
+    QString request = QString("UPDATE users SET group_id = '%1' WHERE id = '%2';")
+            .arg(QString::number(newGroupId), QString::number(id));
+
+    dbConnection->getTransaction()->exec(request.toStdString());
+    dbConnection->getTransaction()->commit();
+}
+
+void deleteUser(int id)
+{
+    dbConnection->assertConnectionIsReliable();
+
+    QString request = QString("DELETE FROM users WHERE id = '%1'").arg(id);
 
     dbConnection->getTransaction()->exec(request.toStdString());
     dbConnection->getTransaction()->commit();

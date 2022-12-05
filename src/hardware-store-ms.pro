@@ -11,23 +11,27 @@ CONFIG += c++17
 SOURCES += \
     addcomponentdialog.cpp \
     component.cpp \
+    computer.cpp \
     dbconnection.cpp \
     deletecomponentdialog.cpp \
     editcomponentdialog.cpp \
     loginwindow.cpp \
     main.cpp \
     mainwindow.cpp \
-    user.cpp
+    user.cpp \
+    warehouse.cpp
 
 HEADERS += \
     addcomponentdialog.h \
     component.h \
+    computer.h \
     dbconnection.h \
     deletecomponentdialog.h \
     editcomponentdialog.h \
     loginwindow.h \
     mainwindow.h \
-    user.h
+    user.h \
+    warehouse.h
 
 FORMS += \
     addcomponentdialog.ui \

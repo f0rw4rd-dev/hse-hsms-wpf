@@ -1,13 +1,14 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 #include "loginwindow.h"
-
 #include "component.h"
-
 #include "addcomponentdialog.h"
 #include "editcomponentdialog.h"
 #include "deletecomponentdialog.h"
+#include "user.h"
+#include "warehouse.h"
+
+#include <QDateTime>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -20,10 +21,15 @@ MainWindow::MainWindow(QWidget *parent)
     setFixedSize(1000, 600);
 
     // Init pointers to UI elements
+    _tableComponents = findChild<QTableWidget*>("tableComponents");
     _buttonLoadComponents = findChild<QPushButton*>("buttonLoadComponents");
     _buttonAddComponent = findChild<QPushButton*>("buttonAddComponent");
     _buttonEditComponent = findChild<QPushButton*>("buttonEditComponent");
     _buttonDeleteComponent = findChild<QPushButton*>("buttonDeleteComponent");
+
+    _tableUsers = findChild<QTableWidget*>("tableUsers");
+
+    _tableWarehouses = findChild<QTableWidget*>("tableWarehouses");
 
     _stackedWidget = findChild<QStackedWidget*>("stackedWidget");
 
@@ -39,6 +45,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Fill tables with data
     loadComponents();
+    loadUsers();
+    loadWarehouses();
 
     parentWidget();
 }
@@ -50,20 +58,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::loadComponents()
 {
-    QTableWidget *tableComponents = findChild<QTableWidget*>("tableComponents");
-
-    tableComponents->setRowCount(0);
+    _tableComponents->setRowCount(0);
 
     for (std::shared_ptr<DBComponent> &dbComponent : Component::getComponents()) {
-        int row = tableComponents->rowCount();
+        int row = _tableComponents->rowCount();
 
-        tableComponents->insertRow(row);
+        _tableComponents->insertRow(row);
 
-        tableComponents->setItem(row, 0, new QTableWidgetItem(QString::number(dbComponent->id)));
-        tableComponents->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbComponent->typeName)));
-        tableComponents->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(dbComponent->name)));
-        tableComponents->setItem(row, 3, new QTableWidgetItem(QString::number(dbComponent->warranty)));
-        tableComponents->setItem(row, 4, new QTableWidgetItem(QString::number(dbComponent->price)));
+        _tableComponents->setItem(row, 0, new QTableWidgetItem(QString::number(dbComponent->id)));
+        _tableComponents->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbComponent->typeName)));
+        _tableComponents->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(dbComponent->name)));
+        _tableComponents->setItem(row, 3, new QTableWidgetItem(QString::number(dbComponent->warranty)));
+        _tableComponents->setItem(row, 4, new QTableWidgetItem(QString::number(dbComponent->price)));
     }
 }
 
@@ -83,4 +89,34 @@ void MainWindow::deleteComponent()
 {
     DeleteComponentDialog *deleteComponentDialog = new DeleteComponentDialog(this);
     deleteComponentDialog->show();
+}
+
+void MainWindow::loadUsers()
+{
+    _tableUsers->setRowCount(0);
+
+    for (std::shared_ptr<DBUser> &dbUser : User::getUsers()) {
+        int row = _tableUsers->rowCount();
+
+        _tableUsers->insertRow(row);
+
+        _tableUsers->setItem(row, 0, new QTableWidgetItem(QString::number(dbUser->id)));
+        _tableUsers->setItem(row, 1, new QTableWidgetItem(QDateTime::fromSecsSinceEpoch(dbUser->registrationDate).toString("dd/MM/yyyy hh:mm:ss")));
+        _tableUsers->setItem(row, 2, new QTableWidgetItem(QDateTime::fromSecsSinceEpoch(dbUser->lastVisitDate).toString("dd/MM/yyyy hh:mm:ss")));
+        _tableUsers->setItem(row, 3, new QTableWidgetItem(QString::fromStdString(dbUser->groupName)));
+    }
+}
+
+void MainWindow::loadWarehouses()
+{
+    _tableWarehouses->setRowCount(0);
+
+    for (std::shared_ptr<DBWarehouse> &dbWarehouse : Warehouse::getWarehouses()) {
+        int row = _tableWarehouses->rowCount();
+
+        _tableWarehouses->insertRow(row);
+
+        _tableWarehouses->setItem(row, 0, new QTableWidgetItem(QString::number(dbWarehouse->id)));
+        _tableWarehouses->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbWarehouse->address)));
+    }
 }
