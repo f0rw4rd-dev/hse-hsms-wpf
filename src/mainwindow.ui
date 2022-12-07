@@ -161,11 +161,128 @@
         </property>
        </widget>
       </widget>
+      <widget class="QWidget" name="tabCharacteristics">
+       <attribute name="title">
+        <string>Характеристики</string>
+       </attribute>
+       <widget class="QPushButton" name="buttonAddCharacteristic">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>10</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Добавить</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="buttonLoadCharacteristics">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Обновить</string>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="tableCharacteristics">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>44</y>
+          <width>1000</width>
+          <height>450</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="tabKeyNavigation">
+         <bool>true</bool>
+        </property>
+        <property name="showDropIndicator" stdset="0">
+         <bool>true</bool>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>false</bool>
+        </property>
+        <property name="textElideMode">
+         <enum>Qt::ElideRight</enum>
+        </property>
+        <property name="showGrid">
+         <bool>true</bool>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+        <property name="cornerButtonEnabled">
+         <bool>true</bool>
+        </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>true</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>ИД</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Название комплектующего</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Название характеристики</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Значение</string>
+         </property>
+        </column>
+       </widget>
+       <widget class="QPushButton" name="buttonEditCharacteristic">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>10</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Изменить</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="buttonDeleteCharacteristic">
+        <property name="geometry">
+         <rect>
+          <x>280</x>
+          <y>10</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Удалить</string>
+        </property>
+       </widget>
+      </widget>
       <widget class="QWidget" name="tabWarehouses">
        <attribute name="title">
         <string>Склады</string>
        </attribute>
-       <widget class="QPushButton" name="buttonLoadWarehouse">
+       <widget class="QPushButton" name="buttonLoadWarehouses">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -268,6 +385,118 @@
         </property>
        </widget>
       </widget>
+      <widget class="QWidget" name="tabComponentsInWarehouses">
+       <attribute name="title">
+        <string>Наличие комплектующих на складах</string>
+       </attribute>
+       <widget class="QPushButton" name="buttonLoadComponentsInWarehouses">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>10</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Обновить</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="buttonEditComponentInWarehouse">
+        <property name="geometry">
+         <rect>
+          <x>190</x>
+          <y>10</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Изменить</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="buttonDeleteComponentInWarehouse">
+        <property name="geometry">
+         <rect>
+          <x>280</x>
+          <y>10</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Удалить</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="buttonAddComponentInWarehouse">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>10</y>
+          <width>80</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Добавить</string>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="tableComponentsInWarehouses">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>44</y>
+          <width>1000</width>
+          <height>450</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="editTriggers">
+         <set>QAbstractItemView::NoEditTriggers</set>
+        </property>
+        <property name="tabKeyNavigation">
+         <bool>true</bool>
+        </property>
+        <property name="showDropIndicator" stdset="0">
+         <bool>true</bool>
+        </property>
+        <property name="alternatingRowColors">
+         <bool>false</bool>
+        </property>
+        <property name="textElideMode">
+         <enum>Qt::ElideRight</enum>
+        </property>
+        <property name="showGrid">
+         <bool>true</bool>
+        </property>
+        <property name="wordWrap">
+         <bool>false</bool>
+        </property>
+        <property name="cornerButtonEnabled">
+         <bool>true</bool>
+        </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>true</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string>Название комплектующего</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Адрес склада</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Количество</string>
+         </property>
+        </column>
+       </widget>
+      </widget>
       <widget class="QWidget" name="tabComputers">
        <attribute name="title">
         <string>Сборки компьютеров</string>
@@ -353,6 +582,66 @@
         <column>
          <property name="text">
           <string>ИД</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Процессор</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Мат. плата</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Видеокарта</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>ОЗУ</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Корпус</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Блок питания</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>SSD</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>HDD</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>SSD M.2</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Вентиляторы</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>СВО</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Кулер</string>
          </property>
         </column>
        </widget>

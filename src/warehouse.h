@@ -13,12 +13,27 @@ struct DBWarehouse
     std::string address;
 };
 
+struct DBComponentInWarehouse
+{
+    DBComponentInWarehouse() {};
+    DBComponentInWarehouse(int warehouseId, std::string address, int componentId, std::string componentName, int amount)
+        : warehouseId(warehouseId), address(address), componentId(componentId), componentName(componentName), amount(amount) {};
+
+    int warehouseId;
+    std::string address;
+    int componentId;
+    std::string componentName;
+    int amount;
+};
+
 class Warehouse
 {
 public:
     Warehouse();
 
     static QVector<std::shared_ptr<DBWarehouse>> getWarehouses();
+
+    static QVector<std::shared_ptr<DBComponentInWarehouse>> getComponentsInWarehouses();
 };
 
 #endif // WAREHOUSE_H

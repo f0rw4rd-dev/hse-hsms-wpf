@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     addcomponentdialog.cpp \
+    characteristic.cpp \
     component.cpp \
     computer.cpp \
     dbconnection.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 
 HEADERS += \
     addcomponentdialog.h \
+    characteristic.h \
     component.h \
     computer.h \
     dbconnection.h \
