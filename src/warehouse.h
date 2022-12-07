@@ -32,6 +32,7 @@ public:
     Warehouse();
 
     static QVector<std::shared_ptr<DBWarehouse>> getWarehouses();
+    static void addWarehouse(DBWarehouse &dbWarehouse);
 
     static QVector<std::shared_ptr<DBComponentInWarehouse>> getComponentsInWarehouses();
 };

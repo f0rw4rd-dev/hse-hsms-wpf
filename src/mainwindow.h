@@ -30,6 +30,7 @@ private slots:
 
     // Actions with warehouses
     void loadWarehouses();
+    void addWarehouse();
 
     // Actions with computers
     void loadComputers();
@@ -53,6 +54,7 @@ private:
 
     QTableWidget *_tableWarehouses;
     QPushButton *_buttonLoadWarehouses;
+    QPushButton *_buttonAddWarehouse;
 
     QTableWidget *_tableComputers;
     QPushButton *_buttonLoadComputers;

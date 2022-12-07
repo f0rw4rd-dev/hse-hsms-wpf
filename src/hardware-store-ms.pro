@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     addcomponentdialog.cpp \
+    addwarehousedialog.cpp \
     characteristic.cpp \
     component.cpp \
     computer.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
 
 HEADERS += \
     addcomponentdialog.h \
+    addwarehousedialog.h \
     characteristic.h \
     component.h \
     computer.h \
@@ -37,6 +39,7 @@ HEADERS += \
 
 FORMS += \
     addcomponentdialog.ui \
+    addwarehousedialog.ui \
     deletecomponentdialog.ui \
     editcomponentdialog.ui \
     loginwindow.ui \

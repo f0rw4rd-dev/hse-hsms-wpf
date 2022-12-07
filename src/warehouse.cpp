@@ -22,6 +22,19 @@ QVector<std::shared_ptr<DBWarehouse>> Warehouse::getWarehouses()
     return warehouses;
 }
 
+void Warehouse::addWarehouse(DBWarehouse &dbWarehouse)
+{
+    dbConnection->assertConnectionIsReliable();
+
+    QString request = QString("INSERT INTO warehouses (address) VALUES ('%1');")
+            .arg(QString::fromStdString(dbWarehouse.address));
+
+    dbConnection->getTransaction()->exec(request.toStdString());
+    dbConnection->getTransaction()->commit();
+
+    // check on errors (not unique, e.g.)
+}
+
 QVector<std::shared_ptr<DBComponentInWarehouse>> Warehouse::getComponentsInWarehouses()
 {
     dbConnection->assertConnectionIsReliable();

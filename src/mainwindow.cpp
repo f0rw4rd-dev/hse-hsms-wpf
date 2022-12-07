@@ -7,6 +7,7 @@
 #include "deletecomponentdialog.h"
 #include "user.h"
 #include "warehouse.h"
+#include "addwarehousedialog.h"
 #include "computer.h"
 #include "characteristic.h"
 
@@ -34,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     _tableWarehouses = findChild<QTableWidget*>("tableWarehouses");
     _buttonLoadWarehouses = findChild<QPushButton*>("buttonLoadWarehouses");
+    _buttonAddWarehouse = findChild<QPushButton*>("buttonAddWarehouse");
 
     _tableComputers = findChild<QTableWidget*>("tableComputers");
     _buttonLoadComputers = findChild<QPushButton*>("buttonLoadComputers");
@@ -59,6 +61,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(_buttonLoadUsers, &QPushButton::clicked, this, &MainWindow::loadUsers);
 
     connect(_buttonLoadWarehouses, &QPushButton::clicked, this, &MainWindow::loadWarehouses);
+    connect(_buttonAddWarehouse, &QPushButton::clicked, this, &MainWindow::addWarehouse);
 
     connect(_buttonLoadComputers, &QPushButton::clicked, this, &MainWindow::loadComputers);
 
@@ -145,6 +148,12 @@ void MainWindow::loadWarehouses()
         _tableWarehouses->setItem(row, 0, new QTableWidgetItem(QString::number(dbWarehouse->id)));
         _tableWarehouses->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbWarehouse->address)));
     }
+}
+
+void MainWindow::addWarehouse()
+{
+    AddWarehouseDialog *addWarehouseDialog = new AddWarehouseDialog(this);
+    addWarehouseDialog->show();
 }
 
 void MainWindow::loadComputers()
