@@ -53,7 +53,7 @@ void Component::addComponent(DBComponent &dbComponent)
     // check on errors (not unique, e.g.)
 }
 
-void Component::editComponent(DBComponent &dbComponent)
+void Component::setComponent(DBComponent &dbComponent)
 {
     dbConnection->assertConnectionIsReliable();
 

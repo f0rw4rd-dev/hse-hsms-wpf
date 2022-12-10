@@ -3,9 +3,10 @@
 #include "loginwindow.h"
 #include "component.h"
 #include "addcomponentdialog.h"
-#include "editcomponentdialog.h"
+#include "setcomponentdialog.h"
 #include "deletecomponentdialog.h"
 #include "user.h"
+#include "adduserdialog.h"
 #include "warehouse.h"
 #include "addwarehousedialog.h"
 #include "computer.h"
@@ -27,11 +28,13 @@ MainWindow::MainWindow(QWidget *parent)
     _tableComponents = findChild<QTableWidget*>("tableComponents");
     _buttonLoadComponents = findChild<QPushButton*>("buttonLoadComponents");
     _buttonAddComponent = findChild<QPushButton*>("buttonAddComponent");
-    _buttonEditComponent = findChild<QPushButton*>("buttonEditComponent");
+    _buttonSetComponent = findChild<QPushButton*>("buttonSetComponent");
     _buttonDeleteComponent = findChild<QPushButton*>("buttonDeleteComponent");
 
     _tableUsers = findChild<QTableWidget*>("tableUsers");
     _buttonLoadUsers = findChild<QPushButton*>("buttonLoadUsers");
+    _buttonAddUser = findChild<QPushButton*>("buttonAddUser");
+    //_button
 
     _tableWarehouses = findChild<QTableWidget*>("tableWarehouses");
     _buttonLoadWarehouses = findChild<QPushButton*>("buttonLoadWarehouses");
@@ -55,10 +58,11 @@ MainWindow::MainWindow(QWidget *parent)
     // Connections
     connect(_buttonLoadComponents, &QPushButton::clicked, this, &MainWindow::loadComponents);
     connect(_buttonAddComponent, &QPushButton::clicked, this, &MainWindow::addComponent);
-    connect(_buttonEditComponent, &QPushButton::clicked, this, &MainWindow::editComponent);
+    connect(_buttonSetComponent, &QPushButton::clicked, this, &MainWindow::setComponent);
     connect(_buttonDeleteComponent, &QPushButton::clicked, this, &MainWindow::deleteComponent);
 
     connect(_buttonLoadUsers, &QPushButton::clicked, this, &MainWindow::loadUsers);
+    connect(_buttonAddUser, &QPushButton::clicked, this, &MainWindow::addUser);
 
     connect(_buttonLoadWarehouses, &QPushButton::clicked, this, &MainWindow::loadWarehouses);
     connect(_buttonAddWarehouse, &QPushButton::clicked, this, &MainWindow::addWarehouse);
@@ -108,10 +112,10 @@ void MainWindow::addComponent()
     addComponentDialog->show();
 }
 
-void MainWindow::editComponent()
+void MainWindow::setComponent()
 {
-    EditComponentDialog *editComponentDialog = new EditComponentDialog(this);
-    editComponentDialog->show();
+    SetComponentDialog *setComponentDialog = new SetComponentDialog(this);
+    setComponentDialog->show();
 }
 
 void MainWindow::deleteComponent()
@@ -134,6 +138,12 @@ void MainWindow::loadUsers()
         _tableUsers->setItem(row, 2, new QTableWidgetItem(QDateTime::fromSecsSinceEpoch(dbUser->lastVisitDate).toString("dd/MM/yyyy hh:mm:ss")));
         _tableUsers->setItem(row, 3, new QTableWidgetItem(QString::fromStdString(dbUser->groupName)));
     }
+}
+
+void MainWindow::addUser()
+{
+    AddUserDialog *addUserDialog = new AddUserDialog(this);
+    addUserDialog->show();
 }
 
 void MainWindow::loadWarehouses()
@@ -201,6 +211,11 @@ void MainWindow::loadComputers()
 
         _tableComputers->setItem(row, 12, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->coolerId), QString::fromStdString(dbComputers->coolerName))));
     }
+}
+
+void MainWindow::addComputer()
+{
+
 }
 
 void MainWindow::loadCharacteristics()

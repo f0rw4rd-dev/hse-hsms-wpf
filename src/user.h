@@ -2,6 +2,7 @@
 #define USER_H
 
 #include <QString>
+#include <pqxx/pqxx>
 
 struct DBUser
 {
@@ -21,6 +22,8 @@ class User
 public:
     User();
 
+    static QString getEncryptedPassword(QString password);
+
     static bool isUserExist(QString login);
     static bool areCredentialsCorrect(QString login, QString password);
 
@@ -28,10 +31,12 @@ public:
 
     static QVector<std::shared_ptr<DBUser>> getUsers();
     //static std::unique_ptr<DBUser> getUser(int id);
-    static void addUser(DBUser &dbUser);
-    static void editPasswordUser(int id, QString newPassword);
-    static void editGroupUser(int id, int newGroupId);
+    static void addUser(QString password, int groupId);
+    static void setUserPassword(int id, QString newPassword);
+    static void setUserGroup(int id, int newGroupId);
     static void deleteUser(int id);
+
+    static pqxx::result getGroups();
 };
 
 #endif // USER_H

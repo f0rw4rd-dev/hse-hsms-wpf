@@ -10,40 +10,43 @@ CONFIG += c++17
 
 SOURCES += \
     addcomponentdialog.cpp \
+    adduserdialog.cpp \
     addwarehousedialog.cpp \
     characteristic.cpp \
     component.cpp \
     computer.cpp \
     dbconnection.cpp \
     deletecomponentdialog.cpp \
-    editcomponentdialog.cpp \
     loginwindow.cpp \
     main.cpp \
     mainwindow.cpp \
+    setcomponentdialog.cpp \
     user.cpp \
     warehouse.cpp
 
 HEADERS += \
     addcomponentdialog.h \
+    adduserdialog.h \
     addwarehousedialog.h \
     characteristic.h \
     component.h \
     computer.h \
     dbconnection.h \
     deletecomponentdialog.h \
-    editcomponentdialog.h \
     loginwindow.h \
     mainwindow.h \
+    setcomponentdialog.h \
     user.h \
     warehouse.h
 
 FORMS += \
     addcomponentdialog.ui \
+    adduserdialog.ui \
     addwarehousedialog.ui \
     deletecomponentdialog.ui \
-    editcomponentdialog.ui \
     loginwindow.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    setcomponentdialog.ui
 	
 INCLUDEPATH += \
     $$PWD/../3rdparty/libpqxx/include

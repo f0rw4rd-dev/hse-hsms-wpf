@@ -22,11 +22,12 @@ private slots:
     // Actions with components
     void loadComponents();
     void addComponent();
-    void editComponent();
+    void setComponent();
     void deleteComponent();
 
     // Actions with users
     void loadUsers();
+    void addUser();
 
     // Actions with warehouses
     void loadWarehouses();
@@ -34,6 +35,7 @@ private slots:
 
     // Actions with computers
     void loadComputers();
+    void addComputer();
 
     // Actions with characteristics
     void loadCharacteristics();
@@ -46,11 +48,15 @@ private:
     QTableWidget *_tableComponents;
     QPushButton *_buttonLoadComponents;
     QPushButton *_buttonAddComponent;
-    QPushButton *_buttonEditComponent;
+    QPushButton *_buttonSetComponent;
     QPushButton *_buttonDeleteComponent;
 
     QTableWidget *_tableUsers;
     QPushButton *_buttonLoadUsers;
+    QPushButton *_buttonAddUser;
+    QPushButton *_buttonSetUserPassword;
+    QPushButton *_buttonSetUserGroup;
+    QPushButton *_buttonDeleteUser;
 
     QTableWidget *_tableWarehouses;
     QPushButton *_buttonLoadWarehouses;

@@ -27,7 +27,7 @@ public:
     static QVector<std::shared_ptr<DBComponent>> getComponents();
     static std::unique_ptr<DBComponent> getComponent(int id);
     static void addComponent(DBComponent &dbComponent);
-    static void editComponent(DBComponent &dbComponent);
+    static void setComponent(DBComponent &dbComponent);
     static void deleteComponent(int id);
 
     static pqxx::result getComponentTypes();

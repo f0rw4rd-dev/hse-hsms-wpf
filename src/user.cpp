@@ -9,6 +9,11 @@ User::User()
 
 }
 
+QString User::getEncryptedPassword(QString password)
+{
+    return QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex();
+}
+
 bool User::isUserExist(QString login)
 {
     dbConnection->assertConnectionIsReliable();
@@ -26,10 +31,7 @@ bool User::areCredentialsCorrect(QString login, QString password)
 {
     dbConnection->assertConnectionIsReliable();
 
-    QString encryptedPassword = QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex(),
-            request = QString("SELECT id "
-                              "FROM users "
-                              "WHERE id = '%1' AND password = '%2';").arg(login, encryptedPassword);
+    QString request = QString("SELECT id FROM users WHERE id = '%1' AND password = '%2';").arg(login, getEncryptedPassword(password));
 
     pqxx::result users = dbConnection->getTransaction()->exec(request.toStdString());
 
@@ -64,12 +66,18 @@ QVector<std::shared_ptr<DBUser>> User::getUsers()
     return users;
 }
 
-void addUser(DBUser &dbUser)
+void User::addUser(QString password, int groupId)
 {
+    dbConnection->assertConnectionIsReliable();
 
+    QString request = QString("INSERT INTO users (password, registration_date, group_id) VALUES ('%1', '%2', '%3');")
+            .arg(password, QString::number(QDateTime::currentSecsSinceEpoch()), QString::number(groupId));
+
+    dbConnection->getTransaction()->exec(request.toStdString());
+    dbConnection->getTransaction()->commit();
 }
 
-void editPasswordUser(int id, QString newPassword)
+void User::setUserPassword(int id, QString newPassword)
 {
     dbConnection->assertConnectionIsReliable();
 
@@ -81,7 +89,7 @@ void editPasswordUser(int id, QString newPassword)
     dbConnection->getTransaction()->commit();
 }
 
-void editGroupUser(int id, int newGroupId)
+void User::setUserGroup(int id, int newGroupId)
 {
     dbConnection->assertConnectionIsReliable();
 
@@ -92,7 +100,7 @@ void editGroupUser(int id, int newGroupId)
     dbConnection->getTransaction()->commit();
 }
 
-void deleteUser(int id)
+void User::deleteUser(int id)
 {
     dbConnection->assertConnectionIsReliable();
 
@@ -100,4 +108,13 @@ void deleteUser(int id)
 
     dbConnection->getTransaction()->exec(request.toStdString());
     dbConnection->getTransaction()->commit();
+}
+
+pqxx::result User::getGroups()
+{
+    dbConnection->assertConnectionIsReliable();
+
+    QString request = "SELECT * FROM groups;";
+
+    return dbConnection->getTransaction()->exec(request.toStdString());
 }

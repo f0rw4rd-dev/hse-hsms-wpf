@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EditComponentDialog</class>
- <widget class="QDialog" name="EditComponentDialog">
+ <class>SetComponentDialog</class>
+ <widget class="QDialog" name="SetComponentDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -96,7 +96,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
-       <widget class="QPushButton" name="buttonEditComponent">
+       <widget class="QPushButton" name="buttonSetComponent">
         <property name="text">
          <string>Изменить</string>
         </property>
@@ -119,7 +119,7 @@
   <connection>
    <sender>buttonCloseDialog</sender>
    <signal>clicked()</signal>
-   <receiver>EditComponentDialog</receiver>
+   <receiver>SetComponentDialog</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">

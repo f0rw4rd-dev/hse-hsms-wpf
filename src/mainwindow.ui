@@ -37,7 +37,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="tabComponents">
        <attribute name="title">
@@ -134,7 +134,7 @@
          <string>Обновить</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="buttonEditComponent">
+       <widget class="QPushButton" name="buttonSetComponent">
         <property name="geometry">
          <rect>
           <x>190</x>
@@ -251,7 +251,7 @@
          </property>
         </column>
        </widget>
-       <widget class="QPushButton" name="buttonEditCharacteristic">
+       <widget class="QPushButton" name="buttonSetCharacteristic">
         <property name="geometry">
          <rect>
           <x>190</x>
@@ -308,7 +308,7 @@
          <string>Добавить</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="buttonEditWarehouse">
+       <widget class="QPushButton" name="buttonSetWarehouse">
         <property name="geometry">
          <rect>
           <x>190</x>
@@ -402,7 +402,7 @@
          <string>Обновить</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="buttonEditComponentInWarehouse">
+       <widget class="QPushButton" name="buttonSetComponentInWarehouse">
         <property name="geometry">
          <rect>
           <x>190</x>
@@ -645,7 +645,7 @@
          </property>
         </column>
        </widget>
-       <widget class="QPushButton" name="buttonEditComputer">
+       <widget class="QPushButton" name="buttonSetComputer">
         <property name="geometry">
          <rect>
           <x>190</x>
@@ -689,7 +689,7 @@
          <string>Добавить</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="buttonEditPasswordUser">
+       <widget class="QPushButton" name="buttonSetUserPassword">
         <property name="geometry">
          <rect>
           <x>190</x>
@@ -775,7 +775,7 @@
          </property>
         </column>
        </widget>
-       <widget class="QPushButton" name="buttonEditGroupUser">
+       <widget class="QPushButton" name="buttonSetUserGroup">
         <property name="geometry">
          <rect>
           <x>305</x>

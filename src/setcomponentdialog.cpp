@@ -1,17 +1,17 @@
-#include "editcomponentdialog.h"
-#include "ui_editcomponentdialog.h"
+#include "setcomponentdialog.h"
+#include "ui_setcomponentdialog.h"
 #include "component.h"
 
-EditComponentDialog::EditComponentDialog(QWidget *parent) :
+SetComponentDialog::SetComponentDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::EditComponentDialog)
+    ui(new Ui::SetComponentDialog)
 {
     ui->setupUi(this);
 
     setWindowTitle("Изменить комплектующее");
 
     // Init pointers to UI elements
-    _buttonEditComponent = findChild<QPushButton*>("buttonEditComponent");
+    _buttonSetComponent = findChild<QPushButton*>("buttonSetComponent");
     _comboTypeName = findChild<QComboBox*>("comboTypeName");
     _inputId = findChild<QLineEdit*>("inputId");
     _inputName = findChild<QLineEdit*>("inputName");
@@ -34,19 +34,19 @@ EditComponentDialog::EditComponentDialog(QWidget *parent) :
     _inputPrice->setValidator(doubleValidator);
 
     // Connections
-    connect(_inputId, &QLineEdit::textChanged, this, &EditComponentDialog::loadComponent);
-    connect(_buttonEditComponent, &QPushButton::clicked, this, &EditComponentDialog::editComponent);
+    connect(_inputId, &QLineEdit::textChanged, this, &SetComponentDialog::loadComponent);
+    connect(_buttonSetComponent, &QPushButton::clicked, this, &SetComponentDialog::setComponent);
 
     //todo: load type components
     loadComponentTypes();
 }
 
-EditComponentDialog::~EditComponentDialog()
+SetComponentDialog::~SetComponentDialog()
 {
     delete ui;
 }
 
-void EditComponentDialog::loadComponentTypes()
+void SetComponentDialog::loadComponentTypes()
 {
     _comboTypeName->clear();
 
@@ -54,7 +54,7 @@ void EditComponentDialog::loadComponentTypes()
         _comboTypeName->addItem(QString::fromStdString(row[1].c_str()), QVariant(atoi(row[0].c_str())));
 }
 
-void EditComponentDialog::loadComponent(const QString &id)
+void SetComponentDialog::loadComponent(const QString &id)
 {
     std::unique_ptr<DBComponent> dbComponent = Component::getComponent(id.toInt());
 
@@ -73,8 +73,8 @@ void EditComponentDialog::loadComponent(const QString &id)
     _inputPrice->setText(QString::number(dbComponent->price));
 }
 
-void EditComponentDialog::editComponent()
+void SetComponentDialog::setComponent()
 {
     DBComponent dbComponent(_inputId->text().toInt(), _inputName->text().toStdString(), _comboTypeName->itemData(_comboTypeName->currentIndex()).toInt(), _comboTypeName->currentText().toStdString(), _inputWarranty->text().toInt(), _inputPrice->text().toDouble());
-    Component::editComponent(dbComponent);
+    Component::setComponent(dbComponent);
 }
