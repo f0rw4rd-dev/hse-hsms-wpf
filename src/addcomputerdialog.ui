@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DeleteComponentDialog</class>
- <widget class="QDialog" name="DeleteComponentDialog">
+ <class>AddComputerDialog</class>
+ <widget class="QDialog" name="AddComputerDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>114</height>
+    <height>533</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,30 +19,44 @@
      <x>10</x>
      <y>10</y>
      <width>381</width>
-     <height>91</height>
+     <height>351</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
-       <widget class="QLabel" name="label_6">
+       <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>ИД</string>
+         <string>Процессор</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="inputId"/>
+       <widget class="QComboBox" name="comboCpuName"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Материнская плата</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="comboBox"/>
       </item>
      </layout>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_9">
       <item>
-       <widget class="QPushButton" name="buttonDeleteComponent">
+       <widget class="QPushButton" name="buttonAddComputer">
         <property name="text">
-         <string>Удалить</string>
+         <string>Добавить</string>
         </property>
        </widget>
       </item>
@@ -59,22 +73,5 @@
   </widget>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>buttonDeleteComponent</sender>
-   <signal>clicked()</signal>
-   <receiver>DeleteComponentDialog</receiver>
-   <slot>close()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>104</x>
-     <y>93</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>199</x>
-     <y>162</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
