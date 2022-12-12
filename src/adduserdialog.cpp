@@ -3,6 +3,7 @@
 #include "user.h"
 
 #include <pqxx/pqxx>
+#include <QMessageBox>
 
 AddUserDialog::AddUserDialog(QWidget *parent) :
     QDialog(parent),
@@ -40,9 +41,11 @@ void AddUserDialog::loadGroups()
 void AddUserDialog::addUser()
 {
     if (_inputPassword->text().isEmpty()) {
-        //todo handle
+        QMessageBox::information(nullptr, "Предупреждение", "Заполните все поля!");
         return;
     }
 
     User::addUser(User::getEncryptedPassword(_inputPassword->text()), _comboGroupName->itemData(_comboGroupName->currentIndex()).toInt());
+
+    close();
 }

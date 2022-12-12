@@ -35,6 +35,29 @@ void Warehouse::addWarehouse(DBWarehouse &dbWarehouse)
     // check on errors (not unique, e.g.)
 }
 
+bool Warehouse::doesWarehouseExist(QString address)
+{
+    dbConnection->assertConnectionIsReliable();
+
+    QString request = QString("SELECT * FROM warehouses WHERE address = '%1'").arg(address);
+
+    pqxx::result result = dbConnection->getTransaction()->exec(request.toStdString());
+
+    return result.size() != 0;
+}
+
+
+bool Warehouse::doesWarehouseExist(int id)
+{
+    dbConnection->assertConnectionIsReliable();
+
+    QString request = QString("SELECT * FROM warehouses WHERE id = '%1'").arg(QString::number(id));
+
+    pqxx::result result = dbConnection->getTransaction()->exec(request.toStdString());
+
+    return result.size() != 0;
+}
+
 QVector<std::shared_ptr<DBComponentInWarehouse>> Warehouse::getComponentsInWarehouses()
 {
     dbConnection->assertConnectionIsReliable();

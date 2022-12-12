@@ -74,6 +74,28 @@ void Component::deleteComponent(int id)
     dbConnection->getTransaction()->commit();
 }
 
+bool Component::doesComponentExist(QString name)
+{
+    dbConnection->assertConnectionIsReliable();
+
+    QString request = QString("SELECT * FROM components WHERE name = '%1'").arg(name);
+
+    pqxx::result result = dbConnection->getTransaction()->exec(request.toStdString());
+
+    return result.size() != 0;
+}
+
+bool Component::doesComponentExist(int id)
+{
+    dbConnection->assertConnectionIsReliable();
+
+    QString request = QString("SELECT * FROM components WHERE id = '%1'").arg(QString::number(id));
+
+    pqxx::result result = dbConnection->getTransaction()->exec(request.toStdString());
+
+    return result.size() != 0;
+}
+
 pqxx::result Component::getComponentTypes()
 {
     dbConnection->assertConnectionIsReliable();

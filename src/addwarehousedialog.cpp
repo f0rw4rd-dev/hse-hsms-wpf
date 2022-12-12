@@ -2,6 +2,8 @@
 #include "ui_addwarehousedialog.h"
 #include "warehouse.h"
 
+#include <QMessageBox>
+
 AddWarehouseDialog::AddWarehouseDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AddWarehouseDialog)
@@ -30,11 +32,18 @@ AddWarehouseDialog::~AddWarehouseDialog()
 void AddWarehouseDialog::addWarehouse()
 {
     if (_inputAddress->text().isEmpty()) {
-        //todo handle
+        QMessageBox::information(nullptr, "Предупреждение", "Заполните все поля!");
+        return;
+    }
+
+    if (Warehouse::doesWarehouseExist(_inputAddress->text())) {
+        QMessageBox::information(nullptr, "Предупреждение", "Склад с данным адресом уже существует!");
         return;
     }
 
     DBWarehouse dbWarehouse(-1, _inputAddress->text().toStdString());
 
     Warehouse::addWarehouse(dbWarehouse);
+
+    close();
 }

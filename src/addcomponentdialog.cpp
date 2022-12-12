@@ -4,6 +4,7 @@
 #include "component.h"
 
 #include <QVariant>
+#include <QMessageBox>
 
 AddComponentDialog::AddComponentDialog(QWidget *parent) :
     QDialog(parent),
@@ -57,11 +58,18 @@ void AddComponentDialog::loadComponentTypes()
 void AddComponentDialog::addComponent()
 {
     if (_inputName->text().isEmpty() || _inputWarranty->text().isEmpty() || _inputPrice->text().isEmpty()) {
-        //todo handle
+        QMessageBox::information(nullptr, "Предупреждение", "Заполните все поля!");
+        return;
+    }
+
+    if (Component::doesComponentExist(_inputName->text())) {
+        QMessageBox::information(nullptr, "Предупреждение", "Комплектующее с данным названием уже существует!");
         return;
     }
 
     DBComponent dbComponent(-1, _inputName->text().toStdString(), _comboTypeName->itemData(_comboTypeName->currentIndex()).toInt(), _comboTypeName->currentText().toStdString(), _inputWarranty->text().toInt(), _inputPrice->text().toFloat());
 
     Component::addComponent(dbComponent);
+
+    close();
 }

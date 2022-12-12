@@ -2,6 +2,8 @@
 #include "ui_setcomponentdialog.h"
 #include "component.h"
 
+#include <QMessageBox>
+
 SetComponentDialog::SetComponentDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SetComponentDialog)
@@ -75,6 +77,18 @@ void SetComponentDialog::loadComponent(const QString &id)
 
 void SetComponentDialog::setComponent()
 {
+    if (_inputId->text().isEmpty() || _inputName->text().isEmpty() || _inputWarranty->text().isEmpty() || _inputPrice->text().isEmpty()) {
+        QMessageBox::information(nullptr, "Предупреждение", "Заполните все поля!");
+        return;
+    }
+
+    if (!Component::doesComponentExist(_inputId->text().toInt())) {
+        QMessageBox::information(nullptr, "Предупреждение", "Данного комплектующего нет!");
+        return;
+    }
+
     DBComponent dbComponent(_inputId->text().toInt(), _inputName->text().toStdString(), _comboTypeName->itemData(_comboTypeName->currentIndex()).toInt(), _comboTypeName->currentText().toStdString(), _inputWarranty->text().toInt(), _inputPrice->text().toDouble());
     Component::setComponent(dbComponent);
+
+    close();
 }

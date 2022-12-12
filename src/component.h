@@ -30,6 +30,9 @@ public:
     static void setComponent(DBComponent &dbComponent);
     static void deleteComponent(int id);
 
+    static bool doesComponentExist(QString name);
+    static bool doesComponentExist(int id);
+
     static pqxx::result getComponentTypes();
 };
 

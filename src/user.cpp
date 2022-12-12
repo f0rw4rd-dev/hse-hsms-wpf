@@ -110,6 +110,17 @@ void User::deleteUser(int id)
     dbConnection->getTransaction()->commit();
 }
 
+bool User::doesUserExist(int id)
+{
+    dbConnection->assertConnectionIsReliable();
+
+    QString request = QString("SELECT * FROM users WHERE id = '%1'").arg(QString::number(id));
+
+    pqxx::result result = dbConnection->getTransaction()->exec(request.toStdString());
+
+    return result.size() != 0;
+}
+
 pqxx::result User::getGroups()
 {
     dbConnection->assertConnectionIsReliable();

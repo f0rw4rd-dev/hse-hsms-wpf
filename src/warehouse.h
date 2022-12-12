@@ -34,6 +34,9 @@ public:
     static QVector<std::shared_ptr<DBWarehouse>> getWarehouses();
     static void addWarehouse(DBWarehouse &dbWarehouse);
 
+    static bool doesWarehouseExist(QString address);
+    static bool doesWarehouseExist(int id);
+
     static QVector<std::shared_ptr<DBComponentInWarehouse>> getComponentsInWarehouses();
 };
 

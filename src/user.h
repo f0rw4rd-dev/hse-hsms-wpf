@@ -36,6 +36,8 @@ public:
     static void setUserGroup(int id, int newGroupId);
     static void deleteUser(int id);
 
+    static bool doesUserExist(int id);
+
     static pqxx::result getGroups();
 };
 
