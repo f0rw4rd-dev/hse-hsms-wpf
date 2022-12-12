@@ -9,6 +9,7 @@
 #include <QStackedWidget>
 
 #include <pqxx/pqxx>
+#include <QMessageBox>
 
 LoginWindow::LoginWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -43,17 +44,17 @@ void LoginWindow::authorize()
     QStackedWidget *stackedWidget = reinterpret_cast<QStackedWidget*>(parentWidget());
 
     if (_inputLogin->text().isEmpty() || _inputPassword->text().isEmpty()) {
-        //todo handle
+        QMessageBox::information(nullptr, "Предупреждение", "Заполните все поля!");
         return;
     }
 
     if (!User::isUserExist(_inputLogin->text())) {
-        //todo handle
+        QMessageBox::information(nullptr, "Предупреждение", "Данного пользователя не существует!");
         return;
     }
 
     if (!User::areCredentialsCorrect(_inputLogin->text(), _inputPassword->text())) {
-        //todo handle
+        QMessageBox::information(nullptr, "Предупреждение", "Неверные данные!");
         return;
     }
 
