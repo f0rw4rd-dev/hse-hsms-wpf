@@ -28,6 +28,8 @@ private slots:
     // Actions with users
     void loadUsers();
     void addUser();
+    void setUser();
+    void deleteUser();
 
     // Actions with warehouses
     void loadWarehouses();
@@ -54,8 +56,7 @@ private:
     QTableWidget *_tableUsers;
     QPushButton *_buttonLoadUsers;
     QPushButton *_buttonAddUser;
-    QPushButton *_buttonSetUserPassword;
-    QPushButton *_buttonSetUserGroup;
+    QPushButton *_buttonSetUser;
     QPushButton *_buttonDeleteUser;
 
     QTableWidget *_tableWarehouses;

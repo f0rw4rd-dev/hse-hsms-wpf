@@ -14,13 +14,13 @@ QString User::getEncryptedPassword(QString password)
     return QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex();
 }
 
-bool User::isUserExist(QString login)
+bool User::isUserExist(int id)
 {
     dbConnection->assertConnectionIsReliable();
 
     QString request = QString("SELECT id "
                               "FROM users "
-                              "WHERE id = '%1';").arg(login);
+                              "WHERE id = '%1';").arg(QString::number(id));
 
     pqxx::result users = dbConnection->getTransaction()->exec(request.toStdString());
 
@@ -56,7 +56,7 @@ QVector<std::shared_ptr<DBUser>> User::getUsers()
     dbConnection->assertConnectionIsReliable();
 
     QString request = "SELECT users.id, users.registration_date, users.last_visit_date, users.group_id, groups.name FROM users "
-                              "LEFT JOIN groups ON users.group_id = groups.id;";
+                              "LEFT JOIN groups ON users.group_id = groups.id ORDER BY users.id DESC;";
 
     QVector<std::shared_ptr<DBUser>> users;
 
@@ -64,6 +64,23 @@ QVector<std::shared_ptr<DBUser>> User::getUsers()
         users.append(std::make_shared<DBUser>(id, registrationDate, lastVisitDate, groupId, groupName));
 
     return users;
+}
+
+std::unique_ptr<DBUser> User::getUser(int id)
+{
+    dbConnection->assertConnectionIsReliable();
+
+    QString request = QString("SELECT users.id, users.registration_date, users.last_visit_date, users.group_id, groups.name FROM users "
+                              "LEFT JOIN groups ON users.group_id = groups.id WHERE users.id = '%1';").arg(QString::number(id));
+
+    pqxx::result component = dbConnection->getTransaction()->exec(request.toStdString());
+
+    if (component.empty())
+        return nullptr;
+
+    pqxx::row row = component[0];
+
+    return std::make_unique<DBUser>(row[0].as<int>(), row[1].as<int64_t>(), row[2].as<int64_t>(), row[3].as<int>(), row[4].as<std::string>());
 }
 
 void User::addUser(QString password, int groupId)

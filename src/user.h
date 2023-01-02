@@ -24,13 +24,13 @@ public:
 
     static QString getEncryptedPassword(QString password);
 
-    static bool isUserExist(QString login);
+    static bool isUserExist(int id);
     static bool areCredentialsCorrect(QString login, QString password);
 
     static void updateLastVisitDate(QString login);
 
     static QVector<std::shared_ptr<DBUser>> getUsers();
-    //static std::unique_ptr<DBUser> getUser(int id);
+    static std::unique_ptr<DBUser> getUser(int id);
     static void addUser(QString password, int groupId);
     static void setUserPassword(int id, QString newPassword);
     static void setUserGroup(int id, int newGroupId);

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>114</height>
+    <height>98</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <x>10</x>
      <y>10</y>
      <width>381</width>
-     <height>91</height>
+     <height>71</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -39,8 +39,29 @@
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_9">
+      <property name="spacing">
+       <number>200</number>
+      </property>
       <item>
        <widget class="QPushButton" name="buttonDeleteComponent">
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+background-color: rgb(250, 250, 250);
+border: 1px solid black;
+padding: 3px;
+}
+
+QPushButton:pressed
+{
+background-color: rgb(240, 240, 240);
+}
+
+QPushButton:hover:!pressed
+{
+background-color: rgb(240, 240, 240);
+}</string>
+        </property>
         <property name="text">
          <string>Удалить</string>
         </property>
@@ -48,6 +69,24 @@
       </item>
       <item>
        <widget class="QPushButton" name="buttonCloseDialog">
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+background-color: rgb(250, 250, 250);
+border: 1px solid black;
+padding: 3px;
+}
+
+QPushButton:pressed
+{
+background-color: rgb(240, 240, 240);
+}
+
+QPushButton:hover:!pressed
+{
+background-color: rgb(240, 240, 240);
+}</string>
+        </property>
         <property name="text">
          <string>Закрыть</string>
         </property>
@@ -61,14 +100,14 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buttonDeleteComponent</sender>
+   <sender>buttonCloseDialog</sender>
    <signal>clicked()</signal>
    <receiver>DeleteComponentDialog</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>104</x>
-     <y>93</y>
+     <x>296</x>
+     <y>63</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>

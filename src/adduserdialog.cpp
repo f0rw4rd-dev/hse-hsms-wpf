@@ -1,6 +1,7 @@
 #include "adduserdialog.h"
 #include "ui_adduserdialog.h"
 #include "user.h"
+#include "regularexpressions.h"
 
 #include <pqxx/pqxx>
 #include <QMessageBox>
@@ -17,6 +18,9 @@ AddUserDialog::AddUserDialog(QWidget *parent) :
     _buttonAddUser = findChild<QPushButton*>("buttonAddUser");
     _comboGroupName = findChild<QComboBox*>("comboGroupName");
     _inputPassword = findChild<QLineEdit*>("inputPassword");
+
+    // Validators
+    _inputPassword->setValidator(new QRegularExpressionValidator(RegularExpressions::integer, this));
 
     // Connections
     connect(_buttonAddUser, &QPushButton::clicked, this, &AddUserDialog::addUser);
@@ -48,4 +52,6 @@ void AddUserDialog::addUser()
     User::addUser(User::getEncryptedPassword(_inputPassword->text()), _comboGroupName->itemData(_comboGroupName->currentIndex()).toInt());
 
     close();
+
+    QMessageBox::information(nullptr, "Информация", "Пользователь добавлен!");
 }

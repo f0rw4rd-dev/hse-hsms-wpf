@@ -3,6 +3,8 @@
 
 #include "user.h"
 
+#include "regularexpressions.h"
+
 #include <QIntValidator>
 #include <QRegularExpressionValidator>
 #include <QRegularExpression>
@@ -26,9 +28,8 @@ LoginWindow::LoginWindow(QWidget *parent) :
     _buttonLogin = findChild<QPushButton*>("buttonLogin");
 
     // Validators
-    QRegularExpression passwordRegExp("[a-zA-Z0-9]+");
-    _inputLogin->setValidator(new QIntValidator(0, std::numeric_limits<int>::max(), this));
-    _inputPassword->setValidator(new QRegularExpressionValidator(passwordRegExp, this));
+    _inputLogin->setValidator(new QRegularExpressionValidator(RegularExpressions::integer, this));
+    _inputPassword->setValidator(new QRegularExpressionValidator(RegularExpressions::password, this));
 
     // Connections
     connect(_buttonLogin, &QPushButton::clicked, this, &LoginWindow::authorize);
@@ -48,7 +49,7 @@ void LoginWindow::authorize()
         return;
     }
 
-    if (!User::isUserExist(_inputLogin->text())) {
+    if (!User::isUserExist(_inputLogin->text().toInt())) {
         QMessageBox::information(nullptr, "Предупреждение", "Данного пользователя не существует!");
         return;
     }

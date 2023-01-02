@@ -1,6 +1,7 @@
 #include "deletecomponentdialog.h"
 #include "ui_deletecomponentdialog.h"
 #include "component.h"
+#include "regularexpressions.h"
 
 #include <QIntValidator>
 #include <QMessageBox>
@@ -18,7 +19,7 @@ DeleteComponentDialog::DeleteComponentDialog(QWidget *parent) :
     _inputId = findChild<QLineEdit*>("inputId");
 
     // Validators
-    _inputId->setValidator(new QIntValidator(1, std::numeric_limits<int>::max(), this));
+    _inputId->setValidator(new QRegularExpressionValidator(RegularExpressions::integer, this));
 
     // Connections
     connect(_buttonDeleteComponent, &QPushButton::clicked, this, &DeleteComponentDialog::deleteComponent);
@@ -44,4 +45,6 @@ void DeleteComponentDialog::deleteComponent()
     Component::deleteComponent(_inputId->text().toInt());
 
     close();
+
+    QMessageBox::information(nullptr, "Информация", "Комплектующее удалено!");
 }

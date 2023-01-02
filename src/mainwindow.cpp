@@ -7,6 +7,8 @@
 #include "deletecomponentdialog.h"
 #include "user.h"
 #include "adduserdialog.h"
+#include "setuserdialog.h"
+#include "deleteuserdialog.h"
 #include "warehouse.h"
 #include "addwarehousedialog.h"
 #include "computer.h"
@@ -34,7 +36,8 @@ MainWindow::MainWindow(QWidget *parent)
     _tableUsers = findChild<QTableWidget*>("tableUsers");
     _buttonLoadUsers = findChild<QPushButton*>("buttonLoadUsers");
     _buttonAddUser = findChild<QPushButton*>("buttonAddUser");
-    //_button
+    _buttonSetUser = findChild<QPushButton*>("buttonSetUser");
+    _buttonDeleteUser = findChild<QPushButton*>("buttonDeleteUser");
 
     _tableWarehouses = findChild<QTableWidget*>("tableWarehouses");
     _buttonLoadWarehouses = findChild<QPushButton*>("buttonLoadWarehouses");
@@ -63,6 +66,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(_buttonLoadUsers, &QPushButton::clicked, this, &MainWindow::loadUsers);
     connect(_buttonAddUser, &QPushButton::clicked, this, &MainWindow::addUser);
+    connect(_buttonSetUser, &QPushButton::clicked, this, &MainWindow::setUser);
+    connect(_buttonDeleteUser, &QPushButton::clicked, this, &MainWindow::deleteUser);
 
     connect(_buttonLoadWarehouses, &QPushButton::clicked, this, &MainWindow::loadWarehouses);
     connect(_buttonAddWarehouse, &QPushButton::clicked, this, &MainWindow::addWarehouse);
@@ -80,6 +85,15 @@ MainWindow::MainWindow(QWidget *parent)
     loadComputers();
     loadCharacteristics();
     loadComponentsInWarehouses();
+
+    // Remove the first column in tables
+    auto setupTable = [](QTableWidget *table) {
+        table->verticalHeader()->setVisible(false);
+        table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    };
+
+    setupTable(_tableComponents);
+    setupTable(_tableUsers);
 
     parentWidget();
 }
@@ -144,6 +158,18 @@ void MainWindow::addUser()
 {
     AddUserDialog *addUserDialog = new AddUserDialog(this);
     addUserDialog->show();
+}
+
+void MainWindow::setUser()
+{
+    SetUserDialog *setUserDialog = new SetUserDialog(this);
+    setUserDialog->show();
+}
+
+void MainWindow::deleteUser()
+{
+    DeleteUserDialog *deleteUserDialog = new DeleteUserDialog(this);
+    deleteUserDialog->show();
 }
 
 void MainWindow::loadWarehouses()

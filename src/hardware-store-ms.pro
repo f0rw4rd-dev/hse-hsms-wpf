@@ -18,10 +18,14 @@ SOURCES += \
     computer.cpp \
     dbconnection.cpp \
     deletecomponentdialog.cpp \
+    deleteuserdialog.cpp \
+    group.cpp \
     loginwindow.cpp \
     main.cpp \
     mainwindow.cpp \
+    regularexpressions.cpp \
     setcomponentdialog.cpp \
+    setuserdialog.cpp \
     user.cpp \
     warehouse.cpp
 
@@ -35,9 +39,13 @@ HEADERS += \
     computer.h \
     dbconnection.h \
     deletecomponentdialog.h \
+    deleteuserdialog.h \
+    group.h \
     loginwindow.h \
     mainwindow.h \
+    regularexpressions.h \
     setcomponentdialog.h \
+    setuserdialog.h \
     user.h \
     warehouse.h
 
@@ -47,9 +55,11 @@ FORMS += \
     adduserdialog.ui \
     addwarehousedialog.ui \
     deletecomponentdialog.ui \
+    deleteuserdialog.ui \
     loginwindow.ui \
     mainwindow.ui \
-    setcomponentdialog.ui
+    setcomponentdialog.ui \
+    setuserdialog.ui
 	
 INCLUDEPATH += \
     $$PWD/../3rdparty/libpqxx/include
@@ -67,3 +77,6 @@ Debug:LIBS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    icons.qrc

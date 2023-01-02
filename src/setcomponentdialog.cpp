@@ -1,6 +1,7 @@
 #include "setcomponentdialog.h"
 #include "ui_setcomponentdialog.h"
 #include "component.h"
+#include "regularexpressions.h"
 
 #include <QMessageBox>
 
@@ -20,26 +21,22 @@ SetComponentDialog::SetComponentDialog(QWidget *parent) :
     _inputWarranty = findChild<QLineEdit*>("inputWarranty");
     _inputPrice = findChild<QLineEdit*>("inputPrice");
 
-    // Validators
-    QRegularExpression nameRegExp("[a-zA-Zа-яА-Я0-9(), ]+");
-
     QLocale locale(QLocale::English, QLocale::UnitedStates);
     locale.setNumberOptions(QLocale::RejectGroupSeparator);
 
     QDoubleValidator *doubleValidator = new QDoubleValidator(0,  std::numeric_limits<float>::max(), 2, this);
     doubleValidator->setLocale(locale);
 
-    _inputId->setValidator(new QIntValidator(1, std::numeric_limits<int>::max(), this));
+    _inputId->setValidator(new QRegularExpressionValidator(RegularExpressions::integer, this));
     _inputName->setLocale(locale);
-    _inputName->setValidator(new QRegularExpressionValidator(nameRegExp, this));
-    _inputWarranty->setValidator(new QIntValidator(1, std::numeric_limits<int>::max(), this));
+    _inputName->setValidator(new QRegularExpressionValidator(RegularExpressions::componentName, this));
+    _inputWarranty->setValidator(new QRegularExpressionValidator(RegularExpressions::integer, this));
     _inputPrice->setValidator(doubleValidator);
 
     // Connections
     connect(_inputId, &QLineEdit::textChanged, this, &SetComponentDialog::loadComponent);
     connect(_buttonSetComponent, &QPushButton::clicked, this, &SetComponentDialog::setComponent);
 
-    //todo: load type components
     loadComponentTypes();
 }
 
@@ -91,4 +88,6 @@ void SetComponentDialog::setComponent()
     Component::setComponent(dbComponent);
 
     close();
+
+    QMessageBox::information(nullptr, "Информация", "Информация о комплектующем изменена!");
 }

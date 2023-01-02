@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AddUserDialog</class>
- <widget class="QDialog" name="AddUserDialog">
+ <class>SetUserDialog</class>
+ <widget class="QDialog" name="SetUserDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>135</height>
+    <height>185</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,28 +19,28 @@
      <x>10</x>
      <y>10</y>
      <width>381</width>
-     <height>111</height>
+     <height>161</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="QLabel" name="label_6">
+       <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>Пароль</string>
+         <string>ИД</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="inputPassword"/>
+       <widget class="QLineEdit" name="inputId"/>
       </item>
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
+     <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="label">
         <property name="text">
          <string>Группа прав</string>
         </property>
@@ -52,12 +52,26 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_9">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Пароль</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="inputPassword"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
       <property name="spacing">
        <number>200</number>
       </property>
       <item>
-       <widget class="QPushButton" name="buttonAddUser">
+       <widget class="QPushButton" name="buttonSetUser">
         <property name="styleSheet">
          <string notr="true">QPushButton
 {
@@ -77,7 +91,7 @@ background-color: rgb(240, 240, 240);
 }</string>
         </property>
         <property name="text">
-         <string>Добавить</string>
+         <string>Изменить</string>
         </property>
        </widget>
       </item>
@@ -116,16 +130,16 @@ background-color: rgb(240, 240, 240);
   <connection>
    <sender>buttonCloseDialog</sender>
    <signal>clicked()</signal>
-   <receiver>AddUserDialog</receiver>
+   <receiver>SetUserDialog</receiver>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>296</x>
-     <y>103</y>
+     <x>344</x>
+     <y>151</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
-     <y>67</y>
+     <y>92</y>
     </hint>
    </hints>
   </connection>

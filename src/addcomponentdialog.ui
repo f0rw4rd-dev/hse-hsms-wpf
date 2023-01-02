@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>233</height>
+    <height>229</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -33,7 +33,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboTypeName"/>
+       <widget class="QComboBox" name="comboTypeName">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
@@ -81,8 +85,29 @@
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="spacing">
+       <number>200</number>
+      </property>
       <item>
        <widget class="QPushButton" name="buttonAddComponent">
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+background-color: rgb(250, 250, 250);
+border: 1px solid black;
+padding: 3px;
+}
+
+QPushButton:pressed
+{
+background-color: rgb(240, 240, 240);
+}
+
+QPushButton:hover:!pressed
+{
+background-color: rgb(240, 240, 240);
+}</string>
+        </property>
         <property name="text">
          <string>Добавить</string>
         </property>
@@ -90,6 +115,24 @@
       </item>
       <item>
        <widget class="QPushButton" name="buttonCloseDialog">
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+background-color: rgb(250, 250, 250);
+border: 1px solid black;
+padding: 3px;
+}
+
+QPushButton:pressed
+{
+background-color: rgb(240, 240, 240);
+}
+
+QPushButton:hover:!pressed
+{
+background-color: rgb(240, 240, 240);
+}</string>
+        </property>
         <property name="text">
          <string>Закрыть</string>
         </property>

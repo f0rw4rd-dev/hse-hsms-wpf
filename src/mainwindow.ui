@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(255, 255, 255);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
@@ -20,7 +23,7 @@
       <x>0</x>
       <y>0</y>
       <width>1000</width>
-      <height>557</height>
+      <height>601</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -37,7 +40,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>5</number>
       </property>
       <widget class="QWidget" name="tabComponents">
        <attribute name="title">
@@ -46,14 +49,31 @@
        <widget class="QPushButton" name="buttonAddComponent">
         <property name="geometry">
          <rect>
-          <x>100</x>
+          <x>110</x>
           <y>10</y>
-          <width>80</width>
+          <width>90</width>
           <height>24</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+}</string>
+        </property>
         <property name="text">
          <string>Добавить</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <activeoff>:/resources/icons/resources/icons/icons8-insert-page-100.png</activeoff>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
        <widget class="QTableWidget" name="tableComponents">
@@ -62,11 +82,11 @@
           <x>0</x>
           <y>44</y>
           <width>1000</width>
-          <height>450</height>
+          <height>521</height>
          </rect>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::Panel</enum>
         </property>
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
@@ -85,6 +105,9 @@
         </property>
         <property name="showGrid">
          <bool>true</bool>
+        </property>
+        <property name="gridStyle">
+         <enum>Qt::SolidLine</enum>
         </property>
         <property name="wordWrap">
          <bool>false</bool>
@@ -126,38 +149,90 @@
          <rect>
           <x>10</x>
           <y>10</y>
-          <width>80</width>
+          <width>90</width>
           <height>24</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+}</string>
+        </property>
         <property name="text">
          <string>Обновить</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <activeoff>:/resources/icons/resources/icons/icons8-update-100.png</activeoff>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
        <widget class="QPushButton" name="buttonSetComponent">
         <property name="geometry">
          <rect>
-          <x>190</x>
+          <x>210</x>
           <y>10</y>
-          <width>80</width>
+          <width>90</width>
           <height>24</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+}</string>
+        </property>
         <property name="text">
          <string>Изменить</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <activeoff>:/resources/icons/resources/icons/icons8-edit-100.png</activeoff>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
        <widget class="QPushButton" name="buttonDeleteComponent">
         <property name="geometry">
          <rect>
-          <x>280</x>
+          <x>310</x>
           <y>10</y>
-          <width>80</width>
+          <width>90</width>
           <height>24</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+}
+</string>
+        </property>
         <property name="text">
          <string>Удалить</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <activeoff>:/resources/icons/resources/icons/icons8-trash-100.png</activeoff>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </widget>
@@ -201,7 +276,7 @@
          </rect>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::Panel</enum>
         </property>
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
@@ -331,7 +406,7 @@
          </rect>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::Panel</enum>
         </property>
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
@@ -451,7 +526,7 @@
          </rect>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::Panel</enum>
         </property>
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
@@ -550,7 +625,7 @@
          </rect>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::Panel</enum>
         </property>
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
@@ -668,51 +743,119 @@
          <rect>
           <x>10</x>
           <y>10</y>
-          <width>80</width>
+          <width>90</width>
           <height>24</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+}</string>
+        </property>
         <property name="text">
          <string>Обновить</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <activeon>:/resources/icons/resources/icons/icons8-update-100.png</activeon>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
        <widget class="QPushButton" name="buttonAddUser">
         <property name="geometry">
          <rect>
-          <x>100</x>
+          <x>110</x>
           <y>10</y>
-          <width>80</width>
+          <width>90</width>
           <height>24</height>
          </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+}</string>
         </property>
         <property name="text">
          <string>Добавить</string>
         </property>
+        <property name="icon">
+         <iconset>
+          <activeon>:/resources/icons/resources/icons/icons8-insert-page-100.png</activeon>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
        </widget>
-       <widget class="QPushButton" name="buttonSetUserPassword">
+       <widget class="QPushButton" name="buttonSetUser">
         <property name="geometry">
          <rect>
-          <x>190</x>
+          <x>210</x>
           <y>10</y>
-          <width>105</width>
+          <width>90</width>
           <height>24</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+}</string>
+        </property>
         <property name="text">
-         <string>Изменить пароль</string>
+         <string>Изменить</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <activeoff>:/resources/icons/resources/icons/icons8-edit-100.png</activeoff>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
        <widget class="QPushButton" name="buttonDeleteUser">
         <property name="geometry">
          <rect>
-          <x>447</x>
+          <x>310</x>
           <y>10</y>
-          <width>80</width>
+          <width>90</width>
           <height>24</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+}</string>
+        </property>
         <property name="text">
          <string>Удалить</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <activeon>:/resources/icons/resources/icons/icons8-trash-100.png</activeon>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
        <widget class="QTableWidget" name="tableUsers">
@@ -721,11 +864,11 @@
           <x>0</x>
           <y>44</y>
           <width>1000</width>
-          <height>450</height>
+          <height>521</height>
          </rect>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::Panel</enum>
         </property>
         <property name="editTriggers">
          <set>QAbstractItemView::NoEditTriggers</set>
@@ -775,28 +918,10 @@
          </property>
         </column>
        </widget>
-       <widget class="QPushButton" name="buttonSetUserGroup">
-        <property name="geometry">
-         <rect>
-          <x>305</x>
-          <y>10</y>
-          <width>132</width>
-          <height>24</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Изменить группу прав</string>
-        </property>
-       </widget>
       </widget>
      </widget>
     </widget>
    </widget>
-  </widget>
-  <widget class="QStatusBar" name="statusbar">
-   <property name="enabled">
-    <bool>false</bool>
-   </property>
   </widget>
  </widget>
  <resources/>

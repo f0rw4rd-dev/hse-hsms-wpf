@@ -2,6 +2,7 @@
 #include "ui_addcomponentdialog.h"
 
 #include "component.h"
+#include "regularexpressions.h"
 
 #include <QVariant>
 #include <QMessageBox>
@@ -22,7 +23,7 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) :
     _inputPrice = findChild<QLineEdit*>("inputPrice");
 
     // Validators
-    QRegularExpression nameRegExp("[a-zA-Zа-яА-Я0-9(), ]+");
+    //QRegularExpression nameRegExp("[a-zA-Zа-яА-Я0-9(), ]+");
 
     QLocale locale(QLocale::English, QLocale::UnitedStates);
     locale.setNumberOptions(QLocale::RejectGroupSeparator);
@@ -31,8 +32,8 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) :
     doubleValidator->setLocale(locale);
 
     _inputName->setLocale(locale);
-    _inputName->setValidator(new QRegularExpressionValidator(nameRegExp, this));
-    _inputWarranty->setValidator(new QIntValidator(1, std::numeric_limits<int>::max(), this));
+    _inputName->setValidator(new QRegularExpressionValidator(RegularExpressions::componentName, this));
+    _inputWarranty->setValidator(new QRegularExpressionValidator(RegularExpressions::integer, this));
     _inputPrice->setValidator(doubleValidator);
 
     // Connections
@@ -72,4 +73,6 @@ void AddComponentDialog::addComponent()
     Component::addComponent(dbComponent);
 
     close();
+
+    QMessageBox::information(nullptr, "Информация", "Комплектующее добавлено!");
 }

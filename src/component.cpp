@@ -13,7 +13,7 @@ QVector<std::shared_ptr<DBComponent>> Component::getComponents()
     dbConnection->assertConnectionIsReliable();
 
     QString request = "SELECT components.id, components.name, components_types.id, components_types.name, components.warranty, components.price FROM components "
-                              "LEFT JOIN components_types ON components.component_type_id = components_types.id;";
+                              "LEFT JOIN components_types ON components.component_type_id = components_types.id ORDER BY components.id DESC;";
 
     QVector<std::shared_ptr<DBComponent>> components;
 
@@ -68,7 +68,7 @@ void Component::deleteComponent(int id)
 {
     dbConnection->assertConnectionIsReliable();
 
-    QString request = QString("DELETE FROM components WHERE id = '%1'").arg(id);
+    QString request = QString("DELETE FROM components WHERE id = '%1'").arg(QString::number(id));
 
     dbConnection->getTransaction()->exec(request.toStdString());
     dbConnection->getTransaction()->commit();
