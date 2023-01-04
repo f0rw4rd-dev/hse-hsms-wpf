@@ -1,7 +1,7 @@
 #include "setuserdialog.h"
 #include "ui_setuserdialog.h"
-#include "group.h"
 #include "user.h"
+#include "group.h"
 #include "regularexpressions.h"
 
 #include <QPushButton>

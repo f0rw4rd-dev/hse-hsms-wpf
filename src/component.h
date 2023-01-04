@@ -43,8 +43,6 @@ public:
 
     static bool doesComponentExist(QString name);
     static bool doesComponentExist(int id);
-
-    static pqxx::result getComponentTypes();
 };
 
 #endif // COMPONENT_H

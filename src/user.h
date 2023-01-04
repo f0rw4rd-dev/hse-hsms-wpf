@@ -42,8 +42,6 @@ public:
     static void setUserPassword(int id, QString newPassword);
     static void setUserGroup(int id, int newGroupId);
     static void deleteUser(int id);
-
-    static pqxx::result getGroups();
 };
 
 #endif // USER_H

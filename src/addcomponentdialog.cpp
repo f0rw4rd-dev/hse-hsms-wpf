@@ -2,6 +2,7 @@
 #include "ui_addcomponentdialog.h"
 
 #include "component.h"
+#include "componenttype.h"
 #include "regularexpressions.h"
 
 #include <QVariant>
@@ -50,8 +51,8 @@ void AddComponentDialog::loadComponentTypes()
 {
     _comboTypeName->clear();
 
-    for (pqxx::row const &row : Component::getComponentTypes())
-        _comboTypeName->addItem(QString::fromStdString(row[1].c_str()), QVariant(atoi(row[0].c_str())));
+    for (const auto &row : ComponentType::getComponentTypes())
+        _comboTypeName->addItem(row->name, QVariant(row->id));
 }
 
 void AddComponentDialog::addComponent()

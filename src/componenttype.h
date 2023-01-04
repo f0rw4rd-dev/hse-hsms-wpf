@@ -2,6 +2,7 @@
 #define COMPONENTTYPE_H
 
 #include <QString>
+#include <QSharedPointer>
 
 struct DBComponentType
 {
@@ -16,6 +17,8 @@ class ComponentType
 {
 public:
     ComponentType();
+
+    static QVector<QSharedPointer<DBComponentType>> getComponentTypes();
 };
 
 #endif // COMPONENTTYPE_H

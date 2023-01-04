@@ -124,12 +124,3 @@ bool User::doesUserExist(int id)
 
     return result.size() != 0;
 }
-
-pqxx::result User::getGroups()
-{
-    dbConnection->assertConnectionIsReliable();
-
-    QString request = "SELECT * FROM groups;";
-
-    return dbConnection->getTransaction()->exec(request.toStdString());
-}

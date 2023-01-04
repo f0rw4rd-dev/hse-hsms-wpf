@@ -1,6 +1,7 @@
 #include "setcomponentdialog.h"
 #include "ui_setcomponentdialog.h"
 #include "component.h"
+#include "componenttype.h"
 #include "regularexpressions.h"
 
 #include <QMessageBox>
@@ -49,8 +50,8 @@ void SetComponentDialog::loadComponentTypes()
 {
     _comboTypeName->clear();
 
-    for (pqxx::row const &row : Component::getComponentTypes())
-        _comboTypeName->addItem(QString::fromStdString(row[1].c_str()), QVariant(atoi(row[0].c_str())));
+    for (const auto &row : ComponentType::getComponentTypes())
+        _comboTypeName->addItem(row->name, QVariant(row->id));
 }
 
 void SetComponentDialog::loadComponent(const QString &id)

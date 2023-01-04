@@ -1,6 +1,7 @@
 #include "adduserdialog.h"
 #include "ui_adduserdialog.h"
 #include "user.h"
+#include "group.h"
 #include "regularexpressions.h"
 
 #include <pqxx/pqxx>
@@ -38,8 +39,8 @@ void AddUserDialog::loadGroups()
 {
     _comboGroupName->clear();
 
-    for (pqxx::row const &row : User::getGroups())
-        _comboGroupName->addItem(QString::fromStdString(row[1].c_str()), QVariant(atoi(row[0].c_str())));
+    for (const auto &row : Group::getGroups())
+        _comboGroupName->addItem(row->name, QVariant(row->id));
 }
 
 void AddUserDialog::addUser()
