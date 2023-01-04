@@ -2,6 +2,7 @@
 #define GROUP_H
 
 #include <QString>
+#include <QSharedPointer>
 #include <pqxx/pqxx>
 
 struct DBGroup
@@ -18,7 +19,7 @@ class Group
 public:
     Group();
 
-    static QVector<std::shared_ptr<DBGroup>> getGroups();
+    static QVector<QSharedPointer<DBGroup>> getGroups();
 };
 
 #endif // GROUP_H

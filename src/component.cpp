@@ -8,22 +8,22 @@ Component::Component()
 
 }
 
-QVector<std::shared_ptr<DBComponent>> Component::getComponents()
+QVector<QSharedPointer<DBComponent>> Component::getComponents()
 {
     dbConnection->assertConnectionIsReliable();
 
     QString request = "SELECT components.id, components.name, components_types.id, components_types.name, components.warranty, components.price FROM components "
                               "LEFT JOIN components_types ON components.component_type_id = components_types.id ORDER BY components.id DESC;";
 
-    QVector<std::shared_ptr<DBComponent>> components;
+    QVector<QSharedPointer<DBComponent>> components;
 
     for (auto &[id, name, typeId, typeName, warranty, price] : dbConnection->getTransaction()->query<int, std::string, int, std::string, int, float>(request.toStdString()))
-        components.append(std::make_shared<DBComponent>(id, QString::fromStdString(name), typeId, QString::fromStdString(typeName), warranty, price));
+        components.append(QSharedPointer<DBComponent>(new DBComponent(id, QString::fromStdString(name), typeId, QString::fromStdString(typeName), warranty, price)));
 
     return components;
 }
 
-std::unique_ptr<DBComponent> Component::getComponent(int id)
+QScopedPointer<DBComponent> Component::getComponent(int id)
 {
     dbConnection->assertConnectionIsReliable();
 
@@ -33,11 +33,11 @@ std::unique_ptr<DBComponent> Component::getComponent(int id)
     pqxx::result component = dbConnection->getTransaction()->exec(request.toStdString());
 
     if (component.empty())
-        return nullptr;
+        return QScopedPointer<DBComponent>();
 
     pqxx::row row = component[0];
 
-    return std::make_unique<DBComponent>(row[0].as<int>(), QString::fromStdString(row[1].as<std::string>()), row[2].as<int>(), QString::fromStdString(row[3].as<std::string>()), row[4].as<int>(), row[5].as<float>());
+    return QScopedPointer<DBComponent>(new DBComponent(row[0].as<int>(), QString::fromStdString(row[1].as<std::string>()), row[2].as<int>(), QString::fromStdString(row[3].as<std::string>()), row[4].as<int>(), row[5].as<float>()));
 }
 
 void Component::addComponent(DBComponent &dbComponent)

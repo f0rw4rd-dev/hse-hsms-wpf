@@ -55,7 +55,7 @@ void SetComponentDialog::loadComponentTypes()
 
 void SetComponentDialog::loadComponent(const QString &id)
 {
-    std::unique_ptr<DBComponent> dbComponent = Component::getComponent(id.toInt());
+    QScopedPointer<DBComponent> dbComponent = Component::getComponent(id.toInt());
 
     if (dbComponent == nullptr) {
         loadComponentTypes();

@@ -4,6 +4,7 @@
 #include "component.h"
 
 #include <QVector>
+#include <QSharedPointer>
 #include <string>
 
 struct DBComputer
@@ -81,7 +82,7 @@ class Computer
 public:
     Computer();
 
-    static QVector<std::shared_ptr<DBComputer>> getComputers();
+    static QVector<QSharedPointer<DBComputer>> getComputers();
 };
 
 #endif // COMPUTER_H

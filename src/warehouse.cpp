@@ -14,21 +14,21 @@ QString Warehouse::getAddress(DBWarehouse &dbWarehouse)
     return QString("г. %1, ул. %2, д. %3, %4").arg(dbWarehouse.city, dbWarehouse.street, QString::number(dbWarehouse.house),  QString::number(dbWarehouse.zip));
 }
 
-QVector<std::shared_ptr<DBWarehouse>> Warehouse::getWarehouses()
+QVector<QSharedPointer<DBWarehouse>> Warehouse::getWarehouses()
 {
     dbConnection->assertConnectionIsReliable();
 
     QString request = "SELECT id, city, street, house, zip FROM warehouses;";
 
-    QVector<std::shared_ptr<DBWarehouse>> warehouses;
+    QVector<QSharedPointer<DBWarehouse>> warehouses;
 
     for (auto &[id, city, street, house, zip] : dbConnection->getTransaction()->query<int, std::string, std::string, int, int>(request.toStdString()))
-        warehouses.append(std::make_shared<DBWarehouse>(id, QString::fromStdString(city), QString::fromStdString(street), house, zip));
+        warehouses.append(QSharedPointer<DBWarehouse>(new DBWarehouse(id, QString::fromStdString(city), QString::fromStdString(street), house, zip)));
 
     return warehouses;
 }
 
-std::unique_ptr<DBWarehouse> Warehouse::getWarehouse(int id)
+QScopedPointer<DBWarehouse> Warehouse::getWarehouse(int id)
 {
     dbConnection->assertConnectionIsReliable();
 
@@ -37,11 +37,11 @@ std::unique_ptr<DBWarehouse> Warehouse::getWarehouse(int id)
     pqxx::result warehouse = dbConnection->getTransaction()->exec(request.toStdString());
 
     if (warehouse.empty())
-        return nullptr;
+        return QScopedPointer<DBWarehouse>();
 
     pqxx::row row = warehouse[0];
 
-    return std::make_unique<DBWarehouse>(row[0].as<int>(), QString::fromStdString(row[1].as<std::string>()), QString::fromStdString(row[2].as<std::string>()), row[3].as<int>(), row[4].as<int>());
+    return QScopedPointer<DBWarehouse>(new DBWarehouse(row[0].as<int>(), QString::fromStdString(row[1].as<std::string>()), QString::fromStdString(row[2].as<std::string>()), row[3].as<int>(), row[4].as<int>()));
 }
 
 void Warehouse::addWarehouse(DBWarehouse &dbWarehouse)
@@ -99,7 +99,7 @@ bool Warehouse::doesWarehouseExist(int id)
     return result.size() != 0;
 }
 
-QVector<std::shared_ptr<DBWarehouseComponent>> Warehouse::getWarehouseComponents()
+QVector<QSharedPointer<DBWarehouseComponent>> Warehouse::getWarehouseComponents()
 {
     dbConnection->assertConnectionIsReliable();
 
@@ -107,10 +107,10 @@ QVector<std::shared_ptr<DBWarehouseComponent>> Warehouse::getWarehouseComponents
                       "LEFT JOIN warehouses ON warehouses_components.warehouse_id = warehouses.id "
                       "LEFT JOIN components ON warehouses_components.component_id = components.id;";
 
-    QVector<std::shared_ptr<DBWarehouseComponent>> components;
+    QVector<QSharedPointer<DBWarehouseComponent>> components;
 
     for (auto &[warehouseId, city, street, house, zip, componentId, componentName, amount] : dbConnection->getTransaction()->query<int, std::string, std::string, int, int, int, std::string, int>(request.toStdString()))
-        components.append(std::make_shared<DBWarehouseComponent>(warehouseId, QString::fromStdString(city), QString::fromStdString(street), house, zip, componentId, QString::fromStdString(componentName), amount));
+        components.append(QSharedPointer<DBWarehouseComponent>(new DBWarehouseComponent(warehouseId, QString::fromStdString(city), QString::fromStdString(street), house, zip, componentId, QString::fromStdString(componentName), amount)));
 
     return components;
 }

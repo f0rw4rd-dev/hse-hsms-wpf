@@ -8,13 +8,13 @@ Computer::Computer()
 
 }
 
-QVector<std::shared_ptr<DBComputer>> Computer::getComputers()
+QVector<QSharedPointer<DBComputer>> Computer::getComputers()
 {
     dbConnection->assertConnectionIsReliable();
 
     QString request = "SELECT * FROM computers";
 
-    QVector<std::shared_ptr<DBComputer>> computers;
+    QVector<QSharedPointer<DBComputer>> computers;
 
     pqxx::result result = dbConnection->getTransaction()->exec(request.toStdString());
 
@@ -41,7 +41,7 @@ QVector<std::shared_ptr<DBComputer>> Computer::getComputers()
         int wcsId = (row["component_wcs_id"].is_null()) ? 0 : row["component_wcs_id"].as<int>();
 
 
-        computers.append(std::make_shared<DBComputer>(id, cpuId, motherboardId, videocardId, ramId, ramAmount, caseId, powersupplyId, hddId, hddAmount, ssdId, ssdAmount, ssdMTId, ssdMTAmount, fanId, fanAmount, wcsId, coolerId));
+        computers.append(QSharedPointer<DBComputer>(new DBComputer(id, cpuId, motherboardId, videocardId, ramId, ramAmount, caseId, powersupplyId, hddId, hddAmount, ssdId, ssdAmount, ssdMTId, ssdMTAmount, fanId, fanAmount, wcsId, coolerId)));
     }
 
     return computers;

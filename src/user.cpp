@@ -38,22 +38,22 @@ void User::updateLastVisitDate(QString login)
     dbConnection->getTransaction()->commit();
 }
 
-QVector<std::shared_ptr<DBUser>> User::getUsers()
+QVector<QSharedPointer<DBUser>> User::getUsers()
 {
     dbConnection->assertConnectionIsReliable();
 
     QString request = "SELECT users.id, users.registration_date, users.last_visit_date, users.group_id, groups.name FROM users "
                               "LEFT JOIN groups ON users.group_id = groups.id ORDER BY users.id DESC;";
 
-    QVector<std::shared_ptr<DBUser>> users;
+    QVector<QSharedPointer<DBUser>> users;
 
     for (auto &[id, registrationDate, lastVisitDate, groupId, groupName] : dbConnection->getTransaction()->query<int, int64_t, int64_t, int, std::string>(request.toStdString()))
-        users.append(std::make_shared<DBUser>(id, registrationDate, lastVisitDate, groupId, QString::fromStdString(groupName)));
+        users.append(QSharedPointer<DBUser>(new DBUser(id, registrationDate, lastVisitDate, groupId, QString::fromStdString(groupName))));
 
     return users;
 }
 
-std::unique_ptr<DBUser> User::getUser(int id)
+QScopedPointer<DBUser> User::getUser(int id)
 {
     dbConnection->assertConnectionIsReliable();
 
@@ -63,11 +63,11 @@ std::unique_ptr<DBUser> User::getUser(int id)
     pqxx::result component = dbConnection->getTransaction()->exec(request.toStdString());
 
     if (component.empty())
-        return nullptr;
+        return QScopedPointer<DBUser>();
 
     pqxx::row row = component[0];
 
-    return std::make_unique<DBUser>(row[0].as<int>(), row[1].as<int64_t>(), row[2].as<int64_t>(), row[3].as<int>(), QString::fromStdString(row[4].as<std::string>()));
+    return QScopedPointer<DBUser>(new DBUser(row[0].as<int>(), row[1].as<int64_t>(), row[2].as<int64_t>(), row[3].as<int>(), QString::fromStdString(row[4].as<std::string>())));
 }
 
 void User::addUser(QString password, int groupId)

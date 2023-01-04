@@ -4,6 +4,8 @@
 #include "component.h"
 
 #include <QString>
+#include <QScopedPointer>
+#include <QSharedPointer>
 
 struct DBWarehouse
 {
@@ -27,12 +29,12 @@ struct DBWarehouseComponent
     DBWarehouseComponent(int warehouseId, QString city, QString street, int house, int zip, int componentId, QString componentName, int amount)
         : amount(amount)
     {
-        warehouse = std::make_unique<DBWarehouse>(warehouseId, city, street, house, zip);
-        component = std::make_unique<DBComponent>(componentId, componentName);
+        warehouse.reset(new DBWarehouse(warehouseId, city, street, house, zip));
+        component.reset(new DBComponent(componentId, componentName));
     };
 
-    std::unique_ptr<DBWarehouse> warehouse;
-    std::unique_ptr<DBComponent> component;
+    QScopedPointer<DBWarehouse> warehouse;
+    QScopedPointer<DBComponent> component;
     int amount;
 };
 
@@ -43,15 +45,15 @@ public:
 
     static QString getAddress(DBWarehouse &dbWarehouse);
 
-    static QVector<std::shared_ptr<DBWarehouse>> getWarehouses();
-    static std::unique_ptr<DBWarehouse> getWarehouse(int id);
+    static QVector<QSharedPointer<DBWarehouse>> getWarehouses();
+    static QScopedPointer<DBWarehouse> getWarehouse(int id);
     static void addWarehouse(DBWarehouse &dbWarehouse);
     static void setWarehouse(DBWarehouse &dbWarehouse);
     static void deleteWarehouse(int id);
     static bool doesWarehouseExist(QString city, QString street, int house, int zip);
     static bool doesWarehouseExist(int id);
 
-    static QVector<std::shared_ptr<DBWarehouseComponent>> getWarehouseComponents();
+    static QVector<QSharedPointer<DBWarehouseComponent>> getWarehouseComponents();
 };
 
 #endif // WAREHOUSE_H

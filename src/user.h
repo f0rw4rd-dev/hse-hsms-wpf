@@ -4,22 +4,24 @@
 #include "group.h"
 
 #include <QString>
+#include <QScopedPointer>
+#include <QSharedPointer>
 #include <pqxx/pqxx>
 
 struct DBUser
 {
     DBUser() {};
-    DBUser(int id, int64_t registrationDate, int64_t lastVisitDate, int groupId, QString groupName)
+    DBUser(int id, qint64 registrationDate, qint64 lastVisitDate, int groupId, QString groupName)
         : id(id), registrationDate(registrationDate), lastVisitDate(lastVisitDate)
     {
-        group = std::make_unique<DBGroup>(groupId, groupName);
+        group.reset(new DBGroup(groupId, groupName));
     };
 
     int id;
-    int64_t registrationDate;
-    int64_t lastVisitDate;
+    qint64 registrationDate;
+    qint64 lastVisitDate;
 
-    std::unique_ptr<DBGroup> group;
+    QScopedPointer<DBGroup> group;
 };
 
 class User
@@ -34,8 +36,8 @@ public:
 
     static void updateLastVisitDate(QString login);
 
-    static QVector<std::shared_ptr<DBUser>> getUsers();
-    static std::unique_ptr<DBUser> getUser(int id);
+    static QVector<QSharedPointer<DBUser>> getUsers();
+    static QScopedPointer<DBUser> getUser(int id);
     static void addUser(QString password, int groupId);
     static void setUserPassword(int id, QString newPassword);
     static void setUserGroup(int id, int newGroupId);

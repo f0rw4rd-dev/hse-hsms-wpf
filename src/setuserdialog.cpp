@@ -46,7 +46,7 @@ void SetUserDialog::loadGroups()
 
 void SetUserDialog::loadUser(const QString &id)
 {
-    std::unique_ptr<DBUser> dbUser = User::getUser(id.toInt());
+    QScopedPointer<DBUser> dbUser = User::getUser(id.toInt());
 
     if (dbUser == nullptr) {
         loadGroups();

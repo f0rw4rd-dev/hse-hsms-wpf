@@ -41,7 +41,7 @@ SetWarehouseDialog::~SetWarehouseDialog()
 
 void SetWarehouseDialog::loadWarehouse(const QString &id)
 {
-    std::unique_ptr<DBWarehouse> dbWarehouse = Warehouse::getWarehouse(id.toInt());
+    QScopedPointer<DBWarehouse> dbWarehouse = Warehouse::getWarehouse(id.toInt());
 
     if (dbWarehouse == nullptr) {
         _inputCity->clear();

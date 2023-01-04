@@ -114,7 +114,7 @@ void MainWindow::loadComponents()
 {
     _tableComponents->setRowCount(0);
 
-    for (std::shared_ptr<DBComponent> &dbComponent : Component::getComponents()) {
+    for (QSharedPointer<DBComponent> &dbComponent : Component::getComponents()) {
         int row = _tableComponents->rowCount();
 
         _tableComponents->insertRow(row);
@@ -153,7 +153,7 @@ void MainWindow::loadUsers()
 {
     _tableUsers->setRowCount(0);
 
-    for (std::shared_ptr<DBUser> &dbUser : User::getUsers()) {
+    for (QSharedPointer<DBUser> &dbUser : User::getUsers()) {
         int row = _tableUsers->rowCount();
 
         _tableUsers->insertRow(row);
@@ -187,7 +187,7 @@ void MainWindow::loadWarehouses()
 {
     _tableWarehouses->setRowCount(0);
 
-    for (std::shared_ptr<DBWarehouse> &dbWarehouse : Warehouse::getWarehouses()) {
+    for (QSharedPointer<DBWarehouse> &dbWarehouse : Warehouse::getWarehouses()) {
         int row = _tableWarehouses->rowCount();
 
         _tableWarehouses->insertRow(row);
@@ -222,7 +222,7 @@ void MainWindow::loadComputers()
 {
     _tableComputers->setRowCount(0);
 
-    for (std::shared_ptr<DBComputer> &dbComputers : Computer::getComputers()) {
+    for (QSharedPointer<DBComputer> &dbComputers : Computer::getComputers()) {
         int row = _tableComputers->rowCount();
 
         _tableComputers->insertRow(row);
@@ -274,7 +274,7 @@ void MainWindow::loadCharacteristics()
 {
     _tableCharacteristics->setRowCount(0);
 
-    for (std::shared_ptr<DBCharacteristic> &dbCharacteristic : Characteristic::getCharacteristics()) {
+    for (QSharedPointer<DBCharacteristic> &dbCharacteristic : Characteristic::getCharacteristics()) {
         int row = _tableCharacteristics->rowCount();
 
         _tableCharacteristics->insertRow(row);
@@ -290,7 +290,7 @@ void MainWindow::loadWarehouseComponents()
 {
     _tableWarehouseComponents->setRowCount(0);
 
-    for (std::shared_ptr<DBWarehouseComponent> &dbComponentInWarehouse : Warehouse::getWarehouseComponents()) {
+    for (QSharedPointer<DBWarehouseComponent> &dbComponentInWarehouse : Warehouse::getWarehouseComponents()) {
         int row = _tableWarehouseComponents->rowCount();
 
         _tableWarehouseComponents->insertRow(row);

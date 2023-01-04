@@ -4,6 +4,7 @@
 #include "component.h"
 
 #include <QVector>
+#include <QSharedPointer>
 
 struct DBCharacteristic
 {
@@ -27,7 +28,7 @@ class Characteristic
 public:
     Characteristic();
 
-    static QVector<std::shared_ptr<DBCharacteristic>> getCharacteristics();
+    static QVector<QSharedPointer<DBCharacteristic>> getCharacteristics();
 };
 
 #endif // CHARACTERISTICS_H
