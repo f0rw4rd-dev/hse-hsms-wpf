@@ -48,7 +48,7 @@ QVector<std::shared_ptr<DBUser>> User::getUsers()
     QVector<std::shared_ptr<DBUser>> users;
 
     for (auto &[id, registrationDate, lastVisitDate, groupId, groupName] : dbConnection->getTransaction()->query<int, int64_t, int64_t, int, std::string>(request.toStdString()))
-        users.append(std::make_shared<DBUser>(id, registrationDate, lastVisitDate, groupId, groupName));
+        users.append(std::make_shared<DBUser>(id, registrationDate, lastVisitDate, groupId, QString::fromStdString(groupName)));
 
     return users;
 }
@@ -67,7 +67,7 @@ std::unique_ptr<DBUser> User::getUser(int id)
 
     pqxx::row row = component[0];
 
-    return std::make_unique<DBUser>(row[0].as<int>(), row[1].as<int64_t>(), row[2].as<int64_t>(), row[3].as<int>(), row[4].as<std::string>());
+    return std::make_unique<DBUser>(row[0].as<int>(), row[1].as<int64_t>(), row[2].as<int64_t>(), row[3].as<int>(), QString::fromStdString(row[4].as<std::string>()));
 }
 
 void User::addUser(QString password, int groupId)

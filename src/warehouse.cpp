@@ -11,7 +11,7 @@ Warehouse::Warehouse()
 
 QString Warehouse::getAddress(DBWarehouse &dbWarehouse)
 {
-    return QString("г. %1, ул. %2, д. %3, %4").arg(QString::fromStdString(dbWarehouse.city), QString::fromStdString(dbWarehouse.street), QString::number(dbWarehouse.house),  QString::number(dbWarehouse.zip));
+    return QString("г. %1, ул. %2, д. %3, %4").arg(dbWarehouse.city, dbWarehouse.street, QString::number(dbWarehouse.house),  QString::number(dbWarehouse.zip));
 }
 
 QVector<std::shared_ptr<DBWarehouse>> Warehouse::getWarehouses()
@@ -23,7 +23,7 @@ QVector<std::shared_ptr<DBWarehouse>> Warehouse::getWarehouses()
     QVector<std::shared_ptr<DBWarehouse>> warehouses;
 
     for (auto &[id, city, street, house, zip] : dbConnection->getTransaction()->query<int, std::string, std::string, int, int>(request.toStdString()))
-        warehouses.append(std::make_shared<DBWarehouse>(id, city, street, house, zip));
+        warehouses.append(std::make_shared<DBWarehouse>(id, QString::fromStdString(city), QString::fromStdString(street), house, zip));
 
     return warehouses;
 }
@@ -41,7 +41,7 @@ std::unique_ptr<DBWarehouse> Warehouse::getWarehouse(int id)
 
     pqxx::row row = warehouse[0];
 
-    return std::make_unique<DBWarehouse>(row[0].as<int>(), row[1].as<std::string>(), row[2].as<std::string>(), row[3].as<int>(), row[4].as<int>());
+    return std::make_unique<DBWarehouse>(row[0].as<int>(), QString::fromStdString(row[1].as<std::string>()), QString::fromStdString(row[2].as<std::string>()), row[3].as<int>(), row[4].as<int>());
 }
 
 void Warehouse::addWarehouse(DBWarehouse &dbWarehouse)
@@ -49,7 +49,7 @@ void Warehouse::addWarehouse(DBWarehouse &dbWarehouse)
     dbConnection->assertConnectionIsReliable();
 
     QString request = QString("INSERT INTO warehouses (city, street, house, zip) VALUES ('%1', '%2', '%3', '%4');")
-            .arg(QString::fromStdString(dbWarehouse.city), QString::fromStdString(dbWarehouse.street), QString::number(dbWarehouse.house), QString::number(dbWarehouse.zip));
+            .arg(dbWarehouse.city, dbWarehouse.street, QString::number(dbWarehouse.house), QString::number(dbWarehouse.zip));
 
     dbConnection->getTransaction()->exec(request.toStdString());
     dbConnection->getTransaction()->commit();
@@ -60,7 +60,7 @@ void Warehouse::setWarehouse(DBWarehouse &dbWarehouse)
     dbConnection->assertConnectionIsReliable();
 
     QString request = QString("UPDATE warehouses SET city = '%1', street = '%2', house = '%3', zip = '%4' WHERE id = '%5';")
-            .arg(QString::fromStdString(dbWarehouse.city), QString::fromStdString(dbWarehouse.street), QString::number(dbWarehouse.house), QString::number(dbWarehouse.zip), QString::number(dbWarehouse.id));
+            .arg(dbWarehouse.city, dbWarehouse.street, QString::number(dbWarehouse.house), QString::number(dbWarehouse.zip), QString::number(dbWarehouse.id));
 
     dbConnection->getTransaction()->exec(request.toStdString());
     dbConnection->getTransaction()->commit();
@@ -110,7 +110,7 @@ QVector<std::shared_ptr<DBWarehouseComponent>> Warehouse::getWarehouseComponents
     QVector<std::shared_ptr<DBWarehouseComponent>> components;
 
     for (auto &[warehouseId, city, street, house, zip, componentId, componentName, amount] : dbConnection->getTransaction()->query<int, std::string, std::string, int, int, int, std::string, int>(request.toStdString()))
-        components.append(std::make_shared<DBWarehouseComponent>(warehouseId, city, street, house, zip, componentId, componentName, amount));
+        components.append(std::make_shared<DBWarehouseComponent>(warehouseId, QString::fromStdString(city), QString::fromStdString(street), house, zip, componentId, QString::fromStdString(componentName), amount));
 
     return components;
 }

@@ -1,15 +1,15 @@
 #ifndef COMPONENTTYPE_H
 #define COMPONENTTYPE_H
 
-#include <string>
+#include <QString>
 
 struct DBComponentType
 {
     DBComponentType() {};
-    DBComponentType(int id, std::string name) : id(id), name(name) {};
+    DBComponentType(int id, QString name) : id(id), name(name) {};
 
     int id;
-    std::string name;
+    QString name;
 };
 
 class ComponentType

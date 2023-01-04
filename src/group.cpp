@@ -17,7 +17,7 @@ QVector<std::shared_ptr<DBGroup>> Group::getGroups()
     QVector<std::shared_ptr<DBGroup>> groups;
 
     for (auto &[id, name] : dbConnection->getTransaction()->query<int, std::string>(request.toStdString()))
-        groups.append(std::make_shared<DBGroup>(id, name));
+        groups.append(std::make_shared<DBGroup>(id, QString::fromStdString(name)));
 
     return groups;
 }

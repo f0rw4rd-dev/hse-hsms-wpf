@@ -120,8 +120,8 @@ void MainWindow::loadComponents()
         _tableComponents->insertRow(row);
 
         _tableComponents->setItem(row, 0, new QTableWidgetItem(QString::number(dbComponent->id)));
-        _tableComponents->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbComponent->componentType->name)));
-        _tableComponents->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(dbComponent->name)));
+        _tableComponents->setItem(row, 1, new QTableWidgetItem(dbComponent->componentType->name));
+        _tableComponents->setItem(row, 2, new QTableWidgetItem(dbComponent->name));
         _tableComponents->setItem(row, 3, new QTableWidgetItem(QString::number(dbComponent->warranty)));
         _tableComponents->setItem(row, 4, new QTableWidgetItem(QString::number(dbComponent->price)));
     }
@@ -161,7 +161,7 @@ void MainWindow::loadUsers()
         _tableUsers->setItem(row, 0, new QTableWidgetItem(QString::number(dbUser->id)));
         _tableUsers->setItem(row, 1, new QTableWidgetItem(QDateTime::fromSecsSinceEpoch(dbUser->registrationDate).toString("dd/MM/yyyy hh:mm:ss")));
         _tableUsers->setItem(row, 2, new QTableWidgetItem(QDateTime::fromSecsSinceEpoch(dbUser->lastVisitDate).toString("dd/MM/yyyy hh:mm:ss")));
-        _tableUsers->setItem(row, 3, new QTableWidgetItem(QString::fromStdString(dbUser->group->name)));
+        _tableUsers->setItem(row, 3, new QTableWidgetItem(dbUser->group->name));
     }
 }
 
@@ -193,8 +193,8 @@ void MainWindow::loadWarehouses()
         _tableWarehouses->insertRow(row);
 
         _tableWarehouses->setItem(row, 0, new QTableWidgetItem(QString::number(dbWarehouse->id)));
-        _tableWarehouses->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbWarehouse->city)));
-        _tableWarehouses->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(dbWarehouse->street)));
+        _tableWarehouses->setItem(row, 1, new QTableWidgetItem(dbWarehouse->city));
+        _tableWarehouses->setItem(row, 2, new QTableWidgetItem(dbWarehouse->street));
         _tableWarehouses->setItem(row, 3, new QTableWidgetItem(QString::number(dbWarehouse->house)));
         _tableWarehouses->setItem(row, 4, new QTableWidgetItem(QString::number(dbWarehouse->zip)));
     }
@@ -232,36 +232,36 @@ void MainWindow::loadComputers()
         QString componentFormat("#%1 %2");
         QString componentWithAmountFormat("#%1 %2 (%3)");
 
-        _tableComputers->setItem(row, 1, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->cpuId), QString::fromStdString(dbComputers->cpuName))));
-        _tableComputers->setItem(row, 2, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->motherboardId), QString::fromStdString(dbComputers->motherboardName))));
-        _tableComputers->setItem(row, 3, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->videocardId), QString::fromStdString(dbComputers->videocardName))));
-        _tableComputers->setItem(row, 4, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->ramId), QString::fromStdString(dbComputers->ramName), QString::number(dbComputers->ramAmount))));
-        _tableComputers->setItem(row, 5, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->caseId), QString::fromStdString(dbComputers->caseName))));
-        _tableComputers->setItem(row, 6, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->powersupplyId), QString::fromStdString(dbComputers->powersupplyName))));
+        _tableComputers->setItem(row, 1, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->cpuId), dbComputers->cpuName)));
+        _tableComputers->setItem(row, 2, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->motherboardId), dbComputers->motherboardName)));
+        _tableComputers->setItem(row, 3, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->videocardId), dbComputers->videocardName)));
+        _tableComputers->setItem(row, 4, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->ramId), dbComputers->ramName, QString::number(dbComputers->ramAmount))));
+        _tableComputers->setItem(row, 5, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->caseId), dbComputers->caseName)));
+        _tableComputers->setItem(row, 6, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->powersupplyId), dbComputers->powersupplyName)));
 
         if (dbComputers->hddId == 0)
-            _tableComputers->setItem(row, 7, new QTableWidgetItem(QString::fromStdString(dbComputers->hddName)));
+            _tableComputers->setItem(row, 7, new QTableWidgetItem(dbComputers->hddName));
         else
-            _tableComputers->setItem(row, 7, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->hddId), QString::fromStdString(dbComputers->hddName), QString::number(dbComputers->hddAmount))));
+            _tableComputers->setItem(row, 7, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->hddId), dbComputers->hddName, QString::number(dbComputers->hddAmount))));
 
         if (dbComputers->ssdId == 0)
-            _tableComputers->setItem(row, 8, new QTableWidgetItem(QString::fromStdString(dbComputers->ssdName)));
+            _tableComputers->setItem(row, 8, new QTableWidgetItem(dbComputers->ssdName));
         else
-            _tableComputers->setItem(row, 8, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->ssdId), QString::fromStdString(dbComputers->ssdName), QString::number(dbComputers->ssdAmount))));
+            _tableComputers->setItem(row, 8, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->ssdId), dbComputers->ssdName, QString::number(dbComputers->ssdAmount))));
 
         if (dbComputers->ssdMTId == 0)
-            _tableComputers->setItem(row, 9, new QTableWidgetItem(QString::fromStdString(dbComputers->ssdMTName)));
+            _tableComputers->setItem(row, 9, new QTableWidgetItem(dbComputers->ssdMTName));
         else
-            _tableComputers->setItem(row, 9, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->ssdMTId), QString::fromStdString(dbComputers->ssdMTName), QString::number(dbComputers->ssdMTAmount))));
+            _tableComputers->setItem(row, 9, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->ssdMTId), dbComputers->ssdMTName, QString::number(dbComputers->ssdMTAmount))));
 
-        _tableComputers->setItem(row, 10, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->fanId), QString::fromStdString(dbComputers->fanName), QString::number(dbComputers->fanAmount))));
+        _tableComputers->setItem(row, 10, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->fanId), dbComputers->fanName, QString::number(dbComputers->fanAmount))));
 
         if (dbComputers->wcsId == 0)
-            _tableComputers->setItem(row, 11, new QTableWidgetItem(QString::fromStdString(dbComputers->wcsName)));
+            _tableComputers->setItem(row, 11, new QTableWidgetItem(dbComputers->wcsName));
         else
-            _tableComputers->setItem(row, 11, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->wcsId), QString::fromStdString(dbComputers->wcsName))));
+            _tableComputers->setItem(row, 11, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->wcsId), dbComputers->wcsName)));
 
-        _tableComputers->setItem(row, 12, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->coolerId), QString::fromStdString(dbComputers->coolerName))));
+        _tableComputers->setItem(row, 12, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->coolerId), dbComputers->coolerName)));
     }
 }
 
@@ -280,9 +280,9 @@ void MainWindow::loadCharacteristics()
         _tableCharacteristics->insertRow(row);
 
         _tableCharacteristics->setItem(row, 0, new QTableWidgetItem(QString::number(dbCharacteristic->id)));
-        _tableCharacteristics->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbCharacteristic->componentName)));
-        _tableCharacteristics->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(dbCharacteristic->characteristicTypeName)));
-        _tableCharacteristics->setItem(row, 3, new QTableWidgetItem(QString::fromStdString(dbCharacteristic->value)));
+        _tableCharacteristics->setItem(row, 1, new QTableWidgetItem(dbCharacteristic->componentName));
+        _tableCharacteristics->setItem(row, 2, new QTableWidgetItem(dbCharacteristic->characteristicTypeName));
+        _tableCharacteristics->setItem(row, 3, new QTableWidgetItem(dbCharacteristic->value));
     }
 }
 
@@ -295,8 +295,8 @@ void MainWindow::loadWarehouseComponents()
 
         _tableWarehouseComponents->insertRow(row);
 
-        _tableWarehouseComponents->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(dbComponentInWarehouse->component->name)));
-        _tableWarehouseComponents->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbComponentInWarehouse->warehouse->city)));
+        _tableWarehouseComponents->setItem(row, 0, new QTableWidgetItem(dbComponentInWarehouse->component->name));
+        _tableWarehouseComponents->setItem(row, 1, new QTableWidgetItem(dbComponentInWarehouse->warehouse->city));
         _tableWarehouseComponents->setItem(row, 2, new QTableWidgetItem(QString::number(dbComponentInWarehouse->amount)));
     }
 }

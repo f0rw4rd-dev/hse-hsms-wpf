@@ -7,10 +7,10 @@
 struct DBGroup
 {
     DBGroup() {};
-    DBGroup(int id, std::string name) : id(id), name(name) {};
+    DBGroup(int id, QString name) : id(id), name(name) {};
 
     int id;
-    std::string name;
+    QString name;
 };
 
 class Group

@@ -8,14 +8,14 @@
 struct DBWarehouse
 {
     DBWarehouse() {};
-    DBWarehouse(std::string city, std::string street, int house, int zip)
+    DBWarehouse(QString city, QString street, int house, int zip)
         : city(city), street(street), house(house), zip(zip) {};
-    DBWarehouse(int id, std::string city, std::string street, int house, int zip)
+    DBWarehouse(int id, QString city, QString street, int house, int zip)
         : id(id), city(city), street(street), house(house), zip(zip) {};
 
     int id;
-    std::string city;
-    std::string street;
+    QString city;
+    QString street;
     int house;
     int zip;
 };
@@ -24,7 +24,7 @@ struct DBWarehouseComponent
 {
     DBWarehouseComponent() {};
 
-    DBWarehouseComponent(int warehouseId, std::string city, std::string street, int house, int zip, int componentId, std::string componentName, int amount)
+    DBWarehouseComponent(int warehouseId, QString city, QString street, int house, int zip, int componentId, QString componentName, int amount)
         : amount(amount)
     {
         warehouse = std::make_unique<DBWarehouse>(warehouseId, city, street, house, zip);

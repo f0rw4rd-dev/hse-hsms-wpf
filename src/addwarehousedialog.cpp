@@ -47,7 +47,7 @@ void AddWarehouseDialog::addWarehouse()
         return;
     }
 
-    DBWarehouse dbWarehouse(_inputCity->text().toStdString(), _inputStreet->text().toStdString(), _inputHouse->text().toInt(), _inputZip->text().toInt());
+    DBWarehouse dbWarehouse(_inputCity->text(), _inputStreet->text(), _inputHouse->text().toInt(), _inputZip->text().toInt());
 
     Warehouse::addWarehouse(dbWarehouse);
 

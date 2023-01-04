@@ -66,7 +66,7 @@ void AddComponentDialog::addComponent()
         return;
     }
 
-    DBComponent dbComponent(-1, _inputName->text().toStdString(), _comboTypeName->itemData(_comboTypeName->currentIndex()).toInt(), _comboTypeName->currentText().toStdString(), _inputWarranty->text().toInt(), _inputPrice->text().toFloat());
+    DBComponent dbComponent(_inputName->text(), _comboTypeName->itemData(_comboTypeName->currentIndex()).toInt(), _comboTypeName->currentText(), _inputWarranty->text().toInt(), _inputPrice->text().toFloat());
 
     Component::addComponent(dbComponent);
 

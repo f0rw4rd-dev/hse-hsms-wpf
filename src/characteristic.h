@@ -4,22 +4,22 @@
 #include "component.h"
 
 #include <QVector>
-#include <string>
 
 struct DBCharacteristic
 {
     DBCharacteristic() {};
-    DBCharacteristic(int id, int componentId, int characteristicTypeId, std::string characteristicTypeName, std::string value) : id(id), componentId(componentId), characteristicTypeId(characteristicTypeId), characteristicTypeName(characteristicTypeName), value(value)
+    DBCharacteristic(int id, int componentId, int characteristicTypeId, QString characteristicTypeName, QString value)
+        : id(id), componentId(componentId), characteristicTypeId(characteristicTypeId), characteristicTypeName(characteristicTypeName), value(value)
     {
         componentName = Component::getComponent(componentId)->name;
     };
 
     int id;
     int componentId;
-    std::string componentName;
+    QString componentName;
     int characteristicTypeId;
-    std::string characteristicTypeName;
-    std::string value;
+    QString characteristicTypeName;
+    QString value;
 };
 
 class Characteristic

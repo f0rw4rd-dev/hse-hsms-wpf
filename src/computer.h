@@ -15,7 +15,7 @@ struct DBComputer
         videocardId(videocardId), ramId(ramId), ramAmount(ramAmount), caseId(caseId), powersupplyId(powersupplyId), hddId(hddId), hddAmount(hddAmount), ssdId(ssdId),
         ssdAmount(ssdAmount), ssdMTId(ssdMTId), ssdMTAmount(ssdMTAmount), fanId(fanId), fanAmount(fanAmount), wcsId(wcsId), coolerId(coolerId)
     {
-        const std::string missing = "Отсутствует";
+        const QString missing = "Отсутствует";
 
         cpuName = Component::getComponent(cpuId)->name;
         motherboardName = Component::getComponent(motherboardId)->name;
@@ -35,45 +35,45 @@ struct DBComputer
 
     int id;
     int cpuId;
-    std::string cpuName;
+    QString cpuName;
 
     int motherboardId;
-    std::string motherboardName;
+    QString motherboardName;
 
     int videocardId;
-    std::string videocardName;
+    QString videocardName;
 
     int ramId;
     int ramAmount;
-    std::string ramName;
+    QString ramName;
 
     int caseId;
-    std::string caseName;
+    QString caseName;
 
     int powersupplyId;
-    std::string powersupplyName;
+    QString powersupplyName;
 
     int hddId;
     int hddAmount;
-    std::string hddName;
+    QString hddName;
 
     int ssdId;
     int ssdAmount;
-    std::string ssdName;
+    QString ssdName;
 
     int ssdMTId;
     int ssdMTAmount;
-    std::string ssdMTName;
+    QString ssdMTName;
 
     int fanId;
     int fanAmount;
-    std::string fanName;
+    QString fanName;
 
     int wcsId;
-    std::string wcsName;
+    QString wcsName;
 
     int coolerId;
-    std::string coolerName;
+    QString coolerName;
 };
 
 class Computer

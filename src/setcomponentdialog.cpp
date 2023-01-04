@@ -67,7 +67,7 @@ void SetComponentDialog::loadComponent(const QString &id)
     }
 
     _comboTypeName->setCurrentIndex(_comboTypeName->findData(QVariant(dbComponent->componentType->id)));
-    _inputName->setText(QString::fromStdString(dbComponent->name));
+    _inputName->setText(dbComponent->name);
     _inputWarranty->setText(QString::number(dbComponent->warranty));
     _inputPrice->setText(QString::number(dbComponent->price));
 }
@@ -84,7 +84,7 @@ void SetComponentDialog::setComponent()
         return;
     }
 
-    DBComponent dbComponent(_inputId->text().toInt(), _inputName->text().toStdString(), _comboTypeName->itemData(_comboTypeName->currentIndex()).toInt(), _comboTypeName->currentText().toStdString(), _inputWarranty->text().toInt(), _inputPrice->text().toDouble());
+    DBComponent dbComponent(_inputId->text().toInt(), _inputName->text(), _comboTypeName->itemData(_comboTypeName->currentIndex()).toInt(), _comboTypeName->currentText(), _inputWarranty->text().toInt(), _inputPrice->text().toDouble());
     Component::setComponent(dbComponent);
 
     close();

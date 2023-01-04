@@ -51,8 +51,8 @@ void SetWarehouseDialog::loadWarehouse(const QString &id)
         return;
     }
 
-    _inputCity->setText(QString::fromStdString(dbWarehouse->city));
-    _inputStreet->setText(QString::fromStdString(dbWarehouse->street));
+    _inputCity->setText(dbWarehouse->city);
+    _inputStreet->setText(dbWarehouse->street);
     _inputHouse->setText(QString::number(dbWarehouse->house));
     _inputZip->setText(QString::number(dbWarehouse->zip));
 }
@@ -69,7 +69,7 @@ void SetWarehouseDialog::setWarehouse()
         return;
     }
 
-    DBWarehouse dbWarehouse(_inputId->text().toInt(), _inputCity->text().toStdString(), _inputStreet->text().toStdString(), _inputHouse->text().toInt(), _inputZip->text().toInt());
+    DBWarehouse dbWarehouse(_inputId->text().toInt(), _inputCity->text(), _inputStreet->text(), _inputHouse->text().toInt(), _inputZip->text().toInt());
     Warehouse::setWarehouse(dbWarehouse);
 
     close();

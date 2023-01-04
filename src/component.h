@@ -4,21 +4,25 @@
 #include "componenttype.h"
 
 #include <QVector>
-#include <string>
 #include <pqxx/pqxx>
 
 struct DBComponent
 {
     DBComponent() {};
-    DBComponent(int id, std::string name, int typeId, std::string typeName, int warranty, float price)
+    DBComponent(int id, QString name, int typeId, QString typeName, int warranty, float price)
         : id(id), name(name), warranty(warranty), price(price)
     {
         componentType = std::make_unique<DBComponentType>(typeId, typeName);
     };
-    DBComponent(int id, std::string name) : id(id), name(name) {};
+    DBComponent(QString name, int typeId, QString typeName, int warranty, float price)
+        : name(name), warranty(warranty), price(price)
+    {
+        componentType = std::make_unique<DBComponentType>(typeId, typeName);
+    };
+    DBComponent(int id, QString name) : id(id), name(name) {};
 
     int id;
-    std::string name;
+    QString name;
     std::unique_ptr<DBComponentType> componentType;
     int warranty; // in months
     float price; // in RUB

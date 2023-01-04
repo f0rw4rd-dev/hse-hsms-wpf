@@ -9,7 +9,7 @@
 struct DBUser
 {
     DBUser() {};
-    DBUser(int id, int64_t registrationDate, int64_t lastVisitDate, int groupId, std::string groupName)
+    DBUser(int id, int64_t registrationDate, int64_t lastVisitDate, int groupId, QString groupName)
         : id(id), registrationDate(registrationDate), lastVisitDate(lastVisitDate)
     {
         group = std::make_unique<DBGroup>(groupId, groupName);

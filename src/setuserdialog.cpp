@@ -41,7 +41,7 @@ void SetUserDialog::loadGroups()
     _comboGroupName->clear();
 
     for (const auto &row : Group::getGroups())
-        _comboGroupName->addItem(QString::fromStdString(row->name.c_str()), QVariant(row->id));
+        _comboGroupName->addItem(row->name, QVariant(row->id));
 }
 
 void SetUserDialog::loadUser(const QString &id)

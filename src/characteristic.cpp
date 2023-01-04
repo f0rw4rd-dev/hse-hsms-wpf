@@ -16,7 +16,7 @@ QVector<std::shared_ptr<DBCharacteristic>> Characteristic::getCharacteristics()
     QVector<std::shared_ptr<DBCharacteristic>> characteristics;
 
     for (auto &[id, characteristicTypeId, value, componentId, characteristicTypeName] : dbConnection->getTransaction()->query<int, int, std::string, int, std::string>(request.toStdString()))
-        characteristics.append(std::make_shared<DBCharacteristic>(id, componentId, characteristicTypeId, characteristicTypeName, value));
+        characteristics.append(std::make_shared<DBCharacteristic>(id, componentId, characteristicTypeId, QString::fromStdString(characteristicTypeName), QString::fromStdString(value)));
 
     return characteristics;
 }
