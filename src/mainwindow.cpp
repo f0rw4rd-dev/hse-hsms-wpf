@@ -13,6 +13,10 @@
 #include "addwarehousedialog.h"
 #include "setwarehousedialog.h"
 #include "deletewarehousedialog.h"
+#include "warehousecomponent.h"
+#include "addwarehousecomponentdialog.h"
+#include "setwarehousecomponentdialog.h"
+#include "deletewarehousecomponentdialog.h"
 #include "computer.h"
 #include "characteristic.h"
 
@@ -55,6 +59,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     _tableWarehouseComponents = findChild<QTableWidget*>("tableWarehouseComponents");
     _buttonLoadWarehouseComponents = findChild<QPushButton*>("buttonLoadWarehouseComponents");
+    _buttonAddWarehouseComponent = findChild<QPushButton*>("buttonAddWarehouseComponent");
+    _buttonSetWarehouseComponent = findChild<QPushButton*>("buttonSetWarehouseComponent");
+    _buttonDeleteWarehouseComponent = findChild<QPushButton*>("buttonDeleteWarehouseComponent");
 
     _stackedWidget = findChild<QStackedWidget*>("stackedWidget");
 
@@ -83,6 +90,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(_buttonLoadCharacteristics, &QPushButton::clicked, this, &MainWindow::loadCharacteristics);
 
     connect(_buttonLoadWarehouseComponents, &QPushButton::clicked, this, &MainWindow::loadWarehouseComponents);
+    connect(_buttonAddWarehouseComponent, &QPushButton::clicked, this, &MainWindow::addWarehouseComponent);
+    connect(_buttonSetWarehouseComponent, &QPushButton::clicked, this, &MainWindow::setWarehouseComponent);
+    connect(_buttonDeleteWarehouseComponent, &QPushButton::clicked, this, &MainWindow::deleteWarehouseComponent);
 
     // Fill tables with data
     loadComponents();
@@ -101,6 +111,8 @@ MainWindow::MainWindow(QWidget *parent)
     setupTable(_tableComponents);
     setupTable(_tableUsers);
     setupTable(_tableWarehouses);
+
+    setupTable(_tableWarehouseComponents);
 
     parentWidget();
 }
@@ -290,13 +302,31 @@ void MainWindow::loadWarehouseComponents()
 {
     _tableWarehouseComponents->setRowCount(0);
 
-    for (QSharedPointer<DBWarehouseComponent> &dbComponentInWarehouse : Warehouse::getWarehouseComponents()) {
+    for (QSharedPointer<DBWarehouseComponent> &dbWarehouseComponent : WarehouseComponent::getWarehouseComponents()) {
         int row = _tableWarehouseComponents->rowCount();
 
         _tableWarehouseComponents->insertRow(row);
 
-        _tableWarehouseComponents->setItem(row, 0, new QTableWidgetItem(dbComponentInWarehouse->component->name));
-        _tableWarehouseComponents->setItem(row, 1, new QTableWidgetItem(dbComponentInWarehouse->warehouse->city));
-        _tableWarehouseComponents->setItem(row, 2, new QTableWidgetItem(QString::number(dbComponentInWarehouse->amount)));
+        _tableWarehouseComponents->setItem(row, 0, new QTableWidgetItem(QString("[%1] %2").arg(QString::number(dbWarehouseComponent->component->id), dbWarehouseComponent->component->name)));
+        _tableWarehouseComponents->setItem(row, 1, new QTableWidgetItem(QString("[%1] %2").arg(QString::number(dbWarehouseComponent->warehouse->id), Warehouse::getAddress(*dbWarehouseComponent->warehouse))));
+        _tableWarehouseComponents->setItem(row, 2, new QTableWidgetItem(QString::number(dbWarehouseComponent->amount)));
     }
+}
+
+void MainWindow::addWarehouseComponent()
+{
+    AddWarehouseComponentDialog *addWarehouseComponentDialog = new AddWarehouseComponentDialog(this);
+    addWarehouseComponentDialog->show();
+}
+
+void MainWindow::setWarehouseComponent()
+{
+    SetWarehouseComponentDialog *setWarehouseComponentDialog = new SetWarehouseComponentDialog(this);
+    setWarehouseComponentDialog->show();
+}
+
+void MainWindow::deleteWarehouseComponent()
+{
+    DeleteWarehouseComponentDialog *deleteWarehouseComponentDialog = new DeleteWarehouseComponentDialog(this);
+    deleteWarehouseComponentDialog->show();
 }

@@ -81,7 +81,7 @@ void SetComponentDialog::setComponent()
     }
 
     if (!Component::doesComponentExist(_inputId->text().toInt())) {
-        QMessageBox::information(nullptr, "Предупреждение", "Данного комплектующего нет!");
+        QMessageBox::information(nullptr, "Предупреждение", "Данного комплектующего не существует!");
         return;
     }
 

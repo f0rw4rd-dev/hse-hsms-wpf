@@ -12,6 +12,7 @@ SOURCES += \
     addcomponentdialog.cpp \
     addcomputerdialog.cpp \
     adduserdialog.cpp \
+    addwarehousecomponentdialog.cpp \
     addwarehousedialog.cpp \
     characteristic.cpp \
     component.cpp \
@@ -20,6 +21,7 @@ SOURCES += \
     dbconnection.cpp \
     deletecomponentdialog.cpp \
     deleteuserdialog.cpp \
+    deletewarehousecomponentdialog.cpp \
     deletewarehousedialog.cpp \
     group.cpp \
     loginwindow.cpp \
@@ -28,14 +30,17 @@ SOURCES += \
     regularexpressions.cpp \
     setcomponentdialog.cpp \
     setuserdialog.cpp \
+    setwarehousecomponentdialog.cpp \
     setwarehousedialog.cpp \
     user.cpp \
-    warehouse.cpp
+    warehouse.cpp \
+    warehousecomponent.cpp
 
 HEADERS += \
     addcomponentdialog.h \
     addcomputerdialog.h \
     adduserdialog.h \
+    addwarehousecomponentdialog.h \
     addwarehousedialog.h \
     characteristic.h \
     component.h \
@@ -44,6 +49,7 @@ HEADERS += \
     dbconnection.h \
     deletecomponentdialog.h \
     deleteuserdialog.h \
+    deletewarehousecomponentdialog.h \
     deletewarehousedialog.h \
     group.h \
     loginwindow.h \
@@ -51,22 +57,27 @@ HEADERS += \
     regularexpressions.h \
     setcomponentdialog.h \
     setuserdialog.h \
+    setwarehousecomponentdialog.h \
     setwarehousedialog.h \
     user.h \
-    warehouse.h
+    warehouse.h \
+    warehousecomponent.h
 
 FORMS += \
     addcomponentdialog.ui \
     addcomputerdialog.ui \
     adduserdialog.ui \
+    addwarehousecomponentdialog.ui \
     addwarehousedialog.ui \
     deletecomponentdialog.ui \
     deleteuserdialog.ui \
+    deletewarehousecomponentdialog.ui \
     deletewarehousedialog.ui \
     loginwindow.ui \
     mainwindow.ui \
     setcomponentdialog.ui \
     setuserdialog.ui \
+    setwarehousecomponentdialog.ui \
     setwarehousedialog.ui
 	
 INCLUDEPATH += \

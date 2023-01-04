@@ -46,6 +46,9 @@ private slots:
 
     // Actions with components in warehouses
     void loadWarehouseComponents();
+    void addWarehouseComponent();
+    void setWarehouseComponent();
+    void deleteWarehouseComponent();
 
 private:
     // UI elements for components
@@ -75,6 +78,9 @@ private:
 
     QTableWidget *_tableWarehouseComponents;
     QPushButton *_buttonLoadWarehouseComponents;
+    QPushButton *_buttonAddWarehouseComponent;
+    QPushButton *_buttonSetWarehouseComponent;
+    QPushButton *_buttonDeleteWarehouseComponent;
 
     QStackedWidget *_stackedWidget;
 

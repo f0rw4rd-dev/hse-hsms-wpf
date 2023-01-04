@@ -11,6 +11,7 @@
 struct DBComponent
 {
     DBComponent() {};
+    DBComponent(int id) : id(id) {};
     DBComponent(int id, QString name, int typeId, QString typeName, int warranty, float price)
         : id(id), name(name), warranty(warranty), price(price)
     {

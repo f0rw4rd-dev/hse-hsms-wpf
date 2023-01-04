@@ -10,6 +10,7 @@
 struct DBWarehouse
 {
     DBWarehouse() {};
+    DBWarehouse(int id) : id(id) {};
     DBWarehouse(QString city, QString street, int house, int zip)
         : city(city), street(street), house(house), zip(zip) {};
     DBWarehouse(int id, QString city, QString street, int house, int zip)
@@ -20,22 +21,6 @@ struct DBWarehouse
     QString street;
     int house;
     int zip;
-};
-
-struct DBWarehouseComponent
-{
-    DBWarehouseComponent() {};
-
-    DBWarehouseComponent(int warehouseId, QString city, QString street, int house, int zip, int componentId, QString componentName, int amount)
-        : amount(amount)
-    {
-        warehouse.reset(new DBWarehouse(warehouseId, city, street, house, zip));
-        component.reset(new DBComponent(componentId, componentName));
-    };
-
-    QScopedPointer<DBWarehouse> warehouse;
-    QScopedPointer<DBComponent> component;
-    int amount;
 };
 
 class Warehouse
@@ -52,8 +37,6 @@ public:
     static void deleteWarehouse(int id);
     static bool doesWarehouseExist(QString city, QString street, int house, int zip);
     static bool doesWarehouseExist(int id);
-
-    static QVector<QSharedPointer<DBWarehouseComponent>> getWarehouseComponents();
 };
 
 #endif // WAREHOUSE_H

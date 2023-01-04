@@ -98,19 +98,3 @@ bool Warehouse::doesWarehouseExist(int id)
 
     return result.size() != 0;
 }
-
-QVector<QSharedPointer<DBWarehouseComponent>> Warehouse::getWarehouseComponents()
-{
-    dbConnection->assertConnectionIsReliable();
-
-    QString request = "SELECT warehouses_components.warehouse_id, warehouses.city, warehouses.street, warehouses.house, warehouses.zip, warehouses_components.component_id, components.name, warehouses_components.amount FROM warehouses_components "
-                      "LEFT JOIN warehouses ON warehouses_components.warehouse_id = warehouses.id "
-                      "LEFT JOIN components ON warehouses_components.component_id = components.id;";
-
-    QVector<QSharedPointer<DBWarehouseComponent>> components;
-
-    for (auto &[warehouseId, city, street, house, zip, componentId, componentName, amount] : dbConnection->getTransaction()->query<int, std::string, std::string, int, int, int, std::string, int>(request.toStdString()))
-        components.append(QSharedPointer<DBWarehouseComponent>(new DBWarehouseComponent(warehouseId, QString::fromStdString(city), QString::fromStdString(street), house, zip, componentId, QString::fromStdString(componentName), amount)));
-
-    return components;
-}

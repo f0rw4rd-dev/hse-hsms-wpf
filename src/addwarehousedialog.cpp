@@ -55,5 +55,4 @@ void AddWarehouseDialog::addWarehouse()
     deleteLater();
 
     QMessageBox::information(nullptr, "Информация", "Склад добавлен!");
-
 }
