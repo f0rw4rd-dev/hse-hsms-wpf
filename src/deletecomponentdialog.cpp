@@ -19,7 +19,7 @@ DeleteComponentDialog::DeleteComponentDialog(QWidget *parent) :
     _inputId = findChild<QLineEdit*>("inputId");
 
     // Validators
-    _inputId->setValidator(new QRegularExpressionValidator(RegularExpressions::integer, this));
+    _inputId->setValidator(new QRegularExpressionValidator(RegularExpressions::digit, this));
 
     // Connections
     connect(_buttonDeleteComponent, &QPushButton::clicked, this, &DeleteComponentDialog::deleteComponent);
@@ -45,6 +45,7 @@ void DeleteComponentDialog::deleteComponent()
     Component::deleteComponent(_inputId->text().toInt());
 
     close();
+    deleteLater();
 
     QMessageBox::information(nullptr, "Информация", "Комплектующее удалено!");
 }

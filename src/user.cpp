@@ -14,19 +14,6 @@ QString User::getEncryptedPassword(QString password)
     return QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex();
 }
 
-bool User::isUserExist(int id)
-{
-    dbConnection->assertConnectionIsReliable();
-
-    QString request = QString("SELECT id "
-                              "FROM users "
-                              "WHERE id = '%1';").arg(QString::number(id));
-
-    pqxx::result users = dbConnection->getTransaction()->exec(request.toStdString());
-
-    return users.size() == 1;
-}
-
 bool User::areCredentialsCorrect(QString login, QString password)
 {
     dbConnection->assertConnectionIsReliable();

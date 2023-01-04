@@ -15,10 +15,12 @@ SOURCES += \
     addwarehousedialog.cpp \
     characteristic.cpp \
     component.cpp \
+    componenttype.cpp \
     computer.cpp \
     dbconnection.cpp \
     deletecomponentdialog.cpp \
     deleteuserdialog.cpp \
+    deletewarehousedialog.cpp \
     group.cpp \
     loginwindow.cpp \
     main.cpp \
@@ -26,6 +28,7 @@ SOURCES += \
     regularexpressions.cpp \
     setcomponentdialog.cpp \
     setuserdialog.cpp \
+    setwarehousedialog.cpp \
     user.cpp \
     warehouse.cpp
 
@@ -36,16 +39,19 @@ HEADERS += \
     addwarehousedialog.h \
     characteristic.h \
     component.h \
+    componenttype.h \
     computer.h \
     dbconnection.h \
     deletecomponentdialog.h \
     deleteuserdialog.h \
+    deletewarehousedialog.h \
     group.h \
     loginwindow.h \
     mainwindow.h \
     regularexpressions.h \
     setcomponentdialog.h \
     setuserdialog.h \
+    setwarehousedialog.h \
     user.h \
     warehouse.h
 
@@ -56,10 +62,12 @@ FORMS += \
     addwarehousedialog.ui \
     deletecomponentdialog.ui \
     deleteuserdialog.ui \
+    deletewarehousedialog.ui \
     loginwindow.ui \
     mainwindow.ui \
     setcomponentdialog.ui \
-    setuserdialog.ui
+    setuserdialog.ui \
+    setwarehousedialog.ui
 	
 INCLUDEPATH += \
     $$PWD/../3rdparty/libpqxx/include

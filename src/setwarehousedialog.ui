@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>AddWarehouseDialog</class>
- <widget class="QDialog" name="AddWarehouseDialog">
+ <class>SetWarehouseDialog</class>
+ <widget class="QDialog" name="SetWarehouseDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>336</width>
-    <height>174</height>
+    <width>338</width>
+    <height>206</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,12 +17,23 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_7">
-       <property name="spacing">
-        <number>6</number>
-       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
         <widget class="QLabel" name="label_5">
+         <property name="text">
+          <string>ИД</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="inputId"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <item>
+        <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Название города</string>
          </property>
@@ -34,12 +45,9 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <property name="spacing">
-        <number>6</number>
-       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_5">
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="label_3">
          <property name="text">
           <string>Название улицы</string>
          </property>
@@ -52,9 +60,6 @@
      </item>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_6">
-       <property name="spacing">
-        <number>6</number>
-       </property>
        <item>
         <widget class="QLabel" name="label_4">
          <property name="text">
@@ -68,12 +73,9 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <property name="spacing">
-        <number>6</number>
-       </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_7">
        <item>
-        <widget class="QLabel" name="label_3">
+        <widget class="QLabel" name="label_6">
          <property name="text">
           <string>Почтовый индекс</string>
          </property>
@@ -85,12 +87,12 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0">
        <property name="spacing">
         <number>200</number>
        </property>
        <item>
-        <widget class="QPushButton" name="buttonAddWarehouse">
+        <widget class="QPushButton" name="buttonSetWarehouse">
          <property name="styleSheet">
           <string notr="true">QPushButton
 {
@@ -110,7 +112,7 @@ background-color: rgb(240, 240, 240);
 }</string>
          </property>
          <property name="text">
-          <string>Добавить</string>
+          <string>Изменить</string>
          </property>
         </widget>
        </item>
@@ -150,32 +152,32 @@ background-color: rgb(240, 240, 240);
   <connection>
    <sender>buttonCloseDialog</sender>
    <signal>clicked()</signal>
-   <receiver>AddWarehouseDialog</receiver>
+   <receiver>SetWarehouseDialog</receiver>
    <slot>deleteLater()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>295</x>
-     <y>79</y>
+     <x>344</x>
+     <y>203</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
-     <y>55</y>
+     <y>114</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>AddWarehouseDialog</sender>
+   <sender>SetWarehouseDialog</sender>
    <signal>finished(int)</signal>
-   <receiver>AddWarehouseDialog</receiver>
+   <receiver>SetWarehouseDialog</receiver>
    <slot>deleteLater()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>199</x>
-     <y>55</y>
+     <y>114</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
-     <y>55</y>
+     <y>114</y>
     </hint>
    </hints>
   </connection>

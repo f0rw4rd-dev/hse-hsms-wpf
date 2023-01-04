@@ -11,6 +11,8 @@
 #include "deleteuserdialog.h"
 #include "warehouse.h"
 #include "addwarehousedialog.h"
+#include "setwarehousedialog.h"
+#include "deletewarehousedialog.h"
 #include "computer.h"
 #include "characteristic.h"
 
@@ -42,6 +44,8 @@ MainWindow::MainWindow(QWidget *parent)
     _tableWarehouses = findChild<QTableWidget*>("tableWarehouses");
     _buttonLoadWarehouses = findChild<QPushButton*>("buttonLoadWarehouses");
     _buttonAddWarehouse = findChild<QPushButton*>("buttonAddWarehouse");
+    _buttonSetWarehouse = findChild<QPushButton*>("buttonSetWarehouse");
+    _buttonDeleteWarehouse = findChild<QPushButton*>("buttonDeleteWarehouse");
 
     _tableComputers = findChild<QTableWidget*>("tableComputers");
     _buttonLoadComputers = findChild<QPushButton*>("buttonLoadComputers");
@@ -49,8 +53,8 @@ MainWindow::MainWindow(QWidget *parent)
     _tableCharacteristics = findChild<QTableWidget*>("tableCharacteristics");
     _buttonLoadCharacteristics = findChild<QPushButton*>("buttonLoadCharacteristics");
 
-    _tableComponentsInWarehouses = findChild<QTableWidget*>("tableComponentsInWarehouses");
-    _buttonLoadComponentsInWarehouses = findChild<QPushButton*>("buttonLoadComponentsInWarehouses");
+    _tableWarehouseComponents = findChild<QTableWidget*>("tableWarehouseComponents");
+    _buttonLoadWarehouseComponents = findChild<QPushButton*>("buttonLoadWarehouseComponents");
 
     _stackedWidget = findChild<QStackedWidget*>("stackedWidget");
 
@@ -71,12 +75,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(_buttonLoadWarehouses, &QPushButton::clicked, this, &MainWindow::loadWarehouses);
     connect(_buttonAddWarehouse, &QPushButton::clicked, this, &MainWindow::addWarehouse);
+    connect(_buttonSetWarehouse, &QPushButton::clicked, this, &MainWindow::setWarehouse);
+    connect(_buttonDeleteWarehouse, &QPushButton::clicked, this, &MainWindow::deleteWarehouse);
 
     connect(_buttonLoadComputers, &QPushButton::clicked, this, &MainWindow::loadComputers);
 
     connect(_buttonLoadCharacteristics, &QPushButton::clicked, this, &MainWindow::loadCharacteristics);
 
-    connect(_buttonLoadComponentsInWarehouses, &QPushButton::clicked, this, &MainWindow::loadComponentsInWarehouses);
+    connect(_buttonLoadWarehouseComponents, &QPushButton::clicked, this, &MainWindow::loadWarehouseComponents);
 
     // Fill tables with data
     loadComponents();
@@ -84,7 +90,7 @@ MainWindow::MainWindow(QWidget *parent)
     loadWarehouses();
     loadComputers();
     loadCharacteristics();
-    loadComponentsInWarehouses();
+    loadWarehouseComponents();
 
     // Remove the first column in tables
     auto setupTable = [](QTableWidget *table) {
@@ -94,6 +100,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     setupTable(_tableComponents);
     setupTable(_tableUsers);
+    setupTable(_tableWarehouses);
 
     parentWidget();
 }
@@ -113,7 +120,7 @@ void MainWindow::loadComponents()
         _tableComponents->insertRow(row);
 
         _tableComponents->setItem(row, 0, new QTableWidgetItem(QString::number(dbComponent->id)));
-        _tableComponents->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbComponent->typeName)));
+        _tableComponents->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbComponent->componentType->name)));
         _tableComponents->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(dbComponent->name)));
         _tableComponents->setItem(row, 3, new QTableWidgetItem(QString::number(dbComponent->warranty)));
         _tableComponents->setItem(row, 4, new QTableWidgetItem(QString::number(dbComponent->price)));
@@ -123,6 +130,10 @@ void MainWindow::loadComponents()
 void MainWindow::addComponent()
 {
     AddComponentDialog *addComponentDialog = new AddComponentDialog(this);
+
+    //QScopedPointer<AddComponentDialog, QScopedPointerDeleteLater> addComponentDialog(new AddComponentDialog(this));
+
+    //AddComponentDialog addComponentDialog(this);
     addComponentDialog->show();
 }
 
@@ -150,7 +161,7 @@ void MainWindow::loadUsers()
         _tableUsers->setItem(row, 0, new QTableWidgetItem(QString::number(dbUser->id)));
         _tableUsers->setItem(row, 1, new QTableWidgetItem(QDateTime::fromSecsSinceEpoch(dbUser->registrationDate).toString("dd/MM/yyyy hh:mm:ss")));
         _tableUsers->setItem(row, 2, new QTableWidgetItem(QDateTime::fromSecsSinceEpoch(dbUser->lastVisitDate).toString("dd/MM/yyyy hh:mm:ss")));
-        _tableUsers->setItem(row, 3, new QTableWidgetItem(QString::fromStdString(dbUser->groupName)));
+        _tableUsers->setItem(row, 3, new QTableWidgetItem(QString::fromStdString(dbUser->group->name)));
     }
 }
 
@@ -182,7 +193,10 @@ void MainWindow::loadWarehouses()
         _tableWarehouses->insertRow(row);
 
         _tableWarehouses->setItem(row, 0, new QTableWidgetItem(QString::number(dbWarehouse->id)));
-        _tableWarehouses->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbWarehouse->address)));
+        _tableWarehouses->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbWarehouse->city)));
+        _tableWarehouses->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(dbWarehouse->street)));
+        _tableWarehouses->setItem(row, 3, new QTableWidgetItem(QString::number(dbWarehouse->house)));
+        _tableWarehouses->setItem(row, 4, new QTableWidgetItem(QString::number(dbWarehouse->zip)));
     }
 }
 
@@ -190,6 +204,18 @@ void MainWindow::addWarehouse()
 {
     AddWarehouseDialog *addWarehouseDialog = new AddWarehouseDialog(this);
     addWarehouseDialog->show();
+}
+
+void MainWindow::setWarehouse()
+{
+    SetWarehouseDialog *setWarehouseDialog = new SetWarehouseDialog(this);
+    setWarehouseDialog->show();
+}
+
+void MainWindow::deleteWarehouse()
+{
+    DeleteWarehouseDialog *deleteWarehouseDialog = new DeleteWarehouseDialog(this);
+    deleteWarehouseDialog->show();
 }
 
 void MainWindow::loadComputers()
@@ -260,17 +286,17 @@ void MainWindow::loadCharacteristics()
     }
 }
 
-void MainWindow::loadComponentsInWarehouses()
+void MainWindow::loadWarehouseComponents()
 {
-    _tableComponentsInWarehouses->setRowCount(0);
+    _tableWarehouseComponents->setRowCount(0);
 
-    for (std::shared_ptr<DBComponentInWarehouse> &dbComponentInWarehouse : Warehouse::getComponentsInWarehouses()) {
-        int row = _tableComponentsInWarehouses->rowCount();
+    for (std::shared_ptr<DBWarehouseComponent> &dbComponentInWarehouse : Warehouse::getWarehouseComponents()) {
+        int row = _tableWarehouseComponents->rowCount();
 
-        _tableComponentsInWarehouses->insertRow(row);
+        _tableWarehouseComponents->insertRow(row);
 
-        _tableComponentsInWarehouses->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(dbComponentInWarehouse->componentName)));
-        _tableComponentsInWarehouses->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbComponentInWarehouse->address)));
-        _tableComponentsInWarehouses->setItem(row, 2, new QTableWidgetItem(QString::number(dbComponentInWarehouse->amount)));
+        _tableWarehouseComponents->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(dbComponentInWarehouse->component->name)));
+        _tableWarehouseComponents->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(dbComponentInWarehouse->warehouse->city)));
+        _tableWarehouseComponents->setItem(row, 2, new QTableWidgetItem(QString::number(dbComponentInWarehouse->amount)));
     }
 }

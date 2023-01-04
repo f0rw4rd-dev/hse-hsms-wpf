@@ -20,7 +20,7 @@ AddUserDialog::AddUserDialog(QWidget *parent) :
     _inputPassword = findChild<QLineEdit*>("inputPassword");
 
     // Validators
-    _inputPassword->setValidator(new QRegularExpressionValidator(RegularExpressions::integer, this));
+    _inputPassword->setValidator(new QRegularExpressionValidator(RegularExpressions::digit, this));
 
     // Connections
     connect(_buttonAddUser, &QPushButton::clicked, this, &AddUserDialog::addUser);
@@ -52,6 +52,7 @@ void AddUserDialog::addUser()
     User::addUser(User::getEncryptedPassword(_inputPassword->text()), _comboGroupName->itemData(_comboGroupName->currentIndex()).toInt());
 
     close();
+    deleteLater();
 
     QMessageBox::information(nullptr, "Информация", "Пользователь добавлен!");
 }

@@ -27,10 +27,10 @@ SetComponentDialog::SetComponentDialog(QWidget *parent) :
     QDoubleValidator *doubleValidator = new QDoubleValidator(0,  std::numeric_limits<float>::max(), 2, this);
     doubleValidator->setLocale(locale);
 
-    _inputId->setValidator(new QRegularExpressionValidator(RegularExpressions::integer, this));
+    _inputId->setValidator(new QRegularExpressionValidator(RegularExpressions::digit, this));
     _inputName->setLocale(locale);
     _inputName->setValidator(new QRegularExpressionValidator(RegularExpressions::componentName, this));
-    _inputWarranty->setValidator(new QRegularExpressionValidator(RegularExpressions::integer, this));
+    _inputWarranty->setValidator(new QRegularExpressionValidator(RegularExpressions::digit, this));
     _inputPrice->setValidator(doubleValidator);
 
     // Connections
@@ -66,7 +66,7 @@ void SetComponentDialog::loadComponent(const QString &id)
         return;
     }
 
-    _comboTypeName->setCurrentIndex(_comboTypeName->findData(QVariant(dbComponent->typeId)));
+    _comboTypeName->setCurrentIndex(_comboTypeName->findData(QVariant(dbComponent->componentType->id)));
     _inputName->setText(QString::fromStdString(dbComponent->name));
     _inputWarranty->setText(QString::number(dbComponent->warranty));
     _inputPrice->setText(QString::number(dbComponent->price));
@@ -88,6 +88,7 @@ void SetComponentDialog::setComponent()
     Component::setComponent(dbComponent);
 
     close();
+    deleteLater();
 
     QMessageBox::information(nullptr, "Информация", "Информация о комплектующем изменена!");
 }

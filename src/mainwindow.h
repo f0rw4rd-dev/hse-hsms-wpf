@@ -34,6 +34,8 @@ private slots:
     // Actions with warehouses
     void loadWarehouses();
     void addWarehouse();
+    void setWarehouse();
+    void deleteWarehouse();
 
     // Actions with computers
     void loadComputers();
@@ -43,7 +45,7 @@ private slots:
     void loadCharacteristics();
 
     // Actions with components in warehouses
-    void loadComponentsInWarehouses();
+    void loadWarehouseComponents();
 
 private:
     // UI elements for components
@@ -62,6 +64,8 @@ private:
     QTableWidget *_tableWarehouses;
     QPushButton *_buttonLoadWarehouses;
     QPushButton *_buttonAddWarehouse;
+    QPushButton *_buttonSetWarehouse;
+    QPushButton *_buttonDeleteWarehouse;
 
     QTableWidget *_tableComputers;
     QPushButton *_buttonLoadComputers;
@@ -69,8 +73,8 @@ private:
     QTableWidget *_tableCharacteristics;
     QPushButton *_buttonLoadCharacteristics;
 
-    QTableWidget *_tableComponentsInWarehouses;
-    QPushButton *_buttonLoadComponentsInWarehouses;
+    QTableWidget *_tableWarehouseComponents;
+    QPushButton *_buttonLoadWarehouseComponents;
 
     QStackedWidget *_stackedWidget;
 

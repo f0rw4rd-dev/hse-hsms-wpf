@@ -1,6 +1,8 @@
 #ifndef USER_H
 #define USER_H
 
+#include "group.h"
+
 #include <QString>
 #include <pqxx/pqxx>
 
@@ -8,13 +10,16 @@ struct DBUser
 {
     DBUser() {};
     DBUser(int id, int64_t registrationDate, int64_t lastVisitDate, int groupId, std::string groupName)
-        : id(id), registrationDate(registrationDate), lastVisitDate(lastVisitDate), groupId(groupId), groupName(groupName) {};
+        : id(id), registrationDate(registrationDate), lastVisitDate(lastVisitDate)
+    {
+        group = std::make_unique<DBGroup>(groupId, groupName);
+    };
 
     int id;
     int64_t registrationDate;
     int64_t lastVisitDate;
-    int groupId;
-    std::string groupName;
+
+    std::unique_ptr<DBGroup> group;
 };
 
 class User
@@ -24,7 +29,7 @@ public:
 
     static QString getEncryptedPassword(QString password);
 
-    static bool isUserExist(int id);
+    static bool doesUserExist(int id);
     static bool areCredentialsCorrect(QString login, QString password);
 
     static void updateLastVisitDate(QString login);
@@ -35,8 +40,6 @@ public:
     static void setUserPassword(int id, QString newPassword);
     static void setUserGroup(int id, int newGroupId);
     static void deleteUser(int id);
-
-    static bool doesUserExist(int id);
 
     static pqxx::result getGroups();
 };

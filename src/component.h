@@ -1,6 +1,8 @@
 #ifndef COMPONENT_H
 #define COMPONENT_H
 
+#include "componenttype.h"
+
 #include <QVector>
 #include <string>
 #include <pqxx/pqxx>
@@ -9,12 +11,15 @@ struct DBComponent
 {
     DBComponent() {};
     DBComponent(int id, std::string name, int typeId, std::string typeName, int warranty, float price)
-        : id(id), name(name), typeId(typeId), typeName(typeName), warranty(warranty), price(price) {};
+        : id(id), name(name), warranty(warranty), price(price)
+    {
+        componentType = std::make_unique<DBComponentType>(typeId, typeName);
+    };
+    DBComponent(int id, std::string name) : id(id), name(name) {};
 
     int id;
     std::string name;
-    int typeId;
-    std::string typeName;
+    std::unique_ptr<DBComponentType> componentType;
     int warranty; // in months
     float price; // in RUB
 };

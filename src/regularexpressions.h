@@ -10,7 +10,7 @@ public:
     static QRegularExpression componentName;
     static QRegularExpression id;
     static QRegularExpression password;
-    static QRegularExpression integer;
+    static QRegularExpression digit;
 };
 
 #endif // REGULAREXPRESSIONS_H

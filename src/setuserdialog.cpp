@@ -21,7 +21,7 @@ SetUserDialog::SetUserDialog(QWidget *parent) :
     _inputId = findChild<QLineEdit*>("inputId");
     _inputPassword = findChild<QLineEdit*>("inputPassword");
 
-    _inputId->setValidator(new QRegularExpressionValidator(RegularExpressions::integer, this));
+    _inputId->setValidator(new QRegularExpressionValidator(RegularExpressions::digit, this));
     _inputPassword->setValidator(new QRegularExpressionValidator(RegularExpressions::password, this));
 
     // Connections
@@ -53,7 +53,7 @@ void SetUserDialog::loadUser(const QString &id)
         return;
     }
 
-    _comboGroupName->setCurrentIndex(_comboGroupName->findData(QVariant(dbUser->groupId)));
+    _comboGroupName->setCurrentIndex(_comboGroupName->findData(QVariant(dbUser->group->id)));
 }
 
 void SetUserDialog::setUser()
@@ -75,6 +75,7 @@ void SetUserDialog::setUser()
     }
 
     close();
+    deleteLater();
 
     QMessageBox::information(nullptr, "Информация", "Информация о пользователе изменена!");
 }

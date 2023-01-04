@@ -40,7 +40,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>5</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tabComponents">
        <attribute name="title">
@@ -362,38 +362,89 @@ border: none;
          <rect>
           <x>10</x>
           <y>10</y>
-          <width>80</width>
+          <width>90</width>
           <height>24</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+}</string>
+        </property>
         <property name="text">
          <string>Обновить</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <activeon>:/resources/icons/resources/icons/icons8-update-100.png</activeon>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
        <widget class="QPushButton" name="buttonAddWarehouse">
         <property name="geometry">
          <rect>
-          <x>100</x>
+          <x>110</x>
           <y>10</y>
-          <width>80</width>
+          <width>90</width>
           <height>24</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+}</string>
+        </property>
         <property name="text">
          <string>Добавить</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <activeon>:/resources/icons/resources/icons/icons8-insert-page-100.png</activeon>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
        <widget class="QPushButton" name="buttonSetWarehouse">
         <property name="geometry">
          <rect>
-          <x>190</x>
+          <x>210</x>
           <y>10</y>
-          <width>80</width>
+          <width>90</width>
           <height>24</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+}</string>
+        </property>
         <property name="text">
          <string>Изменить</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <activeon>:/resources/icons/resources/icons/icons8-edit-100.png</activeon>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
        <widget class="QTableWidget" name="tableWarehouses">
@@ -402,7 +453,7 @@ border: none;
           <x>0</x>
           <y>44</y>
           <width>1000</width>
-          <height>450</height>
+          <height>501</height>
          </rect>
         </property>
         <property name="frameShape">
@@ -442,21 +493,53 @@ border: none;
         </column>
         <column>
          <property name="text">
-          <string>Адрес</string>
+          <string>Город</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Улица</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Дом</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Почтовый индекс</string>
          </property>
         </column>
        </widget>
        <widget class="QPushButton" name="buttonDeleteWarehouse">
         <property name="geometry">
          <rect>
-          <x>280</x>
+          <x>310</x>
           <y>10</y>
-          <width>80</width>
+          <width>90</width>
           <height>24</height>
          </rect>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton
+{
+border: none;
+}</string>
+        </property>
         <property name="text">
          <string>Удалить</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <activeon>:/resources/icons/resources/icons/icons8-trash-100.png</activeon>
+         </iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </widget>
@@ -464,7 +547,7 @@ border: none;
        <attribute name="title">
         <string>Наличие комплектующих на складах</string>
        </attribute>
-       <widget class="QPushButton" name="buttonLoadComponentsInWarehouses">
+       <widget class="QPushButton" name="buttonLoadWarehouseComponents">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -477,7 +560,7 @@ border: none;
          <string>Обновить</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="buttonSetComponentInWarehouse">
+       <widget class="QPushButton" name="buttonSetWarehouseComponent">
         <property name="geometry">
          <rect>
           <x>190</x>
@@ -490,7 +573,7 @@ border: none;
          <string>Изменить</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="buttonDeleteComponentInWarehouse">
+       <widget class="QPushButton" name="buttonDeleteWarehouseComponent">
         <property name="geometry">
          <rect>
           <x>280</x>
@@ -503,7 +586,7 @@ border: none;
          <string>Удалить</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="buttonAddComponentInWarehouse">
+       <widget class="QPushButton" name="buttonAddWarehouseComponent">
         <property name="geometry">
          <rect>
           <x>100</x>
@@ -516,7 +599,7 @@ border: none;
          <string>Добавить</string>
         </property>
        </widget>
-       <widget class="QTableWidget" name="tableComponentsInWarehouses">
+       <widget class="QTableWidget" name="tableWarehouseComponents">
         <property name="geometry">
          <rect>
           <x>0</x>

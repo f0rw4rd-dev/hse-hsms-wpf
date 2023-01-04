@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DeleteUserDialog</class>
- <widget class="QDialog" name="DeleteUserDialog">
+ <class>DeleteWarehouseDialog</class>
+ <widget class="QDialog" name="DeleteWarehouseDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -36,7 +36,7 @@
         <number>200</number>
        </property>
        <item>
-        <widget class="QPushButton" name="buttonDeleteUser">
+        <widget class="QPushButton" name="buttonDeleteWarehouse">
          <property name="styleSheet">
           <string notr="true">QPushButton
 {
@@ -94,34 +94,34 @@ background-color: rgb(240, 240, 240);
  <resources/>
  <connections>
   <connection>
-   <sender>buttonCloseDialog</sender>
-   <signal>clicked()</signal>
-   <receiver>DeleteUserDialog</receiver>
+   <sender>DeleteWarehouseDialog</sender>
+   <signal>finished(int)</signal>
+   <receiver>DeleteWarehouseDialog</receiver>
    <slot>deleteLater()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>344</x>
-     <y>63</y>
+     <x>199</x>
+     <y>39</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
-     <y>49</y>
+     <y>39</y>
     </hint>
    </hints>
   </connection>
   <connection>
-   <sender>DeleteUserDialog</sender>
-   <signal>finished(int)</signal>
-   <receiver>DeleteUserDialog</receiver>
+   <sender>buttonCloseDialog</sender>
+   <signal>clicked()</signal>
+   <receiver>DeleteWarehouseDialog</receiver>
    <slot>deleteLater()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>199</x>
-     <y>49</y>
+     <x>344</x>
+     <y>55</y>
     </hint>
     <hint type="destinationlabel">
      <x>199</x>
-     <y>49</y>
+     <y>39</y>
     </hint>
    </hints>
   </connection>

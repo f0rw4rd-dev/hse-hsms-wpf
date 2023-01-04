@@ -28,7 +28,7 @@ LoginWindow::LoginWindow(QWidget *parent) :
     _buttonLogin = findChild<QPushButton*>("buttonLogin");
 
     // Validators
-    _inputLogin->setValidator(new QRegularExpressionValidator(RegularExpressions::integer, this));
+    _inputLogin->setValidator(new QRegularExpressionValidator(RegularExpressions::digit, this));
     _inputPassword->setValidator(new QRegularExpressionValidator(RegularExpressions::password, this));
 
     // Connections
@@ -49,7 +49,7 @@ void LoginWindow::authorize()
         return;
     }
 
-    if (!User::isUserExist(_inputLogin->text().toInt())) {
+    if (!User::doesUserExist(_inputLogin->text().toInt())) {
         QMessageBox::information(nullptr, "Предупреждение", "Данного пользователя не существует!");
         return;
     }

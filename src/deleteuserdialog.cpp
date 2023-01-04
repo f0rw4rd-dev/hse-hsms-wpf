@@ -20,7 +20,7 @@ DeleteUserDialog::DeleteUserDialog(QWidget *parent) :
     _inputId = findChild<QLineEdit*>("inputId");
 
     // Validators
-    _inputId->setValidator(new QRegularExpressionValidator(RegularExpressions::integer, this));
+    _inputId->setValidator(new QRegularExpressionValidator(RegularExpressions::digit, this));
 
     // Connections
     connect(_buttonDeleteUser, &QPushButton::clicked, this, &DeleteUserDialog::deleteUser);
@@ -38,7 +38,7 @@ void DeleteUserDialog::deleteUser()
         return;
     }
 
-    if (!User::isUserExist(_inputId->text().toInt())) {
+    if (!User::doesUserExist(_inputId->text().toInt())) {
         QMessageBox::information(nullptr, "Предупреждение", "Данного пользователя не существует!");
         return;
     }
@@ -46,6 +46,7 @@ void DeleteUserDialog::deleteUser()
     User::deleteUser(_inputId->text().toInt());
 
     close();
+    deleteLater();
 
-    QMessageBox::information(nullptr, "Информация", "Пользователь удален!");
+    QMessageBox::information(nullptr, "Информация", "Пользователь удален!");    
 }

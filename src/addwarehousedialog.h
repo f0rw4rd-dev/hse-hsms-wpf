@@ -22,7 +22,10 @@ private slots:
 
 private:
     QPushButton *_buttonAddWarehouse;
-    QLineEdit *_inputAddress;
+    QLineEdit *_inputCity;
+    QLineEdit *_inputStreet;
+    QLineEdit *_inputHouse;
+    QLineEdit *_inputZip;
 
 private:
     Ui::AddWarehouseDialog *ui;

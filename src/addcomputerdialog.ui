@@ -73,5 +73,38 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>buttonCloseDialog</sender>
+   <signal>clicked()</signal>
+   <receiver>AddComputerDialog</receiver>
+   <slot>deleteLater()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>296</x>
+     <y>303</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>AddComputerDialog</sender>
+   <signal>finished(int)</signal>
+   <receiver>AddComputerDialog</receiver>
+   <slot>deleteLater()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>266</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>266</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

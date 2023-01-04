@@ -23,8 +23,6 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) :
     _inputPrice = findChild<QLineEdit*>("inputPrice");
 
     // Validators
-    //QRegularExpression nameRegExp("[a-zA-Zа-яА-Я0-9(), ]+");
-
     QLocale locale(QLocale::English, QLocale::UnitedStates);
     locale.setNumberOptions(QLocale::RejectGroupSeparator);
 
@@ -33,7 +31,7 @@ AddComponentDialog::AddComponentDialog(QWidget *parent) :
 
     _inputName->setLocale(locale);
     _inputName->setValidator(new QRegularExpressionValidator(RegularExpressions::componentName, this));
-    _inputWarranty->setValidator(new QRegularExpressionValidator(RegularExpressions::integer, this));
+    _inputWarranty->setValidator(new QRegularExpressionValidator(RegularExpressions::digit, this));
     _inputPrice->setValidator(doubleValidator);
 
     // Connections
@@ -73,6 +71,7 @@ void AddComponentDialog::addComponent()
     Component::addComponent(dbComponent);
 
     close();
+    deleteLater();
 
     QMessageBox::information(nullptr, "Информация", "Комплектующее добавлено!");
 }
