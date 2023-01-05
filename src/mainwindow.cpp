@@ -18,6 +18,7 @@
 #include "setwarehousecomponentdialog.h"
 #include "deletewarehousecomponentdialog.h"
 #include "computer.h"
+#include "addcomputerdialog.h"
 #include "characteristic.h"
 
 #include <QDateTime>
@@ -53,6 +54,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     _tableComputers = findChild<QTableWidget*>("tableComputers");
     _buttonLoadComputers = findChild<QPushButton*>("buttonLoadComputers");
+    _buttonAddComputer = findChild<QPushButton*>("buttonAddComputer");
+    _buttonSetComputer = findChild<QPushButton*>("buttonSetComputer");
+    _buttonDeleteComputer = findChild<QPushButton*>("buttonDeleteComputer");
 
     _tableCharacteristics = findChild<QTableWidget*>("tableCharacteristics");
     _buttonLoadCharacteristics = findChild<QPushButton*>("buttonLoadCharacteristics");
@@ -86,6 +90,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(_buttonDeleteWarehouse, &QPushButton::clicked, this, &MainWindow::deleteWarehouse);
 
     connect(_buttonLoadComputers, &QPushButton::clicked, this, &MainWindow::loadComputers);
+    connect(_buttonAddComputer, &QPushButton::clicked, this, &MainWindow::addComputer);
+    //connect(_buttonSetComputer, &QPushButton::clicked, this, &MainWindow::setComputer);
+    //connect(_buttonDeleteComputer, &QPushButton::clicked, this, &MainWindow::deleteComputer);
 
     connect(_buttonLoadCharacteristics, &QPushButton::clicked, this, &MainWindow::loadCharacteristics);
 
@@ -292,7 +299,8 @@ void MainWindow::loadComputers()
 
 void MainWindow::addComputer()
 {
-
+    AddComputerDialog *addComputerDialog = new AddComputerDialog(this);
+    addComputerDialog->show();
 }
 
 void MainWindow::loadCharacteristics()

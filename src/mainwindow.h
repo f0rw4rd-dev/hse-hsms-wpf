@@ -72,6 +72,9 @@ private:
 
     QTableWidget *_tableComputers;
     QPushButton *_buttonLoadComputers;
+    QPushButton *_buttonAddComputer;
+    QPushButton *_buttonSetComputer;
+    QPushButton *_buttonDeleteComputer;
 
     QTableWidget *_tableCharacteristics;
     QPushButton *_buttonLoadCharacteristics;
