@@ -8,42 +8,41 @@
 #include <QSharedPointer>
 #include <pqxx/pqxx>
 
-struct DBComponent
-{
-    DBComponent() {};
-    DBComponent(int id) : id(id) {};
-    DBComponent(int id, QString name, int typeId, QString typeName, int warranty, float price)
-        : id(id), name(name), warranty(warranty), price(price)
-    {
-        componentType.reset(new DBComponentType(typeId, typeName));
-    };
-    DBComponent(QString name, int typeId, QString typeName, int warranty, float price)
-        : name(name), warranty(warranty), price(price)
-    {
-        componentType.reset(new DBComponentType(typeId, typeName));
-    };
-    DBComponent(int id, QString name) : id(id), name(name) {};
-
-    int id;
-    QString name;
-    QScopedPointer<DBComponentType> componentType;
-    int warranty; // in months
-    float price; // in RUB
-};
-
 class Component
 {
 public:
-    Component();
+    Component() {};
+    Component(int id) : id(id) {};
+    Component(int id, QString name, int typeId, QString typeName, int warranty, float price)
+        : id(id), name(name), warranty(warranty), price(price)
+    {
+        componentType.reset(new ComponentType(typeId, typeName));
+    };
+    Component(QString name, int typeId, QString typeName, int warranty, float price)
+        : name(name), warranty(warranty), price(price)
+    {
+        componentType.reset(new ComponentType(typeId, typeName));
+    };
+    Component(int id, QString name) : id(id), name(name) {};
+    Component(int id, QString name, int amount) : id(id), name(name), amount(amount) {};
 
-    static QVector<QSharedPointer<DBComponent>> getComponents();
-    static QScopedPointer<DBComponent> getComponent(int id);
-    static void addComponent(DBComponent &dbComponent);
-    static void setComponent(DBComponent &dbComponent);
+    static QVector<QSharedPointer<Component>> getComponents();
+    static QScopedPointer<Component> getComponent(int id);
+    static void addComponent(Component &component);
+    static void setComponent(Component &component);
     static void deleteComponent(int id);
 
     static bool doesComponentExist(QString name);
     static bool doesComponentExist(int id);
+
+public:
+    int id;
+    QString name;
+    QScopedPointer<ComponentType> componentType;
+    int warranty;
+    float price;
+
+    int amount; // only for special components (e.g. ram) as part of computers
 };
 
 #endif // COMPONENT_H

@@ -57,8 +57,8 @@ void AddWarehouseComponentDialog::addWarehouseComponent()
         return;
     }
 
-    DBWarehouseComponent dbWarehouseComponent(_inputWarehouseId->text().toInt(), _inputComponentId->text().toInt(), _inputAmount->text().toInt());
-    WarehouseComponent::addWarehouseComponent(dbWarehouseComponent);
+    WarehouseComponent warehouseComponent(_inputWarehouseId->text().toInt(), _inputComponentId->text().toInt(), _inputAmount->text().toInt());
+    WarehouseComponent::addWarehouseComponent(warehouseComponent);
 
     close();
     deleteLater();

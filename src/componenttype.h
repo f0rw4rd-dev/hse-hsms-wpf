@@ -4,21 +4,17 @@
 #include <QString>
 #include <QSharedPointer>
 
-struct DBComponentType
-{
-    DBComponentType() {};
-    DBComponentType(int id, QString name) : id(id), name(name) {};
-
-    int id;
-    QString name;
-};
-
 class ComponentType
 {
 public:
-    ComponentType();
+    ComponentType() {};
+    ComponentType(int id, QString name) : id(id), name(name) {};
 
-    static QVector<QSharedPointer<DBComponentType>> getComponentTypes();
+    static QVector<QSharedPointer<ComponentType>> getComponentTypes();
+
+public:
+    int id;
+    QString name;
 };
 
 #endif // COMPONENTTYPE_H

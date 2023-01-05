@@ -3,21 +3,16 @@
 
 #include <QList>
 
-ComponentType::ComponentType()
-{
-
-}
-
-QVector<QSharedPointer<DBComponentType>> ComponentType::getComponentTypes()
+QVector<QSharedPointer<ComponentType>> ComponentType::getComponentTypes()
 {
     dbConnection->assertConnectionIsReliable();
 
     QString request = "SELECT id, name FROM components_types;";
 
-    QVector<QSharedPointer<DBComponentType>> componentTypes;
+    QVector<QSharedPointer<ComponentType>> componentTypes;
 
     for (auto &[id, name] : dbConnection->getTransaction()->query<int, std::string>(request.toStdString()))
-        componentTypes.append(QSharedPointer<DBComponentType>(new DBComponentType(id, QString::fromStdString(name))));
+        componentTypes.append(QSharedPointer<ComponentType>(new ComponentType(id, QString::fromStdString(name))));
 
     return componentTypes;
 }

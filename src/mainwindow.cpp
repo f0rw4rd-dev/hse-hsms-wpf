@@ -128,7 +128,7 @@ void MainWindow::loadComponents()
 {
     _tableComponents->setRowCount(0);
 
-    for (QSharedPointer<DBComponent> &dbComponent : Component::getComponents()) {
+    for (QSharedPointer<Component> &dbComponent : Component::getComponents()) {
         int row = _tableComponents->rowCount();
 
         _tableComponents->insertRow(row);
@@ -163,15 +163,15 @@ void MainWindow::loadUsers()
 {
     _tableUsers->setRowCount(0);
 
-    for (QSharedPointer<DBUser> &dbUser : User::getUsers()) {
+    for (QSharedPointer<User> &user : User::getUsers()) {
         int row = _tableUsers->rowCount();
 
         _tableUsers->insertRow(row);
 
-        _tableUsers->setItem(row, 0, new QTableWidgetItem(QString::number(dbUser->id)));
-        _tableUsers->setItem(row, 1, new QTableWidgetItem(QDateTime::fromSecsSinceEpoch(dbUser->registrationDate).toString("dd/MM/yyyy hh:mm:ss")));
-        _tableUsers->setItem(row, 2, new QTableWidgetItem(QDateTime::fromSecsSinceEpoch(dbUser->lastVisitDate).toString("dd/MM/yyyy hh:mm:ss")));
-        _tableUsers->setItem(row, 3, new QTableWidgetItem(dbUser->group->name));
+        _tableUsers->setItem(row, 0, new QTableWidgetItem(QString::number(user->id)));
+        _tableUsers->setItem(row, 1, new QTableWidgetItem(QDateTime::fromSecsSinceEpoch(user->registrationDate).toString("dd/MM/yyyy hh:mm:ss")));
+        _tableUsers->setItem(row, 2, new QTableWidgetItem(QDateTime::fromSecsSinceEpoch(user->lastVisitDate).toString("dd/MM/yyyy hh:mm:ss")));
+        _tableUsers->setItem(row, 3, new QTableWidgetItem(user->group->name));
     }
 }
 
@@ -197,16 +197,16 @@ void MainWindow::loadWarehouses()
 {
     _tableWarehouses->setRowCount(0);
 
-    for (QSharedPointer<DBWarehouse> &dbWarehouse : Warehouse::getWarehouses()) {
+    for (QSharedPointer<Warehouse> &warehouse : Warehouse::getWarehouses()) {
         int row = _tableWarehouses->rowCount();
 
         _tableWarehouses->insertRow(row);
 
-        _tableWarehouses->setItem(row, 0, new QTableWidgetItem(QString::number(dbWarehouse->id)));
-        _tableWarehouses->setItem(row, 1, new QTableWidgetItem(dbWarehouse->city));
-        _tableWarehouses->setItem(row, 2, new QTableWidgetItem(dbWarehouse->street));
-        _tableWarehouses->setItem(row, 3, new QTableWidgetItem(QString::number(dbWarehouse->house)));
-        _tableWarehouses->setItem(row, 4, new QTableWidgetItem(QString::number(dbWarehouse->zip)));
+        _tableWarehouses->setItem(row, 0, new QTableWidgetItem(QString::number(warehouse->id)));
+        _tableWarehouses->setItem(row, 1, new QTableWidgetItem(warehouse->city));
+        _tableWarehouses->setItem(row, 2, new QTableWidgetItem(warehouse->street));
+        _tableWarehouses->setItem(row, 3, new QTableWidgetItem(QString::number(warehouse->house)));
+        _tableWarehouses->setItem(row, 4, new QTableWidgetItem(QString::number(warehouse->zip)));
     }
 }
 
@@ -232,50 +232,48 @@ void MainWindow::loadComputers()
 {
     _tableComputers->setRowCount(0);
 
-    for (QSharedPointer<DBComputer> &dbComputers : Computer::getComputers()) {
-        //int row = _tableComputers->rowCount();
+    for (QSharedPointer<Computer> &computers : Computer::getComputers()) {
         int row = 0;
 
         for (int i = row; i < row + 12; i++)
-        {
             _tableComputers->insertRow(i);
-        }
 
-        _tableComputers->setItem(row, 0, new QTableWidgetItem(QString::number(dbComputers->id)));
+        _tableComputers->setItem(row, 0, new QTableWidgetItem(QString::number(computers->id)));
 
-        QString componentFormat("#%1 %2");
-        QString componentWithAmountFormat("#%1 %2 (%3)");
+        QString componentFormat("%1 - [%2] %3");
+        QString componentWithAmountFormat("%1 - [%2] %3 - x%4");
+        QString componentMissingFormat("%1 - Отсутствует");
 
-        _tableComputers->setItem(row + 1, 1, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->cpuId), dbComputers->cpuName)));
-        _tableComputers->setItem(row + 2, 1, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->motherboardId), dbComputers->motherboardName)));
-        _tableComputers->setItem(row + 3, 1, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->videocardId), dbComputers->videocardName)));
-        _tableComputers->setItem(row + 4, 1, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->ramId), dbComputers->ramName, QString::number(dbComputers->ramAmount))));
-        _tableComputers->setItem(row + 5, 1, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->caseId), dbComputers->caseName)));
-        _tableComputers->setItem(row + 6, 1, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->powersupplyId), dbComputers->powersupplyName)));
+        _tableComputers->setItem(row + 1, 1, new QTableWidgetItem(componentFormat.arg("Процессор", QString::number(computers->cpu->id), computers->cpu->name)));
+        _tableComputers->setItem(row + 2, 1, new QTableWidgetItem(componentFormat.arg(QString::number(computers->motherboard->id), computers->motherboard->name)));
+        _tableComputers->setItem(row + 3, 1, new QTableWidgetItem(componentFormat.arg(QString::number(computers->videocard->id), computers->videocard->name)));
+        _tableComputers->setItem(row + 4, 1, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(computers->ram->id), computers->ram->name, QString::number(computers->ram->amount))));
+        _tableComputers->setItem(row + 5, 1, new QTableWidgetItem(componentFormat.arg(QString::number(computers->chassis->id), computers->chassis->name)));
+        _tableComputers->setItem(row + 6, 1, new QTableWidgetItem(componentFormat.arg(QString::number(computers->psu->id), computers->psu->name)));
 
-        if (dbComputers->hddId == 0)
-            _tableComputers->setItem(row + 7, 1, new QTableWidgetItem(dbComputers->hddName));
+        if (computers->hdd.isNull())
+            _tableComputers->setItem(row + 7, 1, new QTableWidgetItem(componentMissingFormat.arg("HDD")));
         else
-            _tableComputers->setItem(row + 7, 1, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->hddId), dbComputers->hddName, QString::number(dbComputers->hddAmount))));
+            _tableComputers->setItem(row + 7, 1, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(computers->hdd->id), computers->hdd->name, QString::number(computers->hdd->amount))));
 
-        if (dbComputers->ssdId == 0)
-            _tableComputers->setItem(row + 8, 1, new QTableWidgetItem(dbComputers->ssdName));
+        if (computers->ssd.isNull())
+            _tableComputers->setItem(row + 8, 1, new QTableWidgetItem(componentMissingFormat.arg("SSD")));
         else
-            _tableComputers->setItem(row + 8, 1, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->ssdId), dbComputers->ssdName, QString::number(dbComputers->ssdAmount))));
+            _tableComputers->setItem(row + 8, 1, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(computers->ssd->id), computers->ssd->name, QString::number(computers->ssd->amount))));
 
-        if (dbComputers->ssdMTId == 0)
-            _tableComputers->setItem(row + 9, 1, new QTableWidgetItem(dbComputers->ssdMTName));
+        if (computers->ssdM2.isNull())
+            _tableComputers->setItem(row + 9, 1, new QTableWidgetItem(componentMissingFormat.arg("SSD M.2")));
         else
-            _tableComputers->setItem(row + 9, 1, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->ssdMTId), dbComputers->ssdMTName, QString::number(dbComputers->ssdMTAmount))));
+            _tableComputers->setItem(row + 9, 1, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(computers->ssdM2->id), computers->ssdM2->name, QString::number(computers->ssdM2->amount))));
 
-        _tableComputers->setItem(row + 10, 1, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(dbComputers->fanId), dbComputers->fanName, QString::number(dbComputers->fanAmount))));
+        _tableComputers->setItem(row + 10, 1, new QTableWidgetItem(componentWithAmountFormat.arg(QString::number(computers->fan->id), computers->fan->name, QString::number(computers->fan->amount))));
 
-        if (dbComputers->wcsId == 0)
-            _tableComputers->setItem(row + 11, 1, new QTableWidgetItem(dbComputers->wcsName));
+        if (computers->wcs.isNull())
+            _tableComputers->setItem(row + 11, 1, new QTableWidgetItem(componentMissingFormat.arg("СЖО")));
         else
-            _tableComputers->setItem(row + 11, 1, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->wcsId), dbComputers->wcsName)));
+            _tableComputers->setItem(row + 11, 1, new QTableWidgetItem(componentFormat.arg(QString::number(computers->wcs->id), computers->wcs->name)));
 
-        _tableComputers->setItem(row + 12, 1, new QTableWidgetItem(componentFormat.arg(QString::number(dbComputers->coolerId), dbComputers->coolerName)));
+        _tableComputers->setItem(row + 12, 1, new QTableWidgetItem(componentFormat.arg(QString::number(computers->cooler->id), computers->cooler->name)));
 
         row += 12;
     }
@@ -306,14 +304,14 @@ void MainWindow::loadWarehouseComponents()
 {
     _tableWarehouseComponents->setRowCount(0);
 
-    for (QSharedPointer<DBWarehouseComponent> &dbWarehouseComponent : WarehouseComponent::getWarehouseComponents()) {
+    for (QSharedPointer<WarehouseComponent> &warehouseComponent : WarehouseComponent::getWarehouseComponents()) {
         int row = _tableWarehouseComponents->rowCount();
 
         _tableWarehouseComponents->insertRow(row);
 
-        _tableWarehouseComponents->setItem(row, 0, new QTableWidgetItem(QString("[%1] %2").arg(QString::number(dbWarehouseComponent->component->id), dbWarehouseComponent->component->name)));
-        _tableWarehouseComponents->setItem(row, 1, new QTableWidgetItem(QString("[%1] %2").arg(QString::number(dbWarehouseComponent->warehouse->id), Warehouse::getAddress(*dbWarehouseComponent->warehouse))));
-        _tableWarehouseComponents->setItem(row, 2, new QTableWidgetItem(QString::number(dbWarehouseComponent->amount)));
+        _tableWarehouseComponents->setItem(row, 0, new QTableWidgetItem(QString("[%1] %2").arg(QString::number(warehouseComponent->component->id), warehouseComponent->component->name)));
+        _tableWarehouseComponents->setItem(row, 1, new QTableWidgetItem(QString("[%1] %2").arg(QString::number(warehouseComponent->warehouse->id), Warehouse::getAddress(*warehouseComponent->warehouse))));
+        _tableWarehouseComponents->setItem(row, 2, new QTableWidgetItem(QString::number(warehouseComponent->amount)));
     }
 }
 

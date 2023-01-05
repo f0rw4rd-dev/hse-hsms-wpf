@@ -46,14 +46,14 @@ void SetUserDialog::loadGroups()
 
 void SetUserDialog::loadUser(const QString &id)
 {
-    QScopedPointer<DBUser> dbUser = User::getUser(id.toInt());
+    QScopedPointer<User> user = User::getUser(id.toInt());
 
-    if (dbUser == nullptr) {
+    if (user == nullptr) {
         loadGroups();
         return;
     }
 
-    _comboGroupName->setCurrentIndex(_comboGroupName->findData(QVariant(dbUser->group->id)));
+    _comboGroupName->setCurrentIndex(_comboGroupName->findData(QVariant(user->group->id)));
 }
 
 void SetUserDialog::setUser()

@@ -56,9 +56,9 @@ void SetComponentDialog::loadComponentTypes()
 
 void SetComponentDialog::loadComponent(const QString &id)
 {
-    QScopedPointer<DBComponent> dbComponent = Component::getComponent(id.toInt());
+    QScopedPointer<Component> component = Component::getComponent(id.toInt());
 
-    if (dbComponent == nullptr) {
+    if (component == nullptr) {
         loadComponentTypes();
 
         _inputName->clear();
@@ -67,10 +67,10 @@ void SetComponentDialog::loadComponent(const QString &id)
         return;
     }
 
-    _comboTypeName->setCurrentIndex(_comboTypeName->findData(QVariant(dbComponent->componentType->id)));
-    _inputName->setText(dbComponent->name);
-    _inputWarranty->setText(QString::number(dbComponent->warranty));
-    _inputPrice->setText(QString::number(dbComponent->price));
+    _comboTypeName->setCurrentIndex(_comboTypeName->findData(QVariant(component->componentType->id)));
+    _inputName->setText(component->name);
+    _inputWarranty->setText(QString::number(component->warranty));
+    _inputPrice->setText(QString::number(component->price));
 }
 
 void SetComponentDialog::setComponent()
@@ -85,8 +85,8 @@ void SetComponentDialog::setComponent()
         return;
     }
 
-    DBComponent dbComponent(_inputId->text().toInt(), _inputName->text(), _comboTypeName->itemData(_comboTypeName->currentIndex()).toInt(), _comboTypeName->currentText(), _inputWarranty->text().toInt(), _inputPrice->text().toDouble());
-    Component::setComponent(dbComponent);
+    Component component(_inputId->text().toInt(), _inputName->text(), _comboTypeName->itemData(_comboTypeName->currentIndex()).toInt(), _comboTypeName->currentText(), _inputWarranty->text().toInt(), _inputPrice->text().toDouble());
+    Component::setComponent(component);
 
     close();
     deleteLater();

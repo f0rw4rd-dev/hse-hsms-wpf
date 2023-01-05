@@ -1,12 +1,7 @@
 #include "warehousecomponent.h"
 #include "dbconnection.h"
 
-WarehouseComponent::WarehouseComponent()
-{
-
-}
-
-QVector<QSharedPointer<DBWarehouseComponent>> WarehouseComponent::getWarehouseComponents()
+QVector<QSharedPointer<WarehouseComponent>> WarehouseComponent::getWarehouseComponents()
 {
     dbConnection->assertConnectionIsReliable();
 
@@ -14,15 +9,15 @@ QVector<QSharedPointer<DBWarehouseComponent>> WarehouseComponent::getWarehouseCo
                       "LEFT JOIN warehouses ON warehouses_components.warehouse_id = warehouses.id "
                       "LEFT JOIN components ON warehouses_components.component_id = components.id;";
 
-    QVector<QSharedPointer<DBWarehouseComponent>> warehouseComponents;
+    QVector<QSharedPointer<WarehouseComponent>> warehouseComponents;
 
     for (auto &[warehouseId, city, street, house, zip, componentId, componentName, amount] : dbConnection->getTransaction()->query<int, std::string, std::string, int, int, int, std::string, int>(request.toStdString()))
-        warehouseComponents.append(QSharedPointer<DBWarehouseComponent>(new DBWarehouseComponent(warehouseId, QString::fromStdString(city), QString::fromStdString(street), house, zip, componentId, QString::fromStdString(componentName), amount)));
+        warehouseComponents.append(QSharedPointer<WarehouseComponent>(new WarehouseComponent(warehouseId, QString::fromStdString(city), QString::fromStdString(street), house, zip, componentId, QString::fromStdString(componentName), amount)));
 
     return warehouseComponents;
 }
 
-QScopedPointer<DBWarehouseComponent> WarehouseComponent::getWarehouseComponent(int componentId, int warehouseId)
+QScopedPointer<WarehouseComponent> WarehouseComponent::getWarehouseComponent(int componentId, int warehouseId)
 {
     dbConnection->assertConnectionIsReliable();
 
@@ -31,30 +26,30 @@ QScopedPointer<DBWarehouseComponent> WarehouseComponent::getWarehouseComponent(i
     pqxx::result warehouseComponent = dbConnection->getTransaction()->exec(request.toStdString());
 
     if (warehouseComponent.empty())
-        return QScopedPointer<DBWarehouseComponent>();
+        return QScopedPointer<WarehouseComponent>();
 
     pqxx::row row = warehouseComponent[0];
 
-    return QScopedPointer<DBWarehouseComponent>(new DBWarehouseComponent(warehouseId, componentId, row[0].as<int>()));
+    return QScopedPointer<WarehouseComponent>(new WarehouseComponent(warehouseId, componentId, row[0].as<int>()));
 }
 
-void WarehouseComponent::addWarehouseComponent(DBWarehouseComponent &dbWarehouseComponent)
+void WarehouseComponent::addWarehouseComponent(WarehouseComponent &warehouseComponent)
 {
     dbConnection->assertConnectionIsReliable();
 
     QString request = QString("INSERT INTO warehouses_components (warehouse_id, component_id, amount) VALUES ('%1', '%2', '%3');")
-            .arg(QString::number(dbWarehouseComponent.warehouse->id), QString::number(dbWarehouseComponent.component->id), QString::number(dbWarehouseComponent.amount));
+            .arg(QString::number(warehouseComponent.warehouse->id), QString::number(warehouseComponent.component->id), QString::number(warehouseComponent.amount));
 
     dbConnection->getTransaction()->exec(request.toStdString());
     dbConnection->getTransaction()->commit();
 }
 
-void WarehouseComponent::setWarehouseComponent(DBWarehouseComponent &dbWarehouseComponent)
+void WarehouseComponent::setWarehouseComponent(WarehouseComponent &warehouseComponent)
 {
     dbConnection->assertConnectionIsReliable();
 
     QString request = QString("UPDATE warehouses_components SET amount = '%1' WHERE warehouse_id = '%2' AND component_id = '%3';")
-            .arg(QString::number(dbWarehouseComponent.amount), QString::number(dbWarehouseComponent.warehouse->id), QString::number(dbWarehouseComponent.component->id));
+            .arg(QString::number(warehouseComponent.amount), QString::number(warehouseComponent.warehouse->id), QString::number(warehouseComponent.component->id));
 
     dbConnection->getTransaction()->exec(request.toStdString());
     dbConnection->getTransaction()->commit();

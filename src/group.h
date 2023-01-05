@@ -5,21 +5,17 @@
 #include <QSharedPointer>
 #include <pqxx/pqxx>
 
-struct DBGroup
-{
-    DBGroup() {};
-    DBGroup(int id, QString name) : id(id), name(name) {};
-
-    int id;
-    QString name;
-};
-
 class Group
 {
 public:
-    Group();
+    Group() {};
+    Group(int id, QString name) : id(id), name(name) {};
 
-    static QVector<QSharedPointer<DBGroup>> getGroups();
+    static QVector<QSharedPointer<Group>> getGroups();
+
+public:
+    int id;
+    QString name;
 };
 
 #endif // GROUP_H

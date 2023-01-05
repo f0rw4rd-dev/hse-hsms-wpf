@@ -4,11 +4,6 @@
 #include <QCryptographicHash>
 #include <QDateTime>
 
-User::User()
-{
-
-}
-
 QString User::getEncryptedPassword(QString password)
 {
     return QCryptographicHash::hash(password.toUtf8(), QCryptographicHash::Sha256).toHex();
@@ -38,22 +33,22 @@ void User::updateLastVisitDate(QString login)
     dbConnection->getTransaction()->commit();
 }
 
-QVector<QSharedPointer<DBUser>> User::getUsers()
+QVector<QSharedPointer<User>> User::getUsers()
 {
     dbConnection->assertConnectionIsReliable();
 
     QString request = "SELECT users.id, users.registration_date, users.last_visit_date, users.group_id, groups.name FROM users "
                               "LEFT JOIN groups ON users.group_id = groups.id ORDER BY users.id DESC;";
 
-    QVector<QSharedPointer<DBUser>> users;
+    QVector<QSharedPointer<User>> users;
 
     for (auto &[id, registrationDate, lastVisitDate, groupId, groupName] : dbConnection->getTransaction()->query<int, int64_t, int64_t, int, std::string>(request.toStdString()))
-        users.append(QSharedPointer<DBUser>(new DBUser(id, registrationDate, lastVisitDate, groupId, QString::fromStdString(groupName))));
+        users.append(QSharedPointer<User>(new User(id, registrationDate, lastVisitDate, groupId, QString::fromStdString(groupName))));
 
     return users;
 }
 
-QScopedPointer<DBUser> User::getUser(int id)
+QScopedPointer<User> User::getUser(int id)
 {
     dbConnection->assertConnectionIsReliable();
 
@@ -63,11 +58,11 @@ QScopedPointer<DBUser> User::getUser(int id)
     pqxx::result component = dbConnection->getTransaction()->exec(request.toStdString());
 
     if (component.empty())
-        return QScopedPointer<DBUser>();
+        return QScopedPointer<User>();
 
     pqxx::row row = component[0];
 
-    return QScopedPointer<DBUser>(new DBUser(row[0].as<int>(), row[1].as<int64_t>(), row[2].as<int64_t>(), row[3].as<int>(), QString::fromStdString(row[4].as<std::string>())));
+    return QScopedPointer<User>(new User(row[0].as<int>(), row[1].as<int64_t>(), row[2].as<int64_t>(), row[3].as<int>(), QString::fromStdString(row[4].as<std::string>())));
 }
 
 void User::addUser(QString password, int groupId)

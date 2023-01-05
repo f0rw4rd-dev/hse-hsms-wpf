@@ -39,14 +39,14 @@ SetWarehouseComponentDialog::~SetWarehouseComponentDialog()
 
 void SetWarehouseComponentDialog::loadWarehouseComponent(const QString&)
 {
-    QScopedPointer<DBWarehouseComponent> dbWarehouseComponent = WarehouseComponent::getWarehouseComponent(_inputComponentId->text().toInt(), _inputWarehouseId->text().toInt());
+    QScopedPointer<WarehouseComponent> warehouseComponent = WarehouseComponent::getWarehouseComponent(_inputComponentId->text().toInt(), _inputWarehouseId->text().toInt());
 
-    if (dbWarehouseComponent == nullptr) {
+    if (warehouseComponent == nullptr) {
         _inputAmount->clear();
         return;
     }
 
-    _inputAmount->setText(QString::number(dbWarehouseComponent->amount));
+    _inputAmount->setText(QString::number(warehouseComponent->amount));
 }
 
 void SetWarehouseComponentDialog::setWarehouseComponent()
@@ -71,8 +71,8 @@ void SetWarehouseComponentDialog::setWarehouseComponent()
         return;
     }
 
-    DBWarehouseComponent dbWarehouseComponent(_inputWarehouseId->text().toInt(), _inputComponentId->text().toInt(), _inputAmount->text().toInt());
-    WarehouseComponent::setWarehouseComponent(dbWarehouseComponent);
+    WarehouseComponent warehouseComponent(_inputWarehouseId->text().toInt(), _inputComponentId->text().toInt(), _inputAmount->text().toInt());
+    WarehouseComponent::setWarehouseComponent(warehouseComponent);
 
     close();
     deleteLater();

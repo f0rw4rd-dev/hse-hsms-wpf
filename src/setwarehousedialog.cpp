@@ -41,9 +41,9 @@ SetWarehouseDialog::~SetWarehouseDialog()
 
 void SetWarehouseDialog::loadWarehouse(const QString &id)
 {
-    QScopedPointer<DBWarehouse> dbWarehouse = Warehouse::getWarehouse(id.toInt());
+    QScopedPointer<Warehouse> warehouse = Warehouse::getWarehouse(id.toInt());
 
-    if (dbWarehouse == nullptr) {
+    if (warehouse == nullptr) {
         _inputCity->clear();
         _inputStreet->clear();
         _inputHouse->clear();
@@ -51,10 +51,10 @@ void SetWarehouseDialog::loadWarehouse(const QString &id)
         return;
     }
 
-    _inputCity->setText(dbWarehouse->city);
-    _inputStreet->setText(dbWarehouse->street);
-    _inputHouse->setText(QString::number(dbWarehouse->house));
-    _inputZip->setText(QString::number(dbWarehouse->zip));
+    _inputCity->setText(warehouse->city);
+    _inputStreet->setText(warehouse->street);
+    _inputHouse->setText(QString::number(warehouse->house));
+    _inputZip->setText(QString::number(warehouse->zip));
 }
 
 void SetWarehouseDialog::setWarehouse()
@@ -69,8 +69,8 @@ void SetWarehouseDialog::setWarehouse()
         return;
     }
 
-    DBWarehouse dbWarehouse(_inputId->text().toInt(), _inputCity->text(), _inputStreet->text(), _inputHouse->text().toInt(), _inputZip->text().toInt());
-    Warehouse::setWarehouse(dbWarehouse);
+    Warehouse warehouse(_inputId->text().toInt(), _inputCity->text(), _inputStreet->text(), _inputHouse->text().toInt(), _inputZip->text().toInt());
+    Warehouse::setWarehouse(warehouse);
 
     close();
     deleteLater();
