@@ -18,7 +18,7 @@ QVector<QSharedPointer<Component>> Component::getComponents()
     return components;
 }
 
-QScopedPointer<Component> Component::getComponent(int id)
+QSharedPointer<Component> Component::getComponent(int id)
 {
     dbConnection->assertConnectionIsReliable();
 
@@ -28,11 +28,11 @@ QScopedPointer<Component> Component::getComponent(int id)
     pqxx::result component = dbConnection->getTransaction()->exec(request.toStdString());
 
     if (component.empty())
-        return QScopedPointer<Component>();
+        return QSharedPointer<Component>();
 
     pqxx::row row = component[0];
 
-    return QScopedPointer<Component>(new Component(row[0].as<int>(), QString::fromStdString(row[1].as<std::string>()), row[2].as<int>(), QString::fromStdString(row[3].as<std::string>()), row[4].as<int>(), row[5].as<float>()));
+    return QSharedPointer<Component>(new Component(row[0].as<int>(), QString::fromStdString(row[1].as<std::string>()), row[2].as<int>(), QString::fromStdString(row[3].as<std::string>()), row[4].as<int>(), row[5].as<float>()));
 }
 
 void Component::addComponent(Component &component)

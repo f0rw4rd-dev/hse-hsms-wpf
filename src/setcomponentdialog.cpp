@@ -56,7 +56,7 @@ void SetComponentDialog::loadComponentTypes()
 
 void SetComponentDialog::loadComponent(const QString &id)
 {
-    QScopedPointer<Component> component = Component::getComponent(id.toInt());
+    QSharedPointer<Component> component = Component::getComponent(id.toInt());
 
     if (component == nullptr) {
         loadComponentTypes();

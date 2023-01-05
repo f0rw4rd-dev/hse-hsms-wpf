@@ -27,7 +27,7 @@ public:
     Component(int id, QString name, int amount) : id(id), name(name), amount(amount) {};
 
     static QVector<QSharedPointer<Component>> getComponents();
-    static QScopedPointer<Component> getComponent(int id);
+    static QSharedPointer<Component> getComponent(int id);
     static void addComponent(Component &component);
     static void setComponent(Component &component);
     static void deleteComponent(int id);

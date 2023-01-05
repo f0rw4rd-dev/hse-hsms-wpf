@@ -18,18 +18,18 @@ public:
 public:
     int id;
 
-    QScopedPointer<Component> cpu;
-    QScopedPointer<Component> motherboard;
-    QScopedPointer<Component> videocard;
-    QScopedPointer<Component> ram;
-    QScopedPointer<Component> chassis;
-    QScopedPointer<Component> psu; // power supply unit
-    QScopedPointer<Component> hdd; // can be nullptr
-    QScopedPointer<Component> ssd; // can be nullptr
-    QScopedPointer<Component> ssdM2; // can be nullptr
-    QScopedPointer<Component> fan; // can be nullptr
-    QScopedPointer<Component> wcs; // can be nullptr
-    QScopedPointer<Component> cooler;
+    QSharedPointer<Component> cpu;
+    QSharedPointer<Component> motherboard;
+    QSharedPointer<Component> videocard;
+    QSharedPointer<Component> ram;
+    QSharedPointer<Component> chassis;
+    QSharedPointer<Component> psu; // power supply unit
+    QSharedPointer<Component> hdd; // can be nullptr
+    QSharedPointer<Component> ssd; // can be nullptr
+    QSharedPointer<Component> ssdM2; // can be nullptr
+    QSharedPointer<Component> fan; // can be nullptr
+    QSharedPointer<Component> wcs; // can be nullptr
+    QSharedPointer<Component> cooler;
 };
 
 #endif // COMPUTER_H
