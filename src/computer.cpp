@@ -18,7 +18,7 @@ QVector<QSharedPointer<DBComputer>> Computer::getComputers()
 
     pqxx::result result = dbConnection->getTransaction()->exec(request.toStdString());
 
-    for (pqxx::row row : result) {
+    for (const pqxx::row &row : result) {
         int id = row["id"].as<int>();
         int cpuId = row["component_cpu_id"].as<int>();
         int motherboardId = row["component_motherboard_id"].as<int>();

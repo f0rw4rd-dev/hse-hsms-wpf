@@ -40,7 +40,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>3</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="tabComponents">
        <attribute name="title">
@@ -812,62 +812,7 @@ border: none;
         </column>
         <column>
          <property name="text">
-          <string>Процессор</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Мат. плата</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Видеокарта</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>ОЗУ</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Корпус</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Блок питания</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>SSD</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>HDD</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>SSD M.2</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Вентиляторы</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>СВО</string>
-         </property>
-        </column>
-        <column>
-         <property name="text">
-          <string>Кулер</string>
+          <string>Сборка компьютера</string>
          </property>
         </column>
        </widget>
