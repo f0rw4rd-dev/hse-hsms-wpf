@@ -103,17 +103,16 @@ MainWindow::MainWindow(QWidget *parent)
     loadWarehouseComponents();
 
     // Remove the first column in tables
-    auto setupTable = [](QTableWidget *table, bool stretchLastSection = false) {
+    auto setupTable = [](QTableWidget *table) {
         table->verticalHeader()->setVisible(false);
-
-        (stretchLastSection) ? table->horizontalHeader()->setStretchLastSection(true)
-                             : table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+        table->horizontalHeader()->setSectionsMovable(true);
     };
 
     setupTable(_tableComponents);
     setupTable(_tableUsers);
     setupTable(_tableWarehouses);
-    setupTable(_tableComputers, true);
+    setupTable(_tableComputers);
     setupTable(_tableWarehouseComponents);
 
     parentWidget();
@@ -232,49 +231,61 @@ void MainWindow::loadComputers()
 {
     _tableComputers->setRowCount(0);
 
+    QVector<QString> componentTypes = {"Процессор", "Материнская плата", "Видеокарта", "Оперативная память", "Корпус", "Блок питания", "HDD", "SSD", "SSD M.2", "Вентилятор", "Система водяного охлаждения", "Кулер"};
+
     for (QSharedPointer<Computer> &computer : Computer::getComputers()) {
         int row = 0;
 
-        for (int i = row; i < row + 12; i++)
-            _tableComputers->insertRow(i);
+        for (int i = row; i < row + 12; i++) {
+            _tableComputers->insertRow(row + i);
+            _tableComputers->setItem(row + i, 0, new QTableWidgetItem(QString::number(computer->id)));
+            _tableComputers->setItem(row + i, 1, new QTableWidgetItem(componentTypes[i]));
+        }
 
-        _tableComputers->setItem(row, 0, new QTableWidgetItem(QString::number(computer->id)));
+        QString componentFormat("[%1] %2");
+        QString componentMissingFormat("Отсутствует");
 
-        QString componentFormat("%1 - [%2] %3");
-        QString componentWithAmountFormat("%1 - [%2] %3 - x%4");
-        QString componentMissingFormat("%1 - Отсутствует");
+        _tableComputers->setItem(row, 2, new QTableWidgetItem(componentFormat.arg(QString::number(computer->cpu->id), computer->cpu->name)));
+        _tableComputers->setItem(row + 1, 2, new QTableWidgetItem(componentFormat.arg(QString::number(computer->motherboard->id), computer->motherboard->name)));
+        _tableComputers->setItem(row + 2, 2, new QTableWidgetItem(componentFormat.arg(QString::number(computer->videocard->id), computer->videocard->name)));
+        _tableComputers->setItem(row + 3, 2, new QTableWidgetItem(componentFormat.arg(QString::number(computer->ram->id), computer->ram->name)));
+        _tableComputers->setItem(row + 3, 3, new QTableWidgetItem(QString::number(computer->ram->amount)));
+        _tableComputers->setItem(row + 4, 2, new QTableWidgetItem(componentFormat.arg(QString::number(computer->chassis->id), computer->chassis->name)));
+        _tableComputers->setItem(row + 5, 2, new QTableWidgetItem(componentFormat.arg(QString::number(computer->psu->id), computer->psu->name)));
 
-        _tableComputers->setItem(row, 1, new QTableWidgetItem(componentFormat.arg("Процессор", QString::number(computer->cpu->id), computer->cpu->name)));
-        _tableComputers->setItem(row + 1, 1, new QTableWidgetItem(componentFormat.arg("Материнская плата", QString::number(computer->motherboard->id), computer->motherboard->name)));
-        _tableComputers->setItem(row + 2, 1, new QTableWidgetItem(componentFormat.arg("Видеокарта", QString::number(computer->videocard->id), computer->videocard->name)));
-        _tableComputers->setItem(row + 3, 1, new QTableWidgetItem(componentWithAmountFormat.arg("Оперативная память", QString::number(computer->ram->id), computer->ram->name, QString::number(computer->ram->amount))));
-        _tableComputers->setItem(row + 4, 1, new QTableWidgetItem(componentFormat.arg("Корпус", QString::number(computer->chassis->id), computer->chassis->name)));
-        _tableComputers->setItem(row + 5, 1, new QTableWidgetItem(componentFormat.arg("Блок питания", QString::number(computer->psu->id), computer->psu->name)));
+        if (computer->hdd.isNull()) {
+            _tableComputers->setItem(row + 6, 2, new QTableWidgetItem(componentMissingFormat));
+        } else {
+            _tableComputers->setItem(row + 6, 2, new QTableWidgetItem(componentFormat.arg(QString::number(computer->hdd->id), computer->hdd->name)));
+            _tableComputers->setItem(row + 6, 3, new QTableWidgetItem(QString::number(computer->hdd->amount)));
+        }
 
-        if (computer->hdd.isNull())
-            _tableComputers->setItem(row + 6, 1, new QTableWidgetItem(componentMissingFormat.arg("HDD")));
-        else
-            _tableComputers->setItem(row + 6, 1, new QTableWidgetItem(componentWithAmountFormat.arg("HDD", QString::number(computer->hdd->id), computer->hdd->name, QString::number(computer->hdd->amount))));
+        if (computer->ssd.isNull()) {
+            _tableComputers->setItem(row + 7, 2, new QTableWidgetItem(componentMissingFormat));
+        } else {
+            _tableComputers->setItem(row + 7, 2, new QTableWidgetItem(componentFormat.arg(QString::number(computer->ssd->id), computer->ssd->name)));
+            _tableComputers->setItem(row + 7, 3, new QTableWidgetItem(QString::number(computer->ssd->amount)));
+        }
 
-        if (computer->ssd.isNull())
-            _tableComputers->setItem(row + 7, 1, new QTableWidgetItem(componentMissingFormat.arg("SSD")));
-        else
-            _tableComputers->setItem(row + 7, 1, new QTableWidgetItem(componentWithAmountFormat.arg("SSD", QString::number(computer->ssd->id), computer->ssd->name, QString::number(computer->ssd->amount))));
+        if (computer->ssdM2.isNull()) {
+            _tableComputers->setItem(row + 8, 2, new QTableWidgetItem(componentMissingFormat));
+        } else {
+            _tableComputers->setItem(row + 8, 2, new QTableWidgetItem(componentFormat.arg(QString::number(computer->ssdM2->id), computer->ssdM2->name)));
+            _tableComputers->setItem(row + 8, 3, new QTableWidgetItem(QString::number(computer->ssdM2->amount)));
+        }
 
-        if (computer->ssdM2.isNull())
-            _tableComputers->setItem(row + 8, 1, new QTableWidgetItem(componentMissingFormat.arg("SSD M.2")));
-        else
-            _tableComputers->setItem(row + 8, 1, new QTableWidgetItem(componentWithAmountFormat.arg("SSD M.2", QString::number(computer->ssdM2->id), computer->ssdM2->name, QString::number(computer->ssdM2->amount))));
+        _tableComputers->setItem(row + 9, 2, new QTableWidgetItem(componentFormat.arg(QString::number(computer->fan->id), computer->fan->name)));
+        _tableComputers->setItem(row + 9, 3, new QTableWidgetItem(QString::number(computer->fan->amount)));
 
-        _tableComputers->setItem(row + 9, 1, new QTableWidgetItem(componentWithAmountFormat.arg("Вентилятор", QString::number(computer->fan->id), computer->fan->name, QString::number(computer->fan->amount))));
+        if (computer->wcs.isNull()) {
+            _tableComputers->setItem(row + 10, 2, new QTableWidgetItem(componentMissingFormat));
+        } else {
+            _tableComputers->setItem(row + 10, 2, new QTableWidgetItem(componentFormat.arg(QString::number(computer->wcs->id), computer->wcs->name)));
+        }
 
-        if (computer->wcs.isNull())
-            _tableComputers->setItem(row + 10, 1, new QTableWidgetItem(componentMissingFormat.arg("Система водяного охлаждения")));
-        else
-            _tableComputers->setItem(row + 10, 1, new QTableWidgetItem(componentFormat.arg("Система водяного охлаждения", QString::number(computer->wcs->id), computer->wcs->name)));
+        _tableComputers->setItem(row + 11, 2, new QTableWidgetItem(componentFormat.arg(QString::number(computer->cooler->id), computer->cooler->name)));
 
-        _tableComputers->setItem(row + 11, 1, new QTableWidgetItem(componentFormat.arg("Кулер", QString::number(computer->cooler->id), computer->cooler->name)));
-
+        _tableComputers->setSpan(row, 0, row + 12, 1);
         row += 12;
     }
 }
