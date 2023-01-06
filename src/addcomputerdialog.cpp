@@ -1,8 +1,10 @@
 #include "addcomputerdialog.h"
 #include "ui_addcomputerdialog.h"
 #include "regularexpressions.h"
+#include "component.h"
 
 #include <QRegularExpressionValidator>
+#include <QMessageBox>
 
 AddComputerDialog::AddComputerDialog(QWidget *parent) :
     QDialog(parent),
@@ -10,7 +12,7 @@ AddComputerDialog::AddComputerDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setWindowTitle("Добавить сборку ПК");
+    setWindowTitle("Добавить сборку компьютера");
 
     // Init pointers to UI elements
     _buttonAddComputer = findChild<QPushButton*>("buttonAddComputer");
@@ -64,8 +66,19 @@ AddComputerDialog::AddComputerDialog(QWidget *parent) :
     _inputCoolerId->setValidator(new QRegularExpressionValidator(RegularExpressions::digit, this));
 
     // Connections
-    //connect(_inputId, &QLineEdit::textChanged, this, &SetWarehouseDialog::loadWarehouse);
     connect(_buttonAddComputer, &QPushButton::clicked, this, &AddComputerDialog::addComputer);
+    connect(_inputCPUId, &QLineEdit::textChanged, this, [this](const QString &id){ loadComponent(id, _inputCPUName, "Процессор"); });
+    connect(_inputMotherboardId, &QLineEdit::textChanged, this, [this](const QString &id){ loadComponent(id, _inputMotherboardName, "Материнская плата"); });
+    connect(_inputVideocardId, &QLineEdit::textChanged, this, [this](const QString &id){ loadComponent(id, _inputVideocardName, "Видеокарта"); });
+    connect(_inputRAMId, &QLineEdit::textChanged, this, [this](const QString &id){ loadComponent(id, _inputRAMName, "Оперативная память"); });
+    connect(_inputCaseId, &QLineEdit::textChanged, this, [this](const QString &id){ loadComponent(id, _inputCaseName, "Корпус"); });
+    connect(_inputPSUId, &QLineEdit::textChanged, this, [this](const QString &id){ loadComponent(id, _inputPSUName, "Блок питания"); });
+    connect(_inputHDDId, &QLineEdit::textChanged, this, [this](const QString &id){ loadComponent(id, _inputHDDName, "Жесткий диск"); });
+    connect(_inputSSDId, &QLineEdit::textChanged, this, [this](const QString &id){ loadComponent(id, _inputSSDName, "SSD накопитель"); });
+    connect(_inputSSDM2Id, &QLineEdit::textChanged, this, [this](const QString &id){ loadComponent(id, _inputSSDM2Name, "SSD M.2 накопитель"); });
+    connect(_inputFanId, &QLineEdit::textChanged, this, [this](const QString &id){ loadComponent(id, _inputFanName, "Вентилятор для корпуса"); });
+    connect(_inputWCSId, &QLineEdit::textChanged, this, [this](const QString &id){ loadComponent(id, _inputWCSName, "Система водяного охлаждения"); });
+    connect(_inputCoolerId, &QLineEdit::textChanged, this, [this](const QString &id){ loadComponent(id, _inputCoolerName, "Кулер для процессора"); });
 }
 
 AddComputerDialog::~AddComputerDialog()
@@ -73,14 +86,61 @@ AddComputerDialog::~AddComputerDialog()
     delete ui;
 }
 
-void AddComputerDialog::loadCpu(const QString &id)
+void AddComputerDialog::loadComponent(const QString id, QLineEdit *inputName, const QString componentTypeName)
 {
+    QSharedPointer<Component> component = Component::getComponent(id.toInt());
 
+    if (component == nullptr || component->componentType->name != componentTypeName) {
+        inputName->clear();
+        return;
+    }
+
+    inputName->setText(component->name);
 }
-
 
 void AddComputerDialog::addComputer()
 {
+    if (_inputCPUId->text().isEmpty() || _inputMotherboardId->text().isEmpty() || _inputVideocardId->text().isEmpty() || _inputRAMId->text().isEmpty()
+            || _inputRAMAmount->text().isEmpty() || _inputCaseId->text().isEmpty() || _inputPSUId->text().isEmpty()) {
+        QMessageBox::information(nullptr, "Предупреждение", "Поля: ИД процессора, ИД материнской платы, ИД видеокарты, ИД оперативной памяти, Количество оперативной памяти, ИД корпуса, ИД блока питания являются обязательными!");
+        return;
+    }
 
+    if (_inputRAMAmount->text().toInt() < 1) {
+        QMessageBox::information(nullptr, "Предупреждение", "Количество оперативной памяти должно быть не менее 1!");
+        return;
+    }
+
+    if (_inputHDDId->text().isEmpty() && _inputSSDId->text().isEmpty() && _inputSSDM2Id->text().isEmpty()) {
+        QMessageBox::information(nullptr, "Предупреждение", "В сборке должен присутствовать как минимум один накопитель (HDD/SSD/SSD M.2)!");
+        return;
+    }
+
+    if (_inputHDDId->text().isEmpty() && _inputSSDId->text().isEmpty() && _inputSSDM2Id->text().isEmpty()) {
+        QMessageBox::information(nullptr, "Предупреждение", "В сборке должен присутствовать как минимум один накопитель (HDD/SSD/SSD M.2)!");
+        return;
+    }
+
+    if (!_inputHDDId->text().isEmpty() && (_inputHDDAmount->text().isEmpty() || _inputHDDAmount->text().toInt() < 1)) {
+        QMessageBox::information(nullptr, "Предупреждение", "Количество HDD накопителей не может быть меньше 1 (если HDD накопитель не требуется, то удалите его ИД)!");
+        return;
+    }
+
+    if (!_inputSSDId->text().isEmpty() && (_inputSSDAmount->text().isEmpty() || _inputSSDAmount->text().toInt() < 1)) {
+        QMessageBox::information(nullptr, "Предупреждение", "Количество SSD накопителей не может быть меньше 1 (если SSD накопитель не требуется, то удалите его ИД)!");
+        return;
+    }
+
+    if (!_inputSSDM2Id->text().isEmpty() && (_inputSSDM2Amount->text().isEmpty() || _inputSSDM2Amount->text().toInt() < 1)) {
+        QMessageBox::information(nullptr, "Предупреждение", "Количество SSD M.2 накопителей не может быть меньше 1 (если SSD M.2 накопитель не требуется, то удалите его ИД)!");
+        return;
+    }
+
+    if (_inputWCSId->text().isEmpty() && _inputCoolerId->text().isEmpty()) {
+        QMessageBox::information(nullptr, "Предупреждение", "В сборке должен присутствовать кулер или система жидкостного охлаждения!");
+        return;
+    }
+
+    // check on exist components
 }
 

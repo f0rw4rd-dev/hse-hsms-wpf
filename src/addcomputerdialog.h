@@ -16,8 +16,10 @@ public:
     explicit AddComputerDialog(QWidget *parent = nullptr);
     ~AddComputerDialog();
 
+private:
+    void loadComponent(const QString id, QLineEdit *inputName, const QString componentTypeName);
+
 private slots:
-    void loadCpu(const QString &id);
     void addComputer();
 
 private:

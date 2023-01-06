@@ -19,6 +19,7 @@ public:
 
 private:
     void loadComponentTypes();
+    bool doesComponentExist(QLineEdit );
 
 private slots:
     void addComponent();
