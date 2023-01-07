@@ -2,6 +2,7 @@
 #include "ui_addcomputerdialog.h"
 #include "regularexpressions.h"
 #include "component.h"
+#include "computer.h"
 
 #include <QRegularExpressionValidator>
 #include <QMessageBox>
@@ -100,9 +101,9 @@ void AddComputerDialog::loadComponent(const QString id, QLineEdit *inputName, co
 
 void AddComputerDialog::addComputer()
 {
-    if (_inputCPUId->text().isEmpty() || _inputMotherboardId->text().isEmpty() || _inputVideocardId->text().isEmpty() || _inputRAMId->text().isEmpty()
+    if (_inputCPUId->text().isEmpty() || _inputMotherboardId->text().isEmpty() || _inputRAMId->text().isEmpty()
             || _inputRAMAmount->text().isEmpty() || _inputCaseId->text().isEmpty() || _inputPSUId->text().isEmpty()) {
-        QMessageBox::information(nullptr, "Предупреждение", "Поля: ИД процессора, ИД материнской платы, ИД видеокарты, ИД оперативной памяти, Количество оперативной памяти, ИД корпуса, ИД блока питания являются обязательными!");
+        QMessageBox::information(nullptr, "Предупреждение", "Поля: ИД процессора, ИД материнской платы, ИД оперативной памяти, Количество оперативной памяти, ИД корпуса, ИД блока питания являются обязательными!");
         return;
     }
 
@@ -141,6 +142,43 @@ void AddComputerDialog::addComputer()
         return;
     }
 
-    // check on exist components
+    if (!_inputWCSId->text().isEmpty() && !_inputCoolerId->text().isEmpty()) {
+        QMessageBox::information(nullptr, "Предупреждение", "В сборке не может одновременно присутствовать кулер и система жидкостного охлаждения (Кулер и СЖО используются для охлаждения процессора)!");
+        return;
+    }
+
+    auto doesComponentExist = [](QLineEdit *input){ return Component::doesComponentExist(input->text().toInt()); };
+
+    if (!doesComponentExist(_inputCPUId) || !doesComponentExist(_inputMotherboardId) || !doesComponentExist(_inputRAMId) || !doesComponentExist(_inputCaseId) || !doesComponentExist(_inputPSUId)) {
+        QMessageBox::information(nullptr, "Предупреждение", "Одно или несколько из следующих комплектующих не существует: Процессор, Материнская плата, Оперативная память, Корпус, Блок питания!");
+        return;
+    }
+
+    if ((!_inputHDDId->text().isEmpty() && !doesComponentExist(_inputHDDId))
+            || (!_inputSSDId->text().isEmpty() && !doesComponentExist(_inputSSDId))
+            || (!_inputSSDM2Id->text().isEmpty() && !doesComponentExist(_inputSSDM2Id))
+            || (!_inputWCSId->text().isEmpty() && !doesComponentExist(_inputWCSId))
+            || (!_inputCoolerId->text().isEmpty() && !doesComponentExist(_inputCoolerId))
+            || (!_inputVideocardId->text().isEmpty() && !doesComponentExist(_inputVideocardId))) {
+        QMessageBox::information(nullptr, "Предупреждение", "Одно или несколько из следующих комплектующих не существует: HDD, SSD, SSD M.2, СЖО, Кулер, Видеокарта!");
+        return;
+    }
+
+    //todo check videocard or gpu in cpu
+
+    auto getComponentId = [](QLineEdit *input){ return (input->text().isEmpty()) ? -1 : input->text().toInt(); };
+    auto getComponentAmount = [](QLineEdit *input){ return (input->text().isEmpty()) ? 0 : input->text().toInt(); };
+
+    Computer computer(getComponentId(_inputCPUId), getComponentId(_inputMotherboardId), getComponentId(_inputVideocardId), getComponentId(_inputRAMId),
+                      getComponentAmount(_inputRAMAmount), getComponentId(_inputCaseId), getComponentId(_inputPSUId), getComponentId(_inputHDDId),
+                      getComponentAmount(_inputHDDAmount), getComponentId(_inputSSDId), getComponentAmount(_inputSSDAmount), getComponentId(_inputSSDM2Id),
+                      getComponentAmount(_inputSSDM2Amount), getComponentId(_inputFanId), getComponentAmount(_inputFanAmount), getComponentId(_inputWCSId),
+                      getComponentId(_inputCoolerId));
+    Computer::addComputer(computer);
+
+    close();
+    deleteLater();
+
+    QMessageBox::information(nullptr, "Информация", "Сборка компьютера добавлена!");
 }
 

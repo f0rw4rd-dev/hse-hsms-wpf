@@ -25,6 +25,7 @@ public:
     };
     Component(int id, QString name) : id(id), name(name) {};
     Component(int id, QString name, int amount) : id(id), name(name), amount(amount) {};
+    Component(int id, int amount) : id(id), amount(amount) {};
 
     static QVector<QSharedPointer<Component>> getComponents();
     static QSharedPointer<Component> getComponent(int id);

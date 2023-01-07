@@ -12,8 +12,10 @@ class Computer
 public:
     Computer() {};
     Computer(int id) : id(id) {};
+    Computer(int cpuId, int motherboardId, int videocardId, int ramId, int ramAmount, int chassisId, int psuId, int hddId, int hddAmount, int ssdId, int ssdAmount, int ssdM2Id, int ssdM2Amount, int fanId, int fanAmount, int wcsId, int coolerId);
 
     static QVector<QSharedPointer<Computer>> getComputers();
+    static void addComputer(Computer &computer);
 
 public:
     int id;
