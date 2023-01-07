@@ -40,6 +40,8 @@ private slots:
     // Actions with computers
     void loadComputers();
     void addComputer();
+    void setComputer();
+    void deleteComputer();
 
     // Actions with characteristics
     void loadCharacteristics();

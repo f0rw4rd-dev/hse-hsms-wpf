@@ -40,7 +40,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="tabComponents">
        <attribute name="title">
@@ -823,7 +823,7 @@ border: none;
           <x>0</x>
           <y>44</y>
           <width>1000</width>
-          <height>450</height>
+          <height>521</height>
          </rect>
         </property>
         <property name="frameShape">

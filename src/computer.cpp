@@ -94,20 +94,57 @@ QVector<QSharedPointer<Computer>> Computer::getComputers()
     return computers;
 }
 
+QSharedPointer<Computer> Computer::getComputer(int id)
+{
+    dbConnection->assertConnectionIsReliable();
+
+    QString request = QString("SELECT * FROM computers WHERE id = '%1';").arg(QString::number(id));
+
+    pqxx::result component = dbConnection->getTransaction()->exec(request.toStdString());
+
+    if (component.empty())
+        return QSharedPointer<Computer>();
+
+    pqxx::row row = component[0];
+
+    auto getComponentId = [](pqxx::field field) { return (field.is_null()) ? -1 : field.as<int>(); };
+    auto getComponentAmount = [](pqxx::field field) { return (field.is_null()) ? 0 : field.as<int>(); };
+
+    return QSharedPointer<Computer>(new Computer(
+                getComponentId(row["component_cpu_id"]),
+                getComponentId(row["component_motherboard_id"]),
+                getComponentId(row["component_videocard_id"]),
+                getComponentId(row["component_ram_id"]),
+                getComponentAmount(row["component_ram_amount"]),
+                getComponentId(row["component_case_id"]),
+                getComponentId(row["component_powersupply_id"]),
+                getComponentId(row["component_hdd_id"]),
+                getComponentAmount(row["component_hdd_amount"]),
+                getComponentId(row["component_ssd_id"]),
+                getComponentAmount(row["component_ssd_amount"]),
+                getComponentId(row["component_ssdm_id"]),
+                getComponentAmount(row["component_ssdm_amount"]),
+                getComponentId(row["component_fan_id"]),
+                getComponentAmount(row["component_fan_amount"]),
+                getComponentId(row["component_wcs_id"]),
+                getComponentId(row["component_cooler_id"])));
+}
+
 void Computer::addComputer(Computer &computer)
 {
     dbConnection->assertConnectionIsReliable();
 
-    auto getComponentId = [](int id){ return (id >= 0) ? QString::number(id) : QString("null"); };
+    auto getComponentId = [](QSharedPointer<Component> component) { return (component.isNull() || component->id < 1) ? QString("null") : QString::number(component->id); };
+    auto getComponentAmount = [](QSharedPointer<Component> component) { return (component.isNull()) ? QString("0") : QString::number(component->amount); };
 
     QString request = QString("INSERT INTO computers "
                               "(component_cpu_id, component_motherboard_id, component_videocard_id, component_ram_id, component_ram_amount, component_case_id, component_powersupply_id, component_hdd_id, component_hdd_amount, component_ssd_id, component_ssd_amount, component_ssdm_id, component_ssdm_amount, component_fan_id, component_fan_amount, component_wcs_id, component_cooler_id) "
-                              "VALUES ('%1', '%2', '%3', '%4', '%5', '%6', '%7', '%8', '%9', '%10', '%11', '%12', '%13', '%14', '%15', '%16', '%17');")
-            .arg(getComponentId(computer.cpu->id), getComponentId(computer.motherboard->id), getComponentId(computer.videocard->id), getComponentId(computer.ram->id),
-                 QString::number(computer.ram->amount), getComponentId(computer.chassis->id), getComponentId(computer.psu->id), getComponentId(computer.hdd->id),
-                 QString::number(computer.hdd->amount), getComponentId(computer.ssd->id), QString::number(computer.ssd->amount), getComponentId(computer.ssdM2->id),
-                 QString::number(computer.ssdM2->amount), getComponentId(computer.fan->id), QString::number(computer.fan->amount), getComponentId(computer.wcs->id),
-                 getComponentId(computer.cooler->id));
+                              "VALUES (%1, %2, %3, %4, %5, %6, %7, %8, %9, %10, %11, %12, %13, %14, %15, %16, %17);")
+            .arg(getComponentId(computer.cpu), getComponentId(computer.motherboard), getComponentId(computer.videocard), getComponentId(computer.ram),
+                 getComponentAmount(computer.ram), getComponentId(computer.chassis), getComponentId(computer.psu), getComponentId(computer.hdd),
+                 getComponentAmount(computer.hdd), getComponentId(computer.ssd), getComponentAmount(computer.ssd), getComponentId(computer.ssdM2),
+                 getComponentAmount(computer.ssdM2), getComponentId(computer.fan), getComponentAmount(computer.fan), getComponentId(computer.wcs),
+                 getComponentId(computer.cooler));
 
     dbConnection->getTransaction()->exec(request.toStdString());
     dbConnection->getTransaction()->commit();

@@ -68,7 +68,6 @@ void AddComponentDialog::addComponent()
     }
 
     Component component(_inputName->text(), _comboTypeName->itemData(_comboTypeName->currentIndex()).toInt(), _comboTypeName->currentText(), _inputWarranty->text().toInt(), _inputPrice->text().toFloat());
-
     Component::addComponent(component);
 
     close();

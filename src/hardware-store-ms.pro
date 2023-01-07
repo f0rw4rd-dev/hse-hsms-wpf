@@ -29,6 +29,7 @@ SOURCES += \
     mainwindow.cpp \
     regularexpressions.cpp \
     setcomponentdialog.cpp \
+    setcomputerdialog.cpp \
     setuserdialog.cpp \
     setwarehousecomponentdialog.cpp \
     setwarehousedialog.cpp \
@@ -56,6 +57,7 @@ HEADERS += \
     mainwindow.h \
     regularexpressions.h \
     setcomponentdialog.h \
+    setcomputerdialog.h \
     setuserdialog.h \
     setwarehousecomponentdialog.h \
     setwarehousedialog.h \
@@ -76,6 +78,7 @@ FORMS += \
     loginwindow.ui \
     mainwindow.ui \
     setcomponentdialog.ui \
+    setcomputerdialog.ui \
     setuserdialog.ui \
     setwarehousecomponentdialog.ui \
     setwarehousedialog.ui
