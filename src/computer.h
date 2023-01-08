@@ -17,6 +17,10 @@ public:
     static QVector<QSharedPointer<Computer>> getComputers();
     static QSharedPointer<Computer> getComputer(int id);
     static void addComputer(Computer &computer);
+    static void setComputer(Computer &computer);
+    static void deleteComputer(int id);
+
+    static bool doesComputerExist(int id);
 
 public:
     int id;

@@ -149,3 +149,37 @@ void Computer::addComputer(Computer &computer)
     dbConnection->getTransaction()->exec(request.toStdString());
     dbConnection->getTransaction()->commit();
 }
+
+void Computer::setComputer(Computer &computer)
+{
+    dbConnection->assertConnectionIsReliable();
+
+    auto getComponentId = [](QSharedPointer<Component> component) { return (component.isNull() || component->id < 1) ? QString("null") : QString::number(component->id); };
+    auto getComponentAmount = [](QSharedPointer<Component> component) { return (component.isNull()) ? QString("0") : QString::number(component->amount); };
+
+    QString request = QString("UPDATE computers SET component_cpu_id = %1, component_motherboard_id = %2, component_videocard_id = %3, component_ram_id = %4, component_ram_amount = %5, component_case_id = %6, component_powersupply_id = %7, component_hdd_id = %8, component_hdd_amount = %9, component_ssd_id = %10, component_ssd_amount = %11, component_ssdm_id = %12, component_ssdm_amount = %13, component_fan_id = %14, component_fan_amount = %15, component_wcs_id = %16, component_cooler_id = %17 WHERE id = %18;")
+            .arg(getComponentId(computer.cpu), getComponentId(computer.motherboard), getComponentId(computer.videocard), getComponentId(computer.ram),
+                 getComponentAmount(computer.ram), getComponentId(computer.chassis), getComponentId(computer.psu), getComponentId(computer.hdd),
+                 getComponentAmount(computer.hdd), getComponentId(computer.ssd), getComponentAmount(computer.ssd), getComponentId(computer.ssdM2),
+                 getComponentAmount(computer.ssdM2), getComponentId(computer.fan), getComponentAmount(computer.fan), getComponentId(computer.wcs),
+                 getComponentId(computer.cooler), QString::number(computer.id));
+
+    dbConnection->getTransaction()->exec(request.toStdString());
+    dbConnection->getTransaction()->commit();
+}
+
+void Computer::deleteComputer(int id)
+{
+
+}
+
+bool Computer::doesComputerExist(int id)
+{
+    dbConnection->assertConnectionIsReliable();
+
+    QString request = QString("SELECT * FROM computers WHERE id = '%1';").arg(QString::number(id));
+
+    pqxx::result result = dbConnection->getTransaction()->exec(request.toStdString());
+
+    return result.size() != 0;
+}

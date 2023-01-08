@@ -165,6 +165,7 @@ void AddComputerDialog::addComputer()
     }
 
     //todo check videocard or gpu in cpu
+    //todo проверка на совпадение типов комплектующих (процессор - и правда процессор, и т. д.)
 
     auto getComponentId = [](QLineEdit *input){ return (input->text().isEmpty()) ? -1 : input->text().toInt(); };
     auto getComponentAmount = [](QLineEdit *input){ return (input->text().isEmpty()) ? 0 : input->text().toInt(); };

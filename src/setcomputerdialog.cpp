@@ -5,6 +5,7 @@
 #include "computer.h"
 
 #include <QRegularExpressionValidator>
+#include <QMessageBox>
 
 SetComputerDialog::SetComputerDialog(QWidget *parent) :
     QDialog(parent),
@@ -181,5 +182,32 @@ void SetComputerDialog::loadComputer(const QString &id)
 
 void SetComputerDialog::setComputer()
 {
+    if (_inputId->text().isEmpty()) {
+        QMessageBox::information(nullptr, "Предупреждение", "Заполните поле ИД!");
+        return;
+    }
 
+    if (!Computer::doesComputerExist(_inputId->text().toInt())) {
+        QMessageBox::information(nullptr, "Предупреждение", "Данная сборка компьютера не существует!");
+        return;
+    }
+
+    //todo check videocard or gpu in cpu
+    //todo check on empty fields
+
+    auto getComponentId = [](QLineEdit *input){ return (input->text().isEmpty()) ? -1 : input->text().toInt(); };
+    auto getComponentAmount = [](QLineEdit *input){ return (input->text().isEmpty()) ? 0 : input->text().toInt(); };
+
+    Computer computer(getComponentId(_inputCPUId), getComponentId(_inputMotherboardId), getComponentId(_inputVideocardId), getComponentId(_inputRAMId),
+                      getComponentAmount(_inputRAMAmount), getComponentId(_inputCaseId), getComponentId(_inputPSUId), getComponentId(_inputHDDId),
+                      getComponentAmount(_inputHDDAmount), getComponentId(_inputSSDId), getComponentAmount(_inputSSDAmount), getComponentId(_inputSSDM2Id),
+                      getComponentAmount(_inputSSDM2Amount), getComponentId(_inputFanId), getComponentAmount(_inputFanAmount), getComponentId(_inputWCSId),
+                      getComponentId(_inputCoolerId));
+    computer.id = _inputId->text().toInt();
+    Computer::setComputer(computer);
+
+    close();
+    deleteLater();
+
+    QMessageBox::information(nullptr, "Информация", "Сборка компьютера изменена!");
 }
