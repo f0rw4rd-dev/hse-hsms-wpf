@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project name="Hardware Store" id="Project-21c1" database="PostgreSQL" >
+<project name="hardware_store" id="Project-21c1" database="PostgreSQL" >
 	<schema name="hardware store" >
-		<table name="users" >
+		<table name="groups" prior="tbl" >
 			<column name="id" type="integer" jt="4" mandatory="y" />
-			<index name="pk_users" unique="PRIMARY_KEY" >
+			<column name="name" type="varchar" length="32" jt="12" mandatory="y" />
+			<index name="pk_groups" unique="PRIMARY_KEY" >
 				<column name="id" />
 			</index>
 		</table>
+		<table name="users" prior="usersпы" >
+			<column name="id" type="integer" jt="4" mandatory="y" />
+			<column name="password" type="varchar" length="64" jt="12" mandatory="y" />
+			<column name="registration_date" prior="registrati" type="bigint" jt="-5" mandatory="y" />
+			<column name="last_visit_date" type="bigint" jt="-5" />
+			<column name="group_id" type="integer" jt="4" mandatory="y" />
+			<index name="pk_users" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<fk name="fk_users_groups" to_schema="hardware store" to_table="groups" >
+				<fk_column name="group_id" pk="id" />
+			</fk>
+		</table>
 	</schema>
 	<layout name="Default Layout" id="Layout-1c9e" show_relation="columns" >
+		<entity schema="hardware store" name="groups" color="C1D8EE" x="656" y="368" />
 		<entity schema="hardware store" name="users" color="C1D8EE" x="80" y="224" />
 		<callout x="48" y="48" pointer="Round" >
 			<comment><![CDATA[This is a layout - a diagram with tools.
