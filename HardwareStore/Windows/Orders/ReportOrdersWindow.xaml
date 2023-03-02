@@ -1,0 +1,16 @@
+﻿<Window x:Class="HardwareStore.Windows.Orders.ReportOrdersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:oxy="http://oxyplot.org/wpf"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HardwareStore.Windows.Orders"
+        mc:Ignorable="d"
+        Title="HSMS - Отчет заказов" Height="600" Width="900" ResizeMode="NoResize">
+    <Window.DataContext>
+        <local:OrdersPlotModel/>
+    </Window.DataContext>
+    <Grid>
+        <oxy:PlotView x:Name="plot" Model="{Binding Model}"/>
+    </Grid>
+</Window>

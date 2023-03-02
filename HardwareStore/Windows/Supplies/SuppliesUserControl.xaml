@@ -1,0 +1,166 @@
+﻿<UserControl x:Class="HardwareStore.Windows.Supplies.SuppliesUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HardwareStore.Windows.Supplies"
+             xmlns:validationRules="clr-namespace:HardwareStore.Windows.ValidationRules"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d"
+             d:DesignHeight="660" d:DesignWidth="1200" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="suppliesViewSource" Filter="CollectionViewSource_Filter" />
+    </UserControl.Resources>
+    <Grid Background="#FFFFFFFF">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ToolBarTray Background="#FFECECEC" Grid.Row="0">
+            <ToolBar ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" Height="30" Width="1200" Margin="0,0,0,0" Background="#FFECECEC">
+                <Button x:Name="updateSupplies" Margin="5,0,5,0" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" Click="updateSupplies_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Reload.png" />
+                        <TextBlock Text="Обновить" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+                <Button x:Name="saveSupplies" Margin="5,0,5,0" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" Click="saveSupplies_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Verify.png" />
+                        <TextBlock Text="Сохранить" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+                <Button x:Name="filterSupplies" Margin="5,0,5,0" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" Click="filterSupplies_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Search.png" />
+                        <TextBlock Text="Фильтр" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+                <Button x:Name="reportSupplies" Margin="5,0,5,0" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" Click="reportSupplies_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Infographic.png" />
+                        <TextBlock Text="График" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+                <Button x:Name="exportSupplies" Margin="5,0,5,0" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" Click="exportSupplies_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Export.png" />
+                        <TextBlock Text="Экспорт" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <DataGrid x:Name="suppliesDataGrid" Grid.Row="1" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding Source={StaticResource suppliesViewSource}}" AutoGenerateColumns="False" Margin="0,-2,0,0" BorderBrush="#F0D6D6D6" Background="White">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ИД" Binding="{Binding Id}" IsReadOnly="True" />
+                <DataGridTextColumn Header="ИД поставщика">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="SupplierId" NotifyOnTargetUpdated="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <validationRules:UnsignedIntValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="MaxLength" Value="8"/>
+                            <Style.Triggers>
+                                <Trigger Property="Validation.HasError" Value="true">
+                                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="ИД комплектующего">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="ComponentId" NotifyOnTargetUpdated="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <validationRules:UnsignedIntValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="MaxLength" Value="8"/>
+                            <Style.Triggers>
+                                <Trigger Property="Validation.HasError" Value="true">
+                                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="ИД склада">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="WarehouseId" NotifyOnTargetUpdated="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <validationRules:UnsignedIntValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="MaxLength" Value="8"/>
+                            <Style.Triggers>
+                                <Trigger Property="Validation.HasError" Value="true">
+                                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Закупочная цена (руб)">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="SupplyPrice" NotifyOnTargetUpdated="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" StringFormat="N2" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <validationRules:UnsignedFloatValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="MaxLength" Value="14"/>
+                            <Style.Triggers>
+                                <Trigger Property="Validation.HasError" Value="true">
+                                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Количество товара (шт)">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="Amount" NotifyOnTargetUpdated="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <validationRules:UnsignedIntValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="MaxLength" Value="8"/>
+                            <Style.Triggers>
+                                <Trigger Property="Validation.HasError" Value="true">
+                                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn Header="Дата поставки">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding DateHandler, Mode=OneWay, StringFormat=' dd-MM-yyyy HH:mm '}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <xctk:DateTimePicker Value="{Binding DateHandler}" BorderThickness="0,0,0,0" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

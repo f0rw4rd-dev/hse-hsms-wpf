@@ -1,0 +1,22 @@
+﻿<Window x:Class="HardwareStore.Windows.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HardwareStore.Windows"
+        mc:Ignorable="d"
+        Title="HSMS - Авторизация" Height="500" Width="450" ResizeMode="NoResize" Icon="/Icons/Favicon.png">
+    <Grid>
+        <GroupBox FontSize="16" BorderThickness="0,0,0,0" SnapsToDevicePixels="True" Margin="50,150,50,30">
+            <StackPanel Margin="0,0,0,0">
+                <Label Content="Логин" Padding="0,5,5,5" Margin="0,10,0,0"/>
+                <TextBox x:Name="loginTextBox" TextWrapping="Wrap" Text="" HorizontalAlignment="Left" Width="322" TextChanged="loginTextBox_TextChanged" MaxLength="8" BorderThickness="0,0,0,1"/>
+                <Label Content="Пароль" Padding="0,5,5,5" Margin="0,10,0,0"/>
+                <PasswordBox x:Name="passwordBox" MaxLength="64" BorderThickness="0,0,0,1"/>
+                <Button x:Name="loginButton" Content="Войти" Margin="0,100,0,0" Click="loginButton_Click" Width="150" Height="30" Padding="0,0,0,0" BorderThickness="0,0,0,0" BorderBrush="#FF313131" Background="#FFDDDDDD"/>
+            </StackPanel>
+
+        </GroupBox>
+        <TextBlock HorizontalAlignment="Center" Margin="0,73,0,0" FontWeight="Bold" FontSize="24" VerticalAlignment="Top" TextAlignment="Center" Foreground="#FF3C3C3C"><Run Text="HARDWARE STORE"/><LineBreak/><Run Text="MANAGEMENT"/><Run Language="ru-ru" Text=" "/><Run Text="SYSTEM"/></TextBlock>
+    </Grid>
+</Window>

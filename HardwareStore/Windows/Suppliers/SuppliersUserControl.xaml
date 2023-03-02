@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="HardwareStore.Windows.Suppliers.SuppliersUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HardwareStore.Windows.Suppliers"
+             xmlns:validationRules="clr-namespace:HardwareStore.Windows.ValidationRules"
+             mc:Ignorable="d" 
+             d:DesignHeight="660" d:DesignWidth="1200" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="suppliersViewSource" />
+    </UserControl.Resources>
+    <Grid Background="#FFFFFFFF">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ToolBarTray Background="#FFECECEC" Grid.Row="0">
+            <ToolBar ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" Height="30" Width="1200" Margin="0,0,0,0" Background="#FFECECEC">
+                <Button x:Name="updateSuppliers" Margin="5,0,5,0" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" Click="updateSuppliers_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Reload.png" />
+                        <TextBlock Text="Обновить" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+                <Button x:Name="saveSuppliers" Margin="5,0,5,0" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" Click="saveSuppliers_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Verify.png" />
+                        <TextBlock Text="Сохранить" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+                <Button x:Name="exportSuppliers" Margin="5,0,5,0" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" Click="exportSuppliers_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Export.png" />
+                        <TextBlock Text="Экспорт" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <DataGrid x:Name="suppliersDataGrid" Grid.Row="1" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding Source={StaticResource suppliersViewSource}}" AutoGenerateColumns="False" Margin="0,-2,0,0" BorderBrush="#F0D6D6D6" Background="White">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ИД" Binding="{Binding Id}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Наименование организации">
+                    <DataGridTextColumn.Binding>
+                        <Binding Path="Name" NotifyOnTargetUpdated="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <validationRules:SupplierNameValidationRule />
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </DataGridTextColumn.Binding>
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="MaxLength" Value="128"/>
+                            <Style.Triggers>
+                                <Trigger Property="Validation.HasError" Value="true">
+                                    <Setter Property="ToolTip" Value="{Binding (Validation.Errors)[0].ErrorContent, RelativeSource={RelativeSource Self}}"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

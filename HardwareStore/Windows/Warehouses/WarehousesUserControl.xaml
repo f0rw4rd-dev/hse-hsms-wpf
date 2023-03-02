@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="HardwareStore.Windows.Warehouses.WarehousesUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:HardwareStore.Windows.Warehouses"
+             mc:Ignorable="d" 
+             d:DesignHeight="660" d:DesignWidth="1200" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="warehousesViewSource" Filter="CollectionViewSource_Filter" />
+    </UserControl.Resources>
+    <Grid Background="#FFFFFFFF">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ToolBarTray Background="#FFECECEC" Grid.Row="0">
+            <ToolBar ToolBarTray.IsLocked="True" ToolBar.OverflowMode="Never" Height="30" Width="1200" Margin="0,0,0,0" Background="#FFECECEC">
+                <Button x:Name="updateWarehouses" Margin="5,0,5,0" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" Click="updateWarehouses_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Reload.png" />
+                        <TextBlock Text="Обновить" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+                <Button x:Name="saveWarehouses" Margin="5,0,5,0" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" Click="saveWarehouses_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Verify.png" />
+                        <TextBlock Text="Сохранить" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+                <Button x:Name="filterWarehouses" Margin="5,0,5,0" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" Click="filterWarehouses_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Search.png" />
+                        <TextBlock Text="Фильтр" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+                <Button x:Name="exportWarehouses" Margin="5,0,5,0" Focusable="False" HorizontalAlignment="Left" VerticalAlignment="Top" Click="exportWarehouses_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Icons/Export.png" />
+                        <TextBlock Text="Экспорт" Margin="5,0,0,0" />
+                    </StackPanel>
+                </Button>
+            </ToolBar>
+        </ToolBarTray>
+        <DataGrid x:Name="warehousesDataGrid" Grid.Row="1" ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" ItemsSource="{Binding Source={StaticResource warehousesViewSource}}" AutoGenerateColumns="False" Margin="0,-2,0,0" BorderBrush="#F0D6D6D6" Background="White">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ИД" Binding="{Binding Id}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Город" Binding="{Binding City}">
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="MaxLength" Value="64"/>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Улица" Binding="{Binding Street}">
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="MaxLength" Value="64"/>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Дом" Binding="{Binding House}">
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="MaxLength" Value="8"/>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Индекс" Binding="{Binding Zip}">
+                    <DataGridTextColumn.EditingElementStyle>
+                        <Style TargetType="TextBox">
+                            <Setter Property="MaxLength" Value="8"/>
+                        </Style>
+                    </DataGridTextColumn.EditingElementStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
