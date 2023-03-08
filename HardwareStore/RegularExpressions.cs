@@ -25,7 +25,7 @@ namespace HardwareStore
         public static partial Regex GetSupplierNameRegex();
 
         [GeneratedRegex(@"[^a-zA-Zа-яА-Я-()\d.,/'\"" ]", RegexOptions.IgnoreCase, "en-US")]
-        public static partial Regex GetCategoryTypeRegex();
+        public static partial Regex GetComponentTypeRegex();
 
         [GeneratedRegex(@"[^a-zA-Zа-яА-Я-()\d.,/ ]", RegexOptions.IgnoreCase, "en-US")]
         public static partial Regex GetDetailTypeRegex();

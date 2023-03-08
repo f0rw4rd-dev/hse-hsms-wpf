@@ -44,7 +44,7 @@
                     <DataGridTextColumn.Binding>
                         <Binding Path="Name" NotifyOnTargetUpdated="True" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay" ValidatesOnDataErrors="True">
                             <Binding.ValidationRules>
-                                <validationRules:CategoryTypeValidationRule />
+                                <validationRules:ComponentTypeValidationRule />
                             </Binding.ValidationRules>
                         </Binding>
                     </DataGridTextColumn.Binding>

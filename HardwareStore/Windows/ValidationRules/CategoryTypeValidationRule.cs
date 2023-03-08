@@ -7,7 +7,7 @@ using System.Windows.Controls;
 
 namespace HardwareStore.Windows.ValidationRules
 {
-    public class CategoryTypeValidationRule : ValidationRule
+    public class ComponentTypeValidationRule : ValidationRule
     {
         public override ValidationResult Validate(object value, System.Globalization.CultureInfo cultureInfo)
         {
@@ -16,7 +16,7 @@ namespace HardwareStore.Windows.ValidationRules
             if (input == null || input == string.Empty)
                 return new ValidationResult(false, "Поле должно быть заполнено");
 
-            if (RegularExpressions.GetCategoryTypeRegex().IsMatch(input))
+            if (RegularExpressions.GetComponentTypeRegex().IsMatch(input))
                 return new ValidationResult(false, "В ячейке присутствуют запрещенные символы");
 
             return new ValidationResult(true, null);
