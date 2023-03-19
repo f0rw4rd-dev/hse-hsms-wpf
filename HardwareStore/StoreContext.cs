@@ -53,16 +53,5 @@ namespace HardwareStore
             optionsBuilder.UseNpgsql($"Host={DbData.Host};Port={DbData.Port};Database={DbData.Database};Username={DbData.Username};Password={DbData.Password}");
             optionsBuilder.UseLazyLoadingProxies();
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            //modelBuilder.Entity<ComponentDetail>().HasIndex(e => new { e.ComponentId, e.DetailTypeId }).IsUnique();
-
-            //modelBuilder.Entity<ComponentDetail>().HasOne<Component>(cd => cd.Component).WithMany(c => c.ComponentDetails).HasForeignKey(cd => cd.ComponentId);
-
-            //modelBuilder.Entity<ComponentDetail>().HasOne<DetailType>(cd => cd.DetailType).WithMany(dt => dt.ComponentDetails).HasForeignKey(cd => cd.DetailTypeId);
-
-            //modelBuilder.Entity<ComponentDetail>().HasAlternateKey(cd => new { cd.ComponentId, cd.DetailTypeId });
-        }
     }
 }
