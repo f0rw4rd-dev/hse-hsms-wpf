@@ -59,7 +59,7 @@
                                         <Expander IsExpanded="True" Background="#FFDDDDDD" BorderBrush="Black" Foreground="Black" BorderThickness="0,0,0,1">
                                             <Expander.Header>
                                                 <DockPanel>
-                                                    <TextBlock Text="ИД конфигурации " Margin="0,0,0,0" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="ИД заказа " Margin="0,0,0,0" VerticalAlignment="Center"/>
                                                     <TextBlock Text="{Binding Path=Name}" Margin="0,0,0,0" VerticalAlignment="Center"/>
                                                 </DockPanel>
                                             </Expander.Header>
