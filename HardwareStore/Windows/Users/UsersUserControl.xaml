@@ -4,8 +4,8 @@
              xmlns:core="clr-namespace:System;assembly=mscorlib"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:HardwareStore.Windows.Users"
-             xmlns:models="clr-namespace:HardwareStore.Models"
+             xmlns:local="clr-namespace:HardwareStore.Windows.Users" 
+             xmlns:models="clr-namespace:HardwareStore.Models" 
              mc:Ignorable="d" 
              d:DesignHeight="660" d:DesignWidth="1200" Loaded="UserControl_Loaded">
     <UserControl.Resources>

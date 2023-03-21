@@ -62,18 +62,7 @@ namespace HardwareStore.Windows.Users
             User? user = context.Users.Where(u => u.Id == int.Parse(idTextBox.Text)).FirstOrDefault();
             if (user != null)
             {
-                switch (user.Group)
-                {
-                    case Models.Group.Consultant:
-                        groupComboBox.SelectedIndex = 0;
-                        break;
-                    case Models.Group.Admin:
-                        groupComboBox.SelectedIndex = 1;
-                        break;
-                    default: 
-                        groupComboBox.SelectedIndex = 0; 
-                        break;
-                }
+                groupComboBox.SelectedIndex = (int)user.Group;
             }
         }
     }
