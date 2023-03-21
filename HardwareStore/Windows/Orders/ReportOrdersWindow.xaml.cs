@@ -32,12 +32,7 @@ namespace HardwareStore.Windows.Orders
                 DefaultColors = new List<OxyColor> { OxyColors.SteelBlue, },
             };
 
-            LineSeries line = new()
-            {
-                MarkerType = MarkerType.Circle,
-                MarkerFill = OxyColors.SteelBlue,
-                MarkerSize = 6,
-            };
+            BarSeries series = new();
 
             DateTime dateTimeLastMonth = DateTime.Today.AddMonths(-1);
             long timeStampLastMoth = Utilities.DateTimeToUnixTimeStamp(dateTimeLastMonth);
@@ -47,53 +42,50 @@ namespace HardwareStore.Windows.Orders
             if (orders.Count == 0)
                 return;
 
-            DateTime orderDateTime = new(1970, 1, 1), previousDateTime = Utilities.UnixTimeStampToDateTime(orders.First().Date);
-            int amountInDay = 0;
+            Dictionary<string, int> days = new();
+
+            CategoryAxis categoryAxis = new()
+            {
+                Position = AxisPosition.Left,
+                Title = "Дата поставки"
+            };
+
+            for (int i = 0; i < 30; i++)
+            {
+                string day = DateTime.Today.AddDays(-i).ToString("dd.MM");
+
+                categoryAxis.Labels.Add(day);
+                days[day] = i;
+            }
+
+            Dictionary<string, int> amounts = new();
 
             foreach (Models.Order order in orders)
             {
-                orderDateTime = Utilities.UnixTimeStampToDateTime(order.Date);
+                DateTime orderDateTime = Utilities.UnixTimeStampToDateTime(order.Date);
+                string day = orderDateTime.ToString("dd.MM");
 
-                if (orderDateTime.Day != previousDateTime.Day)
-                {
-                    line.Points.Add(new DataPoint(DateTimeAxis.ToDouble(new DateTime(previousDateTime.Year, previousDateTime.Month, previousDateTime.Day)), amountInDay));
-                    previousDateTime = orderDateTime;
-                    amountInDay = 0;
-                }
+                if (!amounts.ContainsKey(day))
+                    amounts[day] = 0;
 
-                amountInDay++;
+                amounts[day]++;
             }
 
-            line.Points.Add(new DataPoint(DateTimeAxis.ToDouble(new DateTime(previousDateTime.Year, previousDateTime.Month, previousDateTime.Day)), amountInDay));
-
-            DateTimeAxis xAxis = new()
+            foreach (KeyValuePair<string, int> amount in amounts)
             {
-                Key = "X0",
+                series.Items.Add(new BarItem(amount.Value, days[amount.Key]));
+            }
+
+            LinearAxis amountAxis = new()
+            {
                 Position = AxisPosition.Bottom,
-                Minimum = DateTimeAxis.ToDouble(Utilities.UnixTimeStampToDateTime(orders.First().Date)),
-                Maximum = DateTimeAxis.ToDouble(Utilities.UnixTimeStampToDateTime(Utilities.DateTimeToUnixTimeStamp(DateTime.Now))),
-                IntervalType = DateTimeIntervalType.Days,
-                MajorGridlineStyle = LineStyle.Solid,
-                StringFormat = "dd/MM",
-                MajorStep = 1,
-                IsZoomEnabled = true,
-                MaximumPadding = 1,
-                MinimumPadding = 1,
-                TickStyle = TickStyle.None,
-                Title = "Дата заказа",
-                MinimumDataMargin = 15
-            };
-
-            LinearAxis yAxis = new()
-            {
-                Position = AxisPosition.Left,
-                MajorStep = 1,
+                MinimumMajorStep = 1,
                 Title = "Число заказов"
             };
 
-            Model.Axes.Add(xAxis);
-            Model.Axes.Add(yAxis);
-            Model.Series.Add(line);
+            Model.Axes.Add(categoryAxis);
+            Model.Axes.Add(amountAxis);
+            Model.Series.Add(series);
         }
     }
 

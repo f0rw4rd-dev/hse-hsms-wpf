@@ -29,75 +29,65 @@ namespace HardwareStore.Windows.Supplies
         public SuppliesPlotModel()
         {
             Model = new()
-            { 
+            {
                 Title = "Число поставок за последние 30 дней",
                 DefaultColors = new List<OxyColor> { OxyColors.SteelBlue, },
             };
 
-            LineSeries line = new()
-            {
-                MarkerType = MarkerType.Circle,
-                MarkerFill = OxyColors.SteelBlue,
-                MarkerSize = 6,
-            };
+            BarSeries series = new();
 
             DateTime dateTimeLastMonth = DateTime.Today.AddMonths(-1);
             long timeStampLastMoth = Utilities.DateTimeToUnixTimeStamp(dateTimeLastMonth);
 
-            List<Models.Supply> supplies = _context.Supplies.Where(s => timeStampLastMoth <= s.Date && s.Date <= Utilities.GetCurrentUnixTimeStamp()).OrderBy(s => s.Date).ToList();
+            List<Models.Supply> supplies = _context.Supplies.Where(o => timeStampLastMoth <= o.Date && o.Date <= Utilities.GetCurrentUnixTimeStamp()).OrderBy(o => o.Date).ToList();
 
             if (supplies.Count == 0)
                 return;
 
-            DateTime supplyDateTime = new(1970, 1, 1), previousDateTime = Utilities.UnixTimeStampToDateTime(supplies.First().Date);
-            int amountInDay = 0;
+            Dictionary<string, int> days = new();
+
+            CategoryAxis categoryAxis = new()
+            {
+                Position = AxisPosition.Left,
+                Title = "Дата поставки"
+            };
+
+            for (int i = 0; i < 30; i++)
+            {
+                string day = DateTime.Today.AddDays(-i).ToString("dd.MM");
+
+                categoryAxis.Labels.Add(day);
+                days[day] = i;
+            }
+
+            Dictionary<string, int> amounts = new();
 
             foreach (Models.Supply supply in supplies)
             {
-                supplyDateTime = Utilities.UnixTimeStampToDateTime(supply.Date);
+                DateTime supplyDateTime = Utilities.UnixTimeStampToDateTime(supply.Date);
+                string day = supplyDateTime.ToString("dd.MM");
 
-                if (supplyDateTime.Day != previousDateTime.Day)
-                {
-                    line.Points.Add(new DataPoint(DateTimeAxis.ToDouble(new DateTime(previousDateTime.Year, previousDateTime.Month, previousDateTime.Day)), amountInDay));
-                    previousDateTime = supplyDateTime;
-                    amountInDay = 0;
-                }
+                if (!amounts.ContainsKey(day))
+                    amounts[day] = 0;
 
-                amountInDay++;
-
+                amounts[day]++;
             }
 
-            line.Points.Add(new DataPoint(DateTimeAxis.ToDouble(new DateTime(previousDateTime.Year, previousDateTime.Month, previousDateTime.Day)), amountInDay));
-
-            DateTimeAxis xAxis = new()
+            foreach (KeyValuePair<string, int> amount in amounts)
             {
-                Key = "X0",
+                series.Items.Add(new BarItem(amount.Value, days[amount.Key]));
+            }
+
+            LinearAxis amountAxis = new()
+            {
                 Position = AxisPosition.Bottom,
-                Minimum = DateTimeAxis.ToDouble(Utilities.UnixTimeStampToDateTime(supplies.First().Date)),
-                Maximum = DateTimeAxis.ToDouble(Utilities.UnixTimeStampToDateTime(Utilities.DateTimeToUnixTimeStamp(DateTime.Now))),
-                //Maximum = DateTimeAxis.ToDouble(Utilities.UnixTimeStampToDateTime(supplies.Last().Date)),
-                IntervalType = DateTimeIntervalType.Days,
-                MajorGridlineStyle = LineStyle.Solid,
-                StringFormat = "dd/MM",
-                MajorStep = 1,
-                IsZoomEnabled = true,
-                MaximumPadding = 1,
-                MinimumPadding = 1,
-                TickStyle = TickStyle.None,
-                Title = "Дата поставки",
-                MinimumDataMargin = 15
-            };
-
-            LinearAxis yAxis = new()
-            {
-                Position = AxisPosition.Left,
-                MajorStep = 1,
+                MinimumMajorStep = 1,
                 Title = "Число поставок"
             };
 
-            Model.Axes.Add(xAxis);
-            Model.Axes.Add(yAxis);
-            Model.Series.Add(line);
+            Model.Axes.Add(categoryAxis);
+            Model.Axes.Add(amountAxis);
+            Model.Series.Add(series);
         }
     }
 

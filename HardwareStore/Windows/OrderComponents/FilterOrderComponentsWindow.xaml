@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HardwareStore.Windows.OrderComponents"
         mc:Ignorable="d"
-        Title="HSMS - Фильтр заказов" ResizeMode="NoResize" SizeToContent="WidthAndHeight" Loaded="Window_Loaded">
+        Title="HSMS - Фильтр содержимого заказов" ResizeMode="NoResize" SizeToContent="WidthAndHeight" Loaded="Window_Loaded">
     <Grid>
         <GroupBox FontSize="12" BorderThickness="0,0,0,0" SnapsToDevicePixels="True" Margin="10,10,10,10">
             <StackPanel Margin="0,0,0,0">
